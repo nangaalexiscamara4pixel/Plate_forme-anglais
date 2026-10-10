@@ -1,17 +1,18 @@
+import { Mail, MessageCircle } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Logo } from "@/components/brand/logo";
 import { Link } from "@/i18n/navigation";
-import { SOCIAL_LINKS } from "../site-config";
+import { CONTACT, SOCIAL_LINKS, whatsappUrl } from "../site-config";
 import { NewsletterForm } from "./newsletter-form";
 
-const SOCIAL_LABEL = { facebook: "Facebook", instagram: "Instagram", linkedin: "LinkedIn", youtube: "YouTube" } as const;
+const SOCIAL_LABEL = { facebook: "Facebook", instagram: "Instagram", linkedin: "LinkedIn", youtube: "YouTube", portfolio: "Portfolio" } as const;
 
 export async function SiteFooter() {
   const t = await getTranslations("site.footer");
   const tn = await getTranslations("site.nav");
   return (
     <footer className="border-t bg-card">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-[1.2fr_1fr_1.4fr]">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-2 lg:grid-cols-[1.1fr_0.7fr_1.35fr_1.35fr]">
         <div className="grid content-start gap-4">
           <Logo />
           <p className="max-w-xs text-sm text-muted-foreground">{t("tagline")}</p>
@@ -56,6 +57,36 @@ export async function SiteFooter() {
             </li>
           </ul>
         </nav>
+        <div>
+          <p className="font-display text-lg">{t("contactTitle")}</p>
+          <p className="mt-1 mb-4 text-sm text-muted-foreground">{t("contactText")}</p>
+          <ul className="grid gap-3 text-sm">
+            {CONTACT.whatsapp.map((n) => (
+              <li key={n.e164}>
+                <a
+                  href={whatsappUrl(n.e164)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={t("whatsappLabel", { number: n.display })}
+                  className="group inline-flex items-center gap-2.5 font-medium hover:text-brand-ink"
+                >
+                  <span className="flex size-8 items-center justify-center rounded-full bg-[#25D366] text-white transition-transform group-hover:scale-110">
+                    <MessageCircle className="size-4" aria-hidden />
+                  </span>
+                  <span dir="ltr">{n.display}</span>
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href={`mailto:${CONTACT.email}`} className="group inline-flex items-center gap-2.5 font-medium [overflow-wrap:anywhere] hover:text-brand-ink">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-night text-white transition-transform group-hover:scale-110">
+                  <Mail className="size-4" aria-hidden />
+                </span>
+                {CONTACT.email}
+              </a>
+            </li>
+          </ul>
+        </div>
         <div>
           <p className="font-display text-lg">{t("newsletterTitle")}</p>
           <p className="mt-1 mb-4 text-sm text-muted-foreground">{t("newsletterText")}</p>

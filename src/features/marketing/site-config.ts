@@ -72,8 +72,26 @@ export function visibleTestimonials(): Testimonial[] {
   return process.env.NODE_ENV === "production" ? TESTIMONIALS.filter((t) => !t.sample) : TESTIMONIALS;
 }
 
-/** Réseaux sociaux affichés dans le pied de page (laisser vide pour masquer). */
-export const SOCIAL_LINKS: { network: "facebook" | "instagram" | "linkedin" | "youtube"; url: string }[] = [];
+/** Réseaux sociaux et liens affichés dans le pied de page (laisser vide pour masquer). */
+export const SOCIAL_LINKS: { network: "facebook" | "instagram" | "linkedin" | "youtube" | "portfolio"; url: string }[] = [
+  { network: "linkedin", url: "https://www.linkedin.com/in/nanga-alexis-camara-292045242" },
+  { network: "portfolio", url: "https://portfolio-nanga.vercel.app/" },
+];
+
+/**
+ * Coordonnées affichées dans le pied de page. Chaque numéro ouvre une conversation WhatsApp
+ * (https://wa.me/<numéro sans « + »>) ; `e164` est le numéro international sans espaces.
+ */
+export const CONTACT = {
+  whatsapp: [
+    { display: "+40 757 256 574", e164: "+40757256574" },
+    { display: "+224 610 32 44 03", e164: "+224610324403" },
+  ],
+  email: "nangaalexiscamara4@gmail.com",
+} as const;
+
+/** Lien qui ouvre une conversation WhatsApp avec ce numéro. */
+export const whatsappUrl = (e164: string) => `https://wa.me/${e164.replace(/\D/g, "")}`;
 
 /** Durée indicative de chaque niveau et difficulté (1 à 4) affichées sur les cartes. */
 export const LEVEL_FACTS = {
