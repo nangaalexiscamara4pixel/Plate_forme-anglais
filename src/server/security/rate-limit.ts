@@ -13,6 +13,7 @@ export const RULES = {
   passwordReset: { limit: 3, windowSec: 60 * 60 },
   resendVerification: { limit: 3, windowSec: 60 * 10 },
   twoFactor: { limit: 5, windowSec: 60 },
+  newsletter: { limit: 5, windowSec: 60 * 60 },
 } satisfies Record<string, RateLimitRule>;
 
 const redis =

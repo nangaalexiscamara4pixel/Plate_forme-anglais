@@ -952,3 +952,24 @@ model Notification {
 
   @@index([userId, readAt, createdAt])
 }
+
+// ─────────────────────────────────────────────────────────────
+// Site public
+// ─────────────────────────────────────────────────────────────
+
+/// Abonnés à la newsletter — double opt-in (RGPD) : actif seulement après confirmation par email
+model NewsletterSubscriber {
+  id                    String    @id @default(cuid())
+  email                 String    @unique
+  locale                String    @default("fr")
+  /// Empreinte SHA-256 du jeton de confirmation (le jeton brut n'est jamais stocké)
+  confirmTokenHash      String?   @unique
+  confirmTokenExpiresAt DateTime?
+  /// Jeton aléatoire inclus dans chaque email pour se désinscrire en un clic
+  unsubscribeToken      String    @unique
+  consentAt             DateTime  @default(now())
+  confirmedAt           DateTime?
+  unsubscribedAt        DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}

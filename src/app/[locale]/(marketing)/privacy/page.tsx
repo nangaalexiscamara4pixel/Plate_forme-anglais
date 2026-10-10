@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import { Logo } from "@/components/brand/logo";
-import { Link } from "@/i18n/navigation";
 
 export const metadata: Metadata = { title: "Politique de confidentialité" };
 
@@ -10,15 +8,8 @@ export const metadata: Metadata = { title: "Politique de confidentialité" };
 export default async function PrivacyPage({ params }: { params: Promise<{ locale: string }> }) {
   setRequestLocale((await params).locale);
   return (
-    <div className="min-h-dvh">
-      <header className="border-b">
-        <div className="mx-auto flex h-16 max-w-3xl items-center px-4">
-          <Link href="/" className="rounded-md">
-            <Logo />
-          </Link>
-        </div>
-      </header>
-      <main id="main" className="mx-auto max-w-3xl px-4 py-12 leading-relaxed [&_h2]:mt-10 [&_h2]:mb-3 [&_h2]:text-2xl [&_li]:ml-5 [&_li]:list-disc [&_p]:mb-4 [&_p]:text-muted-foreground">
+    <div>
+      <article className="mx-auto max-w-3xl px-4 py-12 leading-relaxed [&_h2]:mt-10 [&_h2]:mb-3 [&_h2]:text-2xl [&_li]:ml-5 [&_li]:list-disc [&_p]:mb-4 [&_p]:text-muted-foreground">
         <h1 className="text-4xl font-medium">Politique de confidentialité</h1>
         <p className="mt-2 text-sm">Version 2026-10</p>
 
@@ -26,6 +17,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
         <ul>
           <li>Identité et contact : nom, adresse email, pays, fuseau horaire, langue.</li>
           <li>Données pédagogiques : progression, réponses aux exercices, devoirs écrits et enregistrements audio, présences aux cours.</li>
+          <li>Newsletter (facultative) : adresse email et date de consentement, après confirmation par email ; désinscription en un clic dans chaque message.</li>
           <li>Données techniques de sécurité : adresse IP et navigateur associés à vos sessions, journal des connexions.</li>
         </ul>
 
@@ -60,7 +52,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
           Hébergement (Vercel, Neon), envoi d&apos;emails (Resend), vidéos (Mux), stockage de fichiers (Cloudflare R2) et
           visioconférence (Google Meet), dans le cadre de contrats conformes au RGPD.
         </p>
-      </main>
+      </article>
     </div>
   );
 }

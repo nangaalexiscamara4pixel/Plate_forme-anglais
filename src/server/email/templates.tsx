@@ -165,6 +165,28 @@ export function levelPromoted({
   };
 }
 
+export function newsletterConfirm({ url, unsubscribeUrl, locale }: { url: string; unsubscribeUrl: string; locale: EmailLocale }): EmailMessage {
+  const fr = locale === "fr";
+  const subject = fr ? "Confirmez votre inscription à la newsletter" : "Confirm your newsletter subscription";
+  return {
+    subject,
+    react: (
+      <EmailLayout locale={locale} preview={subject} heading={subject}>
+        <P>
+          {fr
+            ? "Vous avez demandé à recevoir les nouvelles de GlobeSpeak Academy. Confirmez votre adresse pour finaliser l'inscription (lien valable 48 heures)."
+            : "You asked to receive news from GlobeSpeak Academy. Confirm your address to complete your subscription (link valid for 48 hours)."}
+        </P>
+        <CTA href={url}>{fr ? "Confirmer mon inscription" : "Confirm my subscription"}</CTA>
+        <P>
+          {fr ? "Ce n'était pas vous ? Ignorez cet email, ou " : "Wasn't you? Ignore this email, or "}
+          <a href={unsubscribeUrl}>{fr ? "supprimez votre adresse" : "remove your address"}</a>.
+        </P>
+      </EmailLayout>
+    ),
+  };
+}
+
 export function accountLocked({
   name,
   minutes,

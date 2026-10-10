@@ -48,19 +48,6 @@
     "WRITING": "Writing",
     "LISTENING": "Listening"
   },
-  "home": {
-    "eyebrow": "International English Academy",
-    "title": "English, taught with the standards of great institutions.",
-    "subtitle": "Four levels, from A1 to B2. Live classes on Google Meet, exclusive content, personal feedback. An invitation-only journey designed to help you progress.",
-    "secondaryCta": "Explore the levels",
-    "levelsTitle": "Four levels, one standard",
-    "levelsSubtitle": "Each level is a dedicated space, aligned with the Common European Framework of Reference (CEFR).",
-    "skillsTitle": "All four skills, studied in depth",
-    "accessTitle": "Access by approval",
-    "accessBody": "To guarantee the quality of our classes, every application is reviewed by our teaching team, who assign you the right level.",
-    "footer": "© {year} GlobeSpeak Academy. All rights reserved.",
-    "privacy": "Privacy"
-  },
   "auth": {
     "shellQuote": "“To have another language is to possess a second soul.”",
     "shellQuoteAuthor": "Attributed to Charlemagne",
@@ -726,6 +713,176 @@
       },
       "audioUnsupported": "Your browser cannot play this audio file.",
       "transcript": "Transcript"
+    }
+  },
+  "site": {
+    "nav": {
+      "label": "Main navigation",
+      "open": "Open menu",
+      "courses": "Courses",
+      "skills": "Skills",
+      "live": "Live classes",
+      "testimonials": "Testimonials",
+      "faq": "FAQ"
+    },
+    "hero": {
+      "label": "About the Academy",
+      "eyebrow": "International English Academy",
+      "slides": [
+        {
+          "title": "Speak English with confidence, anywhere in the world.",
+          "text": "Live classes on Google Meet and a complete journey, from A1 to B2."
+        },
+        {
+          "title": "Four levels, four skills, one method.",
+          "text": "Reading, Listening, Speaking and Writing, practised at every CEFR level."
+        },
+        {
+          "title": "A teacher who really follows your progress.",
+          "text": "Your texts and recordings are corrected personally, with detailed feedback."
+        }
+      ],
+      "cta": "Request access",
+      "secondary": "See the courses",
+      "slideOf": "Message {index} of {total}",
+      "goTo": "Show message {index}",
+      "pause": "Pause the slideshow",
+      "play": "Resume the slideshow"
+    },
+    "photos": {
+      "heroMain": "A student taking an online English class",
+      "heroTopLeft": "A student reading an English text",
+      "heroBottomLeft": "Students talking in English",
+      "heroTopRight": "A student practising speaking",
+      "heroBottomRight": "A student writing a text",
+      "skillReading": "Reading an English text",
+      "skillListening": "Listening to a recording",
+      "skillSpeaking": "Speaking practice",
+      "skillWriting": "Writing a text"
+    },
+    "levels": {
+      "eyebrow": "Our courses",
+      "title": "Four levels to progress at your own pace",
+      "subtitle": "Each level is a dedicated space, aligned with the Common European Framework of Reference (CEFR). Your level is assigned after reviewing your application.",
+      "imageAlt": "{level} course",
+      "difficulty": "Difficulty {n} of 4",
+      "duration": "≈ {months} months"
+    },
+    "skills": {
+      "eyebrow": "Skills",
+      "title": "All four skills, studied in depth",
+      "subtitle": "Written and video lessons, corrected exercises and assignments followed by your teacher.",
+      "search": "Search a skill…",
+      "results": "{count, plural, =0 {No results} one {# result} other {# results}}",
+      "noResults": "No skill matches your search.",
+      "items": {
+        "READING": {
+          "name": "Reading",
+          "text": "Understand all kinds of texts, from simple messages to opinion articles.",
+          "activities": "Texts, vocabulary, comprehension questions"
+        },
+        "LISTENING": {
+          "name": "Listening",
+          "text": "Understand spoken English with subtitled videos and transcripts.",
+          "activities": "Videos, podcasts, dialogues, listening exercises"
+        },
+        "SPEAKING": {
+          "name": "Speaking",
+          "text": "Speak with ease, in class and through recordings.",
+          "activities": "Voice recordings, live conversation, pronunciation"
+        },
+        "WRITING": {
+          "name": "Writing",
+          "text": "Write clearly, with corrections annotated by your teacher.",
+          "activities": "Messages, emails, essays, detailed corrections"
+        }
+      }
+    },
+    "live": {
+      "eyebrow": "Live classes",
+      "title": "Live classes on Google Meet, in small groups",
+      "subtitle": "Meet your teacher and students of your level every week. The schedule is shown automatically in your time zone.",
+      "steps": [
+        {
+          "title": "Check your schedule",
+          "text": "Sessions for your level appear in your calendar, in your local time."
+        },
+        {
+          "title": "Get a reminder",
+          "text": "An email reminds you 24 hours and 1 hour before each class."
+        },
+        {
+          "title": "Join in one click",
+          "text": "The “Join” button activates a few minutes before the start. The link is never public."
+        },
+        {
+          "title": "Watch it again",
+          "text": "Materials and the recording remain available after the session."
+        }
+      ],
+      "imageAlt": "A live class on Google Meet",
+      "badge": "Access reserved for enrolled students"
+    },
+    "testimonials": {
+      "eyebrow": "Testimonials",
+      "title": "They learn with GlobeSpeak"
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Everything to know before you apply",
+      "items": [
+        {
+          "q": "How do I get access?",
+          "a": "Create your account with the “Request access” button. Our team reviews your application and assigns the right level; you receive an email as soon as your access is activated."
+        },
+        {
+          "q": "How is my level determined?",
+          "a": "From your profile and, if you wish, a placement test. Your teacher can adjust your level at any time and moves you up when you are ready."
+        },
+        {
+          "q": "How do live classes work?",
+          "a": "On Google Meet, in small groups of the same level. Each session's link is only visible to enrolled students, a few minutes before it starts."
+        },
+        {
+          "q": "Do I need to install software?",
+          "a": "No. A recent browser is enough, on a computer, tablet or phone. Speaking exercises require a microphone."
+        },
+        {
+          "q": "Can I learn at my own pace?",
+          "a": "Yes. Lessons, videos and exercises are available at any time; your progress is saved and you pick up where you left off."
+        },
+        {
+          "q": "Do I get a certificate?",
+          "a": "Yes. When you complete a level, you receive a certificate with a QR code that anyone can use to verify it."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to improve your English?",
+      "text": "Request access: our team replies quickly and assigns your level."
+    },
+    "footer": {
+      "tagline": "International online English academy, from A1 to B2.",
+      "linksLabel": "Useful links",
+      "privacy": "Privacy",
+      "studentArea": "Student area",
+      "newsletterTitle": "Newsletter",
+      "newsletterText": "Tips to improve and Academy news, once or twice a month.",
+      "emailPlaceholder": "Your email address",
+      "subscribe": "Subscribe",
+      "consent": "I agree to receive the newsletter and have read the <privacy>privacy policy</privacy>. Unsubscribe in one click.",
+      "consentRequired": "Tick the box to confirm your consent.",
+      "emailInvalid": "Invalid email address.",
+      "newsletterSent": "Thank you! Confirm your subscription with the link we just emailed you.",
+      "copyright": "© {year} GlobeSpeak Academy. All rights reserved."
+    },
+    "newsletter": {
+      "confirmedTitle": "Subscription confirmed",
+      "confirmedText": "You will now receive the GlobeSpeak Academy newsletter.",
+      "invalidTitle": "Invalid or expired link",
+      "invalidText": "This confirmation link is no longer valid. You can subscribe again from the site footer.",
+      "unsubscribedTitle": "You have been unsubscribed",
+      "unsubscribedText": "You will no longer receive the newsletter. You can subscribe again at any time."
     }
   }
 }

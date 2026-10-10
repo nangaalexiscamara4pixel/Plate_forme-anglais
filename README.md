@@ -90,6 +90,23 @@ Actions disponibles sur un compte étudiant, toutes journalisées :
 
 Les routes HTTP du plugin admin de Better Auth (`/api/auth/admin/*`) sont fermées : toute action d'administration passe par les Server Actions, qui vérifient la 2FA et écrivent dans le journal d'audit.
 
+## Site public
+
+Page d'accueil inspirée de la maquette fournie :
+- mosaïque de photos avec titre défilant (pause au survol, ou via le bouton) ;
+- les 4 formations ;
+- les 4 compétences, avec une recherche ;
+- le déroulé des cours Google Meet ;
+- les témoignages et la FAQ ;
+- un pied de page avec newsletter en **double opt-in** (confirmation par email, désinscription en un clic).
+
+Pour personnaliser le site, modifiez `src/features/marketing/site-config.ts` :
+- **Photos** : déposez les fichiers dans `public/images/site/` (voir le README de ce dossier). En attendant, des visuels aux couleurs de l'Académie s'affichent à leur place.
+- **Témoignages** : les exemples fournis sont masqués en production ; remplacez-les par de vrais avis.
+- **Réseaux sociaux** : leurs liens.
+
+Les textes du site sont dans `messages/fr.json` et `messages/en.json`, sous la clé `site`.
+
 ## Contenus pédagogiques (phase 3)
 
 Hiérarchie : **niveau → compétence → unité → leçon → blocs**. Une leçon est composée de blocs : texte riche, encadré, vidéo, audio, image, liste de vocabulaire. Les blocs d'exercices et de devoirs arrivent en phase 4.

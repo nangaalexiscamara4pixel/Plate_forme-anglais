@@ -48,19 +48,6 @@
     "WRITING": "Writing",
     "LISTENING": "Listening"
   },
-  "home": {
-    "eyebrow": "Académie internationale d'anglais",
-    "title": "L'anglais, enseigné avec l'exigence des grandes institutions.",
-    "subtitle": "Quatre niveaux, de A1 à B2. Cours en direct sur Google Meet, contenus exclusifs, corrections personnalisées. Un parcours sur invitation, pensé pour vous faire progresser.",
-    "secondaryCta": "Découvrir les niveaux",
-    "levelsTitle": "Quatre niveaux, une seule exigence",
-    "levelsSubtitle": "Chaque niveau est un espace dédié, aligné sur le Cadre européen commun de référence (CECRL).",
-    "skillsTitle": "Les quatre compétences, travaillées en profondeur",
-    "accessTitle": "Un accès sur approbation",
-    "accessBody": "Pour garantir la qualité des cours, chaque demande est examinée par notre équipe pédagogique, qui vous attribue le niveau adapté.",
-    "footer": "© {year} GlobeSpeak Academy. Tous droits réservés.",
-    "privacy": "Confidentialité"
-  },
   "auth": {
     "shellQuote": "« Une langue de plus, c'est une vie de plus. »",
     "shellQuoteAuthor": "Proverbe",
@@ -726,6 +713,176 @@
       },
       "audioUnsupported": "Votre navigateur ne lit pas ce fichier audio.",
       "transcript": "Transcription"
+    }
+  },
+  "site": {
+    "nav": {
+      "label": "Navigation principale",
+      "open": "Ouvrir le menu",
+      "courses": "Formations",
+      "skills": "Compétences",
+      "live": "Cours en direct",
+      "testimonials": "Témoignages",
+      "faq": "FAQ"
+    },
+    "hero": {
+      "label": "Présentation de l'Académie",
+      "eyebrow": "Académie internationale d'anglais",
+      "slides": [
+        {
+          "title": "Parlez anglais avec assurance, partout dans le monde.",
+          "text": "Des cours en direct sur Google Meet et un parcours complet, du niveau A1 au B2."
+        },
+        {
+          "title": "Quatre niveaux, quatre compétences, une méthode.",
+          "text": "Reading, Listening, Speaking et Writing, travaillés à chaque niveau du CECRL."
+        },
+        {
+          "title": "Un enseignant qui vous suit, vraiment.",
+          "text": "Vos textes et vos enregistrements sont corrigés personnellement, avec des retours détaillés."
+        }
+      ],
+      "cta": "Demander mon accès",
+      "secondary": "Voir les formations",
+      "slideOf": "Message {index} sur {total}",
+      "goTo": "Afficher le message {index}",
+      "pause": "Mettre le défilement en pause",
+      "play": "Reprendre le défilement"
+    },
+    "photos": {
+      "heroMain": "Une étudiante suit un cours d'anglais en ligne",
+      "heroTopLeft": "Un étudiant lit un texte en anglais",
+      "heroBottomLeft": "Des étudiants échangent en anglais",
+      "heroTopRight": "Une étudiante s'entraîne à l'oral",
+      "heroBottomRight": "Un étudiant rédige un texte",
+      "skillReading": "Lecture d'un texte en anglais",
+      "skillListening": "Écoute d'un enregistrement",
+      "skillSpeaking": "Pratique de l'oral",
+      "skillWriting": "Rédaction d'un texte"
+    },
+    "levels": {
+      "eyebrow": "Nos formations",
+      "title": "Quatre niveaux pour progresser à votre rythme",
+      "subtitle": "Chaque niveau est un espace dédié, aligné sur le Cadre européen commun de référence (CECRL). Votre niveau est attribué après étude de votre demande.",
+      "imageAlt": "Formation {level}",
+      "difficulty": "Difficulté {n} sur 4",
+      "duration": "≈ {months} mois"
+    },
+    "skills": {
+      "eyebrow": "Compétences",
+      "title": "Les quatre compétences, travaillées en profondeur",
+      "subtitle": "Des leçons écrites et vidéo, des exercices corrigés et des devoirs suivis par votre enseignant.",
+      "search": "Rechercher une compétence…",
+      "results": "{count, plural, =0 {Aucun résultat} one {# résultat} other {# résultats}}",
+      "noResults": "Aucune compétence ne correspond à votre recherche.",
+      "items": {
+        "READING": {
+          "name": "Reading",
+          "text": "Comprendre des textes variés, du message simple à l'article d'opinion.",
+          "activities": "Textes, vocabulaire, questions de compréhension"
+        },
+        "LISTENING": {
+          "name": "Listening",
+          "text": "Comprendre l'anglais parlé, avec vidéos sous-titrées et transcriptions.",
+          "activities": "Vidéos, podcasts, dialogues, exercices d'écoute"
+        },
+        "SPEAKING": {
+          "name": "Speaking",
+          "text": "Prendre la parole avec aisance, en cours et à travers des enregistrements.",
+          "activities": "Enregistrements vocaux, conversation en direct, prononciation"
+        },
+        "WRITING": {
+          "name": "Writing",
+          "text": "Rédiger avec clarté, avec des corrections annotées par votre enseignant.",
+          "activities": "Messages, emails, essais, corrections détaillées"
+        }
+      }
+    },
+    "live": {
+      "eyebrow": "Cours en direct",
+      "title": "Des cours en direct sur Google Meet, en petits groupes",
+      "subtitle": "Retrouvez votre enseignant et les étudiants de votre niveau chaque semaine. Le planning s'affiche automatiquement dans votre fuseau horaire.",
+      "steps": [
+        {
+          "title": "Consultez votre planning",
+          "text": "Les sessions de votre niveau apparaissent dans votre calendrier, à votre heure locale."
+        },
+        {
+          "title": "Recevez un rappel",
+          "text": "Un email vous prévient 24 h puis 1 h avant chaque cours."
+        },
+        {
+          "title": "Rejoignez en un clic",
+          "text": "Le bouton « Rejoindre » s'active quelques minutes avant le début. Le lien n'est jamais public."
+        },
+        {
+          "title": "Revoyez le cours",
+          "text": "Supports et enregistrement restent disponibles après la séance."
+        }
+      ],
+      "imageAlt": "Un cours en direct sur Google Meet",
+      "badge": "Accès réservé aux étudiants inscrits"
+    },
+    "testimonials": {
+      "eyebrow": "Témoignages",
+      "title": "Ils apprennent avec GlobeSpeak"
+    },
+    "faq": {
+      "eyebrow": "Questions fréquentes",
+      "title": "Tout savoir avant de vous inscrire",
+      "items": [
+        {
+          "q": "Comment obtenir un accès ?",
+          "a": "Créez votre compte avec le bouton « Demander mon accès ». Notre équipe étudie votre demande et vous attribue le niveau adapté ; vous recevez un email dès que votre accès est activé."
+        },
+        {
+          "q": "Comment mon niveau est-il déterminé ?",
+          "a": "À partir de votre profil et, si vous le souhaitez, d'un test de positionnement. L'enseignant peut ajuster votre niveau à tout moment et vous fait passer au niveau supérieur quand vous êtes prêt."
+        },
+        {
+          "q": "Comment se déroulent les cours en direct ?",
+          "a": "Sur Google Meet, en petits groupes du même niveau. Le lien de chaque séance n'est visible que par les étudiants inscrits, quelques minutes avant le début."
+        },
+        {
+          "q": "Faut-il installer un logiciel ?",
+          "a": "Non. Un navigateur récent suffit, sur ordinateur, tablette ou téléphone. Pour les exercices oraux, un micro est nécessaire."
+        },
+        {
+          "q": "Puis-je apprendre à mon rythme ?",
+          "a": "Oui. Les leçons, vidéos et exercices sont disponibles à tout moment ; votre progression est enregistrée et vous reprenez là où vous vous êtes arrêté."
+        },
+        {
+          "q": "Obtient-on un certificat ?",
+          "a": "Oui. À la validation d'un niveau, vous recevez un certificat de réussite avec un QR code permettant à quiconque de vérifier son authenticité."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Prêt à progresser en anglais ?",
+      "text": "Demandez votre accès : notre équipe vous répond rapidement et vous attribue votre niveau."
+    },
+    "footer": {
+      "tagline": "Académie internationale d'anglais en ligne, du niveau A1 au B2.",
+      "linksLabel": "Liens utiles",
+      "privacy": "Confidentialité",
+      "studentArea": "Espace étudiant",
+      "newsletterTitle": "Newsletter",
+      "newsletterText": "Conseils pour progresser et nouveautés de l'Académie, une à deux fois par mois.",
+      "emailPlaceholder": "Votre adresse email",
+      "subscribe": "S'abonner",
+      "consent": "J'accepte de recevoir la newsletter et j'ai lu la <privacy>politique de confidentialité</privacy>. Désinscription en un clic.",
+      "consentRequired": "Cochez la case pour confirmer votre accord.",
+      "emailInvalid": "Adresse email invalide.",
+      "newsletterSent": "Merci ! Confirmez votre inscription grâce au lien envoyé par email.",
+      "copyright": "© {year} GlobeSpeak Academy. Tous droits réservés."
+    },
+    "newsletter": {
+      "confirmedTitle": "Inscription confirmée",
+      "confirmedText": "Vous recevrez désormais la newsletter de GlobeSpeak Academy.",
+      "invalidTitle": "Lien invalide ou expiré",
+      "invalidText": "Ce lien de confirmation n'est plus valable. Vous pouvez vous réinscrire depuis le pied de page du site.",
+      "unsubscribedTitle": "Désinscription prise en compte",
+      "unsubscribedText": "Vous ne recevrez plus la newsletter. Vous pouvez vous réinscrire à tout moment."
     }
   }
 }
