@@ -1,0 +1,208 @@
+{
+  "meta": {
+    "title": "GlobeSpeak Academy — English, with excellence",
+    "description": "An international online English academy: levels A1 to B2, live classes on Google Meet, personal guidance."
+  },
+  "common": {
+    "brand": "GlobeSpeak Academy",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "requestAccess": "Request access",
+    "backHome": "Back to home",
+    "loading": "Loading…",
+    "language": "Language",
+    "theme": { "label": "Theme", "light": "Light", "dark": "Dark", "system": "System" },
+    "skipToContent": "Skip to main content",
+    "email": "Email address",
+    "password": "Password",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "levels": {
+    "A1": { "name": "Discovery", "tagline": "Beginner — your first steps" },
+    "A2": { "name": "Explorer", "tagline": "Elementary — gaining confidence" },
+    "B1": { "name": "Navigator", "tagline": "Intermediate — charting your course" },
+    "B2": { "name": "Ambassador", "tagline": "Upper intermediate — speaking with assurance" }
+  },
+  "skills": {
+    "READING": "Reading",
+    "SPEAKING": "Speaking",
+    "WRITING": "Writing",
+    "LISTENING": "Listening"
+  },
+  "home": {
+    "eyebrow": "International English Academy",
+    "title": "English, taught with the standards of great institutions.",
+    "subtitle": "Four levels, from A1 to B2. Live classes on Google Meet, exclusive content, personal feedback. An invitation-only journey designed to help you progress.",
+    "secondaryCta": "Explore the levels",
+    "levelsTitle": "Four levels, one standard",
+    "levelsSubtitle": "Each level is a dedicated space, aligned with the Common European Framework of Reference (CEFR).",
+    "skillsTitle": "All four skills, studied in depth",
+    "accessTitle": "Access by approval",
+    "accessBody": "To guarantee the quality of our classes, every application is reviewed by our teaching team, who assign you the right level.",
+    "footer": "© {year} GlobeSpeak Academy. All rights reserved.",
+    "privacy": "Privacy"
+  },
+  "auth": {
+    "shellQuote": "“To have another language is to possess a second soul.”",
+    "shellQuoteAuthor": "Attributed to Charlemagne",
+    "signIn": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to continue your journey.",
+      "submit": "Sign in",
+      "forgot": "Forgot your password?",
+      "noAccount": "No account yet?",
+      "expired": "Your session has expired. Please sign in again.",
+      "google": "Continue with Google",
+      "or": "or"
+    },
+    "signUp": {
+      "title": "Request access",
+      "subtitle": "Create your account: our team will review your application and assign your level.",
+      "name": "Full name",
+      "country": "Country (optional)",
+      "countryPlaceholder": "Select a country",
+      "timezone": "Time zone",
+      "consent": "I accept the <privacy>privacy policy</privacy> and the processing of my data to manage my registration.",
+      "submit": "Submit my application",
+      "haveAccount": "Already registered?",
+      "successTitle": "Check your inbox",
+      "successBody": "If this address is not already in use, a confirmation email has just been sent. Click the link inside to complete your application."
+    },
+    "password": {
+      "strength": "Password strength",
+      "levels": ["Very weak", "Weak", "Fair", "Strong", "Excellent"],
+      "hint": "At least 12 characters. A passphrase is ideal."
+    },
+    "forgot": {
+      "title": "Forgot password",
+      "subtitle": "Enter your email address: if an account exists, you will receive a reset link.",
+      "submit": "Send the link",
+      "sent": "If an account is linked to this address, an email has just been sent. The link is valid for 30 minutes.",
+      "back": "Back to sign in"
+    },
+    "reset": {
+      "title": "New password",
+      "subtitle": "Choose a strong password. You will be signed out of all your devices.",
+      "submit": "Update",
+      "success": "Your password has been changed. You can now sign in.",
+      "missingToken": "This reset link is invalid or incomplete."
+    },
+    "twoFactor": {
+      "title": "Two-step verification",
+      "subtitle": "Enter the 6-digit code shown in your authenticator app.",
+      "submit": "Verify",
+      "useBackup": "Use a backup code",
+      "useTotp": "Use the authenticator app",
+      "backupLabel": "Backup code"
+    },
+    "setup2fa": {
+      "title": "Secure your account",
+      "subtitleAdmin": "Two-factor authentication is mandatory for administrators.",
+      "subtitle": "Add a second layer of protection to your account.",
+      "step1": "Confirm your password",
+      "step2": "Scan this QR code with Google Authenticator, 1Password, Authy…",
+      "step3": "Enter the code shown to confirm",
+      "manual": "Or enter this key manually:",
+      "backupTitle": "Backup codes",
+      "backupBody": "Keep these codes somewhere safe. Each one lets you sign in if you lose your phone.",
+      "confirm": "Enable two-factor authentication"
+    },
+    "verifyEmail": {
+      "title": "Confirm your email address",
+      "body": "Your account must be verified before continuing. Didn't receive anything? Request a new email.",
+      "submit": "Resend the email",
+      "sent": "If a matching unverified account exists, a new email has just been sent."
+    }
+  },
+  "gate": {
+    "pending": {
+      "eyebrow": "Application received",
+      "title": "Your application is under review",
+      "body": "Thank you {name}. Our teaching team is reviewing your profile to assign the level that suits you. You will receive an email as soon as your access is activated.",
+      "steps": ["Account created", "Email confirmed", "Team review", "Access to your level"],
+      "delay": "Usual turnaround: less than 48 business hours.",
+      "meanwhile": "In the meantime, you can safely close this page."
+    },
+    "status": {
+      "REJECTED": {
+        "title": "Your application was not accepted",
+        "body": "After review, we are unable to accept your application at this time."
+      },
+      "SUSPENDED": {
+        "title": "Your account is suspended",
+        "body": "Access to your space has been temporarily suspended."
+      },
+      "reason": "Reason given: {reason}",
+      "contact": "For any question, please contact the Academy administration."
+    }
+  },
+  "app": {
+    "welcome": "Hello, {name}",
+    "welcomeSubtitle": "Your learning space is ready. Courses are coming very soon.",
+    "yourLevel": "Your level",
+    "comingSoon": "Coming soon"
+  },
+  "admin": {
+    "title": "Administration",
+    "pendingTitle": "Pending applications",
+    "pendingEmpty": "No pending applications. You're all caught up.",
+    "approve": "Approve",
+    "reject": "Reject",
+    "chooseLevel": "Level",
+    "registeredOn": "Registered on {date}",
+    "approved": "Account approved.",
+    "rejected": "Application rejected.",
+    "stats": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "SUSPENDED": "Suspended"
+    }
+  },
+  "validation": {
+    "required": "This field is required.",
+    "emailInvalid": "Invalid email address.",
+    "passwordTooShort": "At least 12 characters.",
+    "passwordTooLong": "128 characters maximum.",
+    "passwordTooSimple": "Mix letters with numbers or symbols.",
+    "passwordWeak": "This password is too easy to guess.",
+    "nameTooShort": "Name too short.",
+    "nameTooLong": "Name too long.",
+    "countryInvalid": "Invalid country.",
+    "timezoneInvalid": "Invalid time zone.",
+    "consentRequired": "Your consent is required to create an account.",
+    "totpInvalid": "Invalid code.",
+    "backupCodeInvalid": "Invalid backup code."
+  },
+  "errors": {
+    "validation": "Please correct the highlighted fields.",
+    "generic": "Something unexpected happened. Please try again in a moment.",
+    "forbidden": "You are not allowed to perform this action.",
+    "readOnly": "View-only mode: changes are disabled.",
+    "tooManyAttempts": "Too many attempts. Please wait a few minutes before trying again.",
+    "invalidCredentials": "Incorrect email or password.",
+    "invalidPassword": "Incorrect password.",
+    "emailNotVerified": "Your email address is not confirmed yet. A new link has just been sent to you.",
+    "totpInvalid": "This code is invalid or has expired.",
+    "backupCodeInvalid": "This backup code is invalid.",
+    "resetTokenInvalid": "This link has expired or was already used. Please request a new one.",
+    "INVALID_TRANSITION": "This status change is not allowed.",
+    "LEVEL_REQUIRED": "Choose a level before approving.",
+    "NOT_FOUND": "Account not found.",
+    "notFound": {
+      "title": "Page not found",
+      "body": "This page doesn't exist or is no longer available."
+    },
+    "forbiddenPage": {
+      "title": "Access denied",
+      "body": "You don't have permission to view this page."
+    },
+    "serverError": {
+      "title": "Something went wrong",
+      "body": "Our team has been notified. You can try again.",
+      "retry": "Try again"
+    }
+  }
+}

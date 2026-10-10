@@ -1,0 +1,208 @@
+{
+  "meta": {
+    "title": "GlobeSpeak Academy — L'anglais, avec excellence",
+    "description": "Académie internationale d'anglais en ligne : niveaux A1 à B2, cours en direct sur Google Meet, suivi personnalisé."
+  },
+  "common": {
+    "brand": "GlobeSpeak Academy",
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter",
+    "requestAccess": "Demander mon accès",
+    "backHome": "Retour à l'accueil",
+    "loading": "Chargement…",
+    "language": "Langue",
+    "theme": { "label": "Thème", "light": "Clair", "dark": "Sombre", "system": "Système" },
+    "skipToContent": "Aller au contenu principal",
+    "email": "Adresse email",
+    "password": "Mot de passe",
+    "continue": "Continuer",
+    "cancel": "Annuler",
+    "save": "Enregistrer"
+  },
+  "levels": {
+    "A1": { "name": "Discovery", "tagline": "Débutant — vos premiers pas" },
+    "A2": { "name": "Explorer", "tagline": "Élémentaire — gagner en aisance" },
+    "B1": { "name": "Navigator", "tagline": "Intermédiaire — tracer votre route" },
+    "B2": { "name": "Ambassador", "tagline": "Intermédiaire avancé — parler avec assurance" }
+  },
+  "skills": {
+    "READING": "Reading",
+    "SPEAKING": "Speaking",
+    "WRITING": "Writing",
+    "LISTENING": "Listening"
+  },
+  "home": {
+    "eyebrow": "Académie internationale d'anglais",
+    "title": "L'anglais, enseigné avec l'exigence des grandes institutions.",
+    "subtitle": "Quatre niveaux, de A1 à B2. Cours en direct sur Google Meet, contenus exclusifs, corrections personnalisées. Un parcours sur invitation, pensé pour vous faire progresser.",
+    "secondaryCta": "Découvrir les niveaux",
+    "levelsTitle": "Quatre niveaux, une seule exigence",
+    "levelsSubtitle": "Chaque niveau est un espace dédié, aligné sur le Cadre européen commun de référence (CECRL).",
+    "skillsTitle": "Les quatre compétences, travaillées en profondeur",
+    "accessTitle": "Un accès sur approbation",
+    "accessBody": "Pour garantir la qualité des cours, chaque demande est examinée par notre équipe pédagogique, qui vous attribue le niveau adapté.",
+    "footer": "© {year} GlobeSpeak Academy. Tous droits réservés.",
+    "privacy": "Confidentialité"
+  },
+  "auth": {
+    "shellQuote": "« Une langue de plus, c'est une vie de plus. »",
+    "shellQuoteAuthor": "Proverbe",
+    "signIn": {
+      "title": "Bon retour parmi nous",
+      "subtitle": "Connectez-vous pour reprendre votre parcours.",
+      "submit": "Se connecter",
+      "forgot": "Mot de passe oublié ?",
+      "noAccount": "Pas encore de compte ?",
+      "expired": "Votre session a expiré. Veuillez vous reconnecter.",
+      "google": "Continuer avec Google",
+      "or": "ou"
+    },
+    "signUp": {
+      "title": "Demander mon accès",
+      "subtitle": "Créez votre compte : notre équipe examinera votre demande et vous attribuera votre niveau.",
+      "name": "Nom complet",
+      "country": "Pays (optionnel)",
+      "countryPlaceholder": "Choisir un pays",
+      "timezone": "Fuseau horaire",
+      "consent": "J'accepte la <privacy>politique de confidentialité</privacy> et le traitement de mes données pour la gestion de mon inscription.",
+      "submit": "Envoyer ma demande",
+      "haveAccount": "Déjà inscrit ?",
+      "successTitle": "Vérifiez votre boîte de réception",
+      "successBody": "Si cette adresse n'est pas déjà utilisée, un email de confirmation vient de vous être envoyé. Cliquez sur le lien qu'il contient pour finaliser votre demande."
+    },
+    "password": {
+      "strength": "Robustesse du mot de passe",
+      "levels": ["Très faible", "Faible", "Moyen", "Solide", "Excellent"],
+      "hint": "12 caractères minimum. Une phrase de passe est idéale."
+    },
+    "forgot": {
+      "title": "Mot de passe oublié",
+      "subtitle": "Indiquez votre adresse email : si un compte existe, vous recevrez un lien de réinitialisation.",
+      "submit": "Envoyer le lien",
+      "sent": "Si un compte est associé à cette adresse, un email vient d'être envoyé. Le lien est valable 30 minutes.",
+      "back": "Retour à la connexion"
+    },
+    "reset": {
+      "title": "Nouveau mot de passe",
+      "subtitle": "Choisissez un mot de passe robuste. Vous serez déconnecté de tous vos appareils.",
+      "submit": "Mettre à jour",
+      "success": "Votre mot de passe a été modifié. Vous pouvez maintenant vous connecter.",
+      "missingToken": "Ce lien de réinitialisation est invalide ou incomplet."
+    },
+    "twoFactor": {
+      "title": "Vérification en deux étapes",
+      "subtitle": "Saisissez le code à 6 chiffres affiché par votre application d'authentification.",
+      "submit": "Vérifier",
+      "useBackup": "Utiliser un code de secours",
+      "useTotp": "Utiliser l'application d'authentification",
+      "backupLabel": "Code de secours"
+    },
+    "setup2fa": {
+      "title": "Sécurisez votre compte",
+      "subtitleAdmin": "La double authentification est obligatoire pour les administrateurs.",
+      "subtitle": "Ajoutez une seconde protection à votre compte.",
+      "step1": "Confirmez votre mot de passe",
+      "step2": "Scannez ce QR code avec Google Authenticator, 1Password, Authy…",
+      "step3": "Saisissez le code affiché pour confirmer",
+      "manual": "Ou saisissez cette clé manuellement :",
+      "backupTitle": "Codes de secours",
+      "backupBody": "Conservez ces codes dans un endroit sûr. Chacun permet une connexion si vous perdez votre téléphone.",
+      "confirm": "Activer la double authentification"
+    },
+    "verifyEmail": {
+      "title": "Confirmez votre adresse email",
+      "body": "Votre compte doit être vérifié avant de continuer. Vous n'avez rien reçu ? Demandez un nouvel email.",
+      "submit": "Renvoyer l'email",
+      "sent": "Si un compte non vérifié correspond, un nouvel email vient d'être envoyé."
+    }
+  },
+  "gate": {
+    "pending": {
+      "eyebrow": "Demande reçue",
+      "title": "Votre demande est en cours d'examen",
+      "body": "Merci {name}. Notre équipe pédagogique étudie votre profil afin de vous attribuer le niveau qui vous correspond. Vous recevrez un email dès que votre accès sera activé.",
+      "steps": ["Compte créé", "Email confirmé", "Examen par l'équipe", "Accès à votre niveau"],
+      "delay": "Délai habituel : moins de 48 heures ouvrées.",
+      "meanwhile": "En attendant, vous pouvez fermer cette page en toute sérénité."
+    },
+    "status": {
+      "REJECTED": {
+        "title": "Votre demande n'a pas été retenue",
+        "body": "Après examen, nous ne pouvons pas donner suite à votre demande pour le moment."
+      },
+      "SUSPENDED": {
+        "title": "Votre compte est suspendu",
+        "body": "L'accès à votre espace est temporairement suspendu."
+      },
+      "reason": "Motif communiqué : {reason}",
+      "contact": "Pour toute question, contactez l'administration de l'Académie."
+    }
+  },
+  "app": {
+    "welcome": "Bonjour, {name}",
+    "welcomeSubtitle": "Votre espace d'apprentissage est prêt. Les cours arrivent très bientôt.",
+    "yourLevel": "Votre niveau",
+    "comingSoon": "Bientôt disponible"
+  },
+  "admin": {
+    "title": "Administration",
+    "pendingTitle": "Demandes en attente",
+    "pendingEmpty": "Aucune demande en attente. Tout est à jour.",
+    "approve": "Approuver",
+    "reject": "Rejeter",
+    "chooseLevel": "Niveau",
+    "registeredOn": "Inscrit le {date}",
+    "approved": "Compte approuvé.",
+    "rejected": "Demande rejetée.",
+    "stats": {
+      "PENDING": "En attente",
+      "APPROVED": "Approuvés",
+      "REJECTED": "Rejetés",
+      "SUSPENDED": "Suspendus"
+    }
+  },
+  "validation": {
+    "required": "Ce champ est obligatoire.",
+    "emailInvalid": "Adresse email invalide.",
+    "passwordTooShort": "12 caractères minimum.",
+    "passwordTooLong": "128 caractères maximum.",
+    "passwordTooSimple": "Mélangez lettres et chiffres ou symboles.",
+    "passwordWeak": "Ce mot de passe est trop facile à deviner.",
+    "nameTooShort": "Nom trop court.",
+    "nameTooLong": "Nom trop long.",
+    "countryInvalid": "Pays invalide.",
+    "timezoneInvalid": "Fuseau horaire invalide.",
+    "consentRequired": "Votre consentement est nécessaire pour créer un compte.",
+    "totpInvalid": "Code invalide.",
+    "backupCodeInvalid": "Code de secours invalide."
+  },
+  "errors": {
+    "validation": "Merci de corriger les champs indiqués.",
+    "generic": "Une erreur inattendue s'est produite. Réessayez dans un instant.",
+    "forbidden": "Vous n'avez pas l'autorisation d'effectuer cette action.",
+    "readOnly": "Mode consultation : aucune modification n'est possible.",
+    "tooManyAttempts": "Trop de tentatives. Patientez quelques minutes avant de réessayer.",
+    "invalidCredentials": "Email ou mot de passe incorrect.",
+    "invalidPassword": "Mot de passe incorrect.",
+    "emailNotVerified": "Votre adresse email n'est pas encore confirmée. Un nouveau lien vient de vous être envoyé.",
+    "totpInvalid": "Ce code est invalide ou a expiré.",
+    "backupCodeInvalid": "Ce code de secours est invalide.",
+    "resetTokenInvalid": "Ce lien a expiré ou a déjà été utilisé. Faites une nouvelle demande.",
+    "INVALID_TRANSITION": "Ce changement de statut n'est pas autorisé.",
+    "LEVEL_REQUIRED": "Choisissez un niveau avant d'approuver.",
+    "NOT_FOUND": "Compte introuvable.",
+    "notFound": {
+      "title": "Page introuvable",
+      "body": "Cette page n'existe pas ou n'est plus disponible."
+    },
+    "forbiddenPage": {
+      "title": "Accès refusé",
+      "body": "Vous n'avez pas les droits nécessaires pour consulter cette page."
+    },
+    "serverError": {
+      "title": "Un incident est survenu",
+      "body": "Notre équipe en a été informée. Vous pouvez réessayer.",
+      "retry": "Réessayer"
+    }
+  }
+}
