@@ -19,9 +19,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       <Hero
         tiles={{
-          main: <SitePhoto name="heroLondon" alt={t("heroLondon")} sizes={big} priority />,
-          topLeft: <SitePhoto name="heroDenim" alt={t("heroDenim")} sizes={small} position="top" />,
-          bottomLeft: <SitePhoto name="heroNewYork" alt={t("heroNewYork")} sizes={small} />,
+          main: <SitePhoto name="heroLondon" alt={t("heroLondon")} sizes={big} priority motion="kenburns" />,
+          topLeft: <SitePhoto name="heroDenim" alt={t("heroDenim")} sizes={small} position="top" motion="kenburns" motionDelay={7} />,
+          bottomLeft: <SitePhoto name="heroNewYork" alt={t("heroNewYork")} sizes={small} motion="kenburns" motionDelay={13} />,
         }}
       />
       <LevelsSection />

@@ -256,6 +256,16 @@
   100% { transform: translate(0, 0); }
 }
 
+/* Photos du héros : zoom lent et continu (effet « Ken Burns ») */
+@keyframes kenburns {
+  from { transform: scale(1) translate(0, 0); }
+  to { transform: scale(1.1) translate(-1.5%, -1%); }
+}
+
+@utility animate-kenburns {
+  animation: kenburns 20s ease-in-out infinite alternate;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

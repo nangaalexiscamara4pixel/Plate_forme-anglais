@@ -29,6 +29,8 @@ const ICONS: Partial<Record<SiteImageKey, LucideIcon>> = {
  *  - affiche (`fit="contain"`) : montrée en entier, sans recadrage, pour que son texte reste lisible ;
  *  - photo détourée (`cutout`) : posée en bas d'un fond dégradé aux couleurs de l'Académie ;
  *  - sans photo : visuel de remplacement (dégradé, motif discret, icône).
+ * Animation (`motion`) : léger zoom au survol de la carte parente (`group`) ou zoom lent continu (`kenburns`).
+ * Les deux sont neutralisées si le visiteur préfère réduire les animations (globals.css).
  */
 export function SitePhoto({
   name,
@@ -38,6 +40,8 @@ export function SitePhoto({
   priority = false,
   position = "center",
   fit = "cover",
+  motion = "hover",
+  motionDelay = 0,
 }: {
   name: SiteImageKey;
   alt: string;
@@ -46,14 +50,22 @@ export function SitePhoto({
   priority?: boolean;
   position?: "center" | "top";
   fit?: "cover" | "contain";
+  motion?: "hover" | "kenburns" | "none";
+  /** Décalage (secondes) du zoom continu, pour que les photos voisines ne bougent pas en même temps. */
+  motionDelay?: number;
 }) {
   const image: SiteImage = SITE_IMAGES[name];
   const tone = TONES[image.tone];
+  const anim = cn(
+    motion === "hover" && "transition-transform duration-700 ease-out group-hover:scale-105",
+    motion === "kenburns" && "animate-kenburns",
+  );
+  const animStyle = motion === "kenburns" && motionDelay ? { animationDelay: `-${motionDelay}s` } : undefined;
   if (image.src && image.cutout) {
     return (
       <div className={cn("relative overflow-hidden bg-gradient-to-br", tone, className)}>
         <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:18px_18px]" aria-hidden />
-        <Image src={image.src} alt={alt} fill sizes={sizes} priority={priority} className="object-contain object-bottom" />
+        <Image src={image.src} alt={alt} fill sizes={sizes} priority={priority} style={animStyle} className={cn("object-contain object-bottom", anim)} />
       </div>
     );
   }
@@ -62,14 +74,14 @@ export function SitePhoto({
       <div className={cn("relative overflow-hidden bg-white", className)}>
         {/* Fond flou tiré de l'affiche : comble les bandes quand ses proportions diffèrent du cadre */}
         <Image src={image.src} alt="" aria-hidden fill sizes={sizes} quality={90} className="scale-110 object-cover opacity-60 blur-xl" />
-        <Image src={image.src} alt={alt} fill sizes={sizes} priority={priority} quality={90} className="object-contain" />
+        <Image src={image.src} alt={alt} fill sizes={sizes} priority={priority} quality={90} style={animStyle} className={cn("object-contain", anim)} />
       </div>
     );
   }
   if (image.src) {
     return (
       <div className={cn("relative overflow-hidden", className)}>
-        <Image src={image.src} alt={alt} fill sizes={sizes} priority={priority} className={cn("object-cover", position === "top" && "object-top")} />
+        <Image src={image.src} alt={alt} fill sizes={sizes} priority={priority} style={animStyle} className={cn("object-cover", position === "top" && "object-top", anim)} />
       </div>
     );
   }
