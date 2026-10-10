@@ -181,6 +181,53 @@
   }
 }
 
+/* Typographie des contenus de leçon (texte riche) */
+@layer components {
+  .prose-academy {
+    @apply text-[1.0625rem] leading-relaxed text-foreground;
+  }
+  .prose-academy > * + * {
+    @apply mt-4;
+  }
+  .prose-academy > :first-child {
+    @apply mt-0;
+  }
+  .prose-academy h2 {
+    @apply mt-10 text-2xl font-medium;
+  }
+  .prose-academy h3 {
+    @apply mt-8 text-xl font-medium;
+  }
+  .prose-academy h4 {
+    @apply mt-6 font-sans text-base font-semibold tracking-wide uppercase text-gold-ink;
+  }
+  .prose-academy ul {
+    @apply list-disc space-y-1.5 pl-6 marker:text-gold-ink;
+  }
+  .prose-academy ol {
+    @apply list-decimal space-y-1.5 pl-6 marker:text-gold-ink;
+  }
+  .prose-academy blockquote {
+    @apply border-l-4 border-gold/60 pl-4 text-lg italic text-muted-foreground;
+    font-family: var(--font-fraunces), Georgia, serif;
+  }
+  .prose-academy hr {
+    @apply my-8 border-border;
+  }
+  .prose-academy table {
+    @apply w-full border-collapse overflow-hidden rounded-lg text-sm;
+  }
+  .prose-academy th {
+    @apply border bg-muted px-3 py-2 text-left font-semibold;
+  }
+  .prose-academy td {
+    @apply border px-3 py-2 align-top;
+  }
+  .prose-academy li > p {
+    @apply m-0;
+  }
+}
+
 @layer utilities {
   /* Texture subtile « papier » pour les grands aplats */
   .bg-grain {
@@ -190,6 +237,15 @@
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Filigrane vidéo : se déplace lentement pour ne pas pouvoir être masqué d'un recadrage */
+@keyframes watermark {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(55vw, 18vh); }
+  50% { transform: translate(20vw, 32vh); }
+  75% { transform: translate(60vw, 4vh); }
+  100% { transform: translate(0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {

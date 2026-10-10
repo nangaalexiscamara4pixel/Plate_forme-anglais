@@ -3,13 +3,20 @@
  *  - compte administrateur initial (identifiants dans .env)
  *  - 4 niveaux CECRL et leurs 4 modules de compétence
  *  - paramètres de plateforme par défaut
- * Le contenu de démonstration (unités, leçons, exercices) est ajouté en phases 3 et 4.
+ *  - contenu de démonstration : leçons texte, vidéo sous-titrée, vocabulaire (créé seulement si
+ *    la compétence est encore vide — les contenus saisis par l'équipe ne sont jamais écrasés)
  */
 import "dotenv/config";
 import { randomUUID } from "node:crypto";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient, type LevelCode, type SkillCode } from "../src/generated/prisma/client";
+import { copyFile, mkdir, readFile, stat } from "node:fs/promises";
+import path from "node:path";
+import { blockContentSchemas } from "../src/features/content/blocks";
+import { slugify } from "../src/lib/slug";
 import { hashPassword } from "../src/server/password";
+import { localPath, storage } from "../src/server/storage";
+import { DEMO_VIDEO, demoUnits } from "./demo-content";
 
 const db = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }) });
 
@@ -94,10 +101,96 @@ async function seedSettings() {
   console.log("✓ Paramètres de plateforme par défaut");
 }
 
+
+async function seedDemoVideo(): Promise<string> {
+  const existing = await db.video.findFirst({ where: { title: DEMO_VIDEO.title } });
+  if (existing) return existing.id;
+  const source = path.resolve("prisma/demo/demo-lesson.webm");
+  const { size } = await stat(source);
+  const key = "lesson_video/demo/demo-lesson.webm";
+  if (storage.name === "local") {
+    await mkdir(path.dirname(localPath(key)), { recursive: true });
+    await copyFile(source, localPath(key));
+  } else {
+    const target = await storage.presignUpload(key, "video/webm", size);
+    const res = await fetch(target.url, { method: "PUT", headers: target.headers, body: await readFile(source) });
+    if (!res.ok) throw new Error(`Upload de la vidéo de démo impossible (${res.status})`);
+  }
+  const media = await db.mediaFile.upsert({
+    where: { key },
+    update: { uploadedAt: new Date() },
+    create: { key, mime: "video/webm", sizeBytes: size, originalName: "demo-lesson.webm", purpose: "LESSON_VIDEO", uploadedAt: new Date() },
+  });
+  const video = await db.video.create({
+    data: {
+      title: DEMO_VIDEO.title,
+      provider: "LOCAL",
+      status: "READY",
+      durationSec: 32,
+      mediaFileId: media.id,
+      chapters: DEMO_VIDEO.chapters,
+      tracks: {
+        create: (["en", "fr"] as const).map((lang) => ({
+          lang,
+          kind: "SUBTITLES",
+          cues: DEMO_VIDEO.subtitles[lang].map(([start, end, text]) => ({ start, end, text })),
+        })),
+      },
+    },
+  });
+  return video.id;
+}
+
+async function seedDemoContent() {
+  const videoId = await seedDemoVideo();
+  const modules = await db.module.findMany({ include: { level: true, _count: { select: { units: true } } } });
+  let created = 0;
+  for (const mod of modules) {
+    if (mod._count.units > 0) continue;
+    for (const [ui, unit] of demoUnits(mod.level.code, mod.skill).entries()) {
+      await db.unit.create({
+        data: {
+          moduleId: mod.id,
+          title: unit.title,
+          summary: unit.summary,
+          slug: slugify(unit.title),
+          order: ui + 1,
+          status: "PUBLISHED",
+          publishAt: new Date(),
+          lessons: {
+            create: unit.lessons.map((lesson, li) => ({
+              title: lesson.title,
+              summary: lesson.summary,
+              slug: slugify(lesson.title),
+              type: lesson.type,
+              order: li + 1,
+              estimatedMinutes: lesson.minutes,
+              status: "PUBLISHED" as const,
+              publishAt: new Date(),
+              blocks: {
+                create: lesson.blocks.map(({ kind, ...content }, bi) => ({
+                  order: bi + 1,
+                  kind,
+                  // Le contenu de démonstration passe par la même validation que l'éditeur.
+                  content: blockContentSchemas[kind].parse(content) as object,
+                  videoId: kind === "VIDEO" ? videoId : null,
+                })),
+              },
+            })),
+          },
+        },
+      });
+      created++;
+    }
+  }
+  console.log(`✓ Contenu de démonstration : ${created} unité(s) créée(s) (vidéo « ${DEMO_VIDEO.title} »)`);
+}
+
 async function main() {
   await seedLevels();
   await seedSettings();
   await seedAdmin();
+  await seedDemoContent();
 }
 
 main()

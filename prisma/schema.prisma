@@ -135,6 +135,7 @@ enum VideoStatus {
 }
 
 enum MediaPurpose {
+  LESSON_VIDEO
   LESSON_AUDIO
   LESSON_IMAGE
   LESSON_DOCUMENT
@@ -497,8 +498,11 @@ model Video {
   durationSec  Int?
   chapters     Json          @default("[]")
   posterKey    String?
+  /// Fournisseur LOCAL : fichier vidéo stocké (démo / développement)
+  mediaFileId  String?
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  mediaFile    MediaFile?    @relation(fields: [mediaFileId], references: [id], onDelete: SetNull)
   tracks       VideoTrack[]
   blocks       LessonBlock[]
   liveReplays  LiveSession[]
@@ -527,6 +531,8 @@ model MediaFile {
   purpose      MediaPurpose
   uploadedById String?
   ownerUserId  String?      // propriétaire (fichiers d'étudiant)
+  /// Renseigné quand l'upload a été vérifié (taille, type) — un fichier non confirmé n'est jamais servi
+  uploadedAt   DateTime?
   createdAt    DateTime     @default(now())
   uploadedBy   User?        @relation("MediaUploader", fields: [uploadedById], references: [id], onDelete: SetNull)
   owner        User?        @relation("MediaOwner", fields: [ownerUserId], references: [id], onDelete: Cascade)
@@ -536,6 +542,7 @@ model MediaFile {
   questionsAudio   Question[]
   vocabAudio       VocabularyItem[]
   liveMaterials    LiveSessionMaterial[]
+  videos           Video[]
 
   @@index([ownerUserId])
 }

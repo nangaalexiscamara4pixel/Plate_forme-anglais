@@ -19,7 +19,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { ActionResult } from "@/server/actions";
 
-type ServerAction = (prev: ActionResult | null, data: FormData) => Promise<ActionResult>;
+// L'état précédent n'est pas utilisé par nos actions (createAction) : on transmet toujours null.
+type ServerAction = (prev: null, data: FormData) => Promise<ActionResult<unknown>>;
 
 /**
  * Bouton + boîte de confirmation pour une action d'administration.
@@ -51,8 +52,8 @@ export function ConfirmAction({
   const t = useTranslations("admin.student");
   const te = useTranslations("errors");
   const [open, setOpen] = useState(false);
-  const [, formAction, pending] = useActionState(async (prev: ActionResult | null, data: FormData) => {
-    const result = await action(prev, data);
+  const [, formAction, pending] = useActionState(async (_prev: ActionResult<unknown> | null, data: FormData) => {
+    const result = await action(null, data);
     if (result.ok) {
       toast.success(successMessage);
       setOpen(false);

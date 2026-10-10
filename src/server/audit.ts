@@ -17,6 +17,17 @@ export const AUDIT_ACTIONS = [
   "admin.sessions.revoke",
   "impersonation.start",
   "impersonation.stop",
+  "content.unit.create",
+  "content.unit.update",
+  "content.unit.delete",
+  "content.lesson.create",
+  "content.lesson.update",
+  "content.lesson.delete",
+  "content.reorder",
+  "content.block.update",
+  "media.upload",
+  "media.delete",
+  "video.update",
 ] as const;
 
 export type AuditAction = (typeof AUDIT_ACTIONS)[number];

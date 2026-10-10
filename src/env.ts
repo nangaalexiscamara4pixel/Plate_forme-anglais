@@ -36,6 +36,18 @@ const schema = z.object({
   CRON_SECRET: optional,
   UPSTASH_REDIS_REST_URL: optional,
   UPSTASH_REDIS_REST_TOKEN: optional,
+  // Vidéo (Mux) — sans ces clés, les vidéos sont servies localement (démo / développement)
+  MUX_TOKEN_ID: optional,
+  MUX_TOKEN_SECRET: optional,
+  MUX_WEBHOOK_SECRET: optional,
+  MUX_SIGNING_KEY_ID: optional,
+  MUX_SIGNING_PRIVATE_KEY: optional,
+  // Fichiers (Cloudflare R2) — sans ces clés, stockage sur disque local (.dev-storage/)
+  R2_ACCOUNT_ID: optional,
+  R2_ACCESS_KEY_ID: optional,
+  R2_SECRET_ACCESS_KEY: optional,
+  R2_BUCKET: optional,
+  LOCAL_STORAGE_DIR: optional,
 });
 
 const parsed = schema.safeParse(process.env);

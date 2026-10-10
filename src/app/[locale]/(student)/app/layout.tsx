@@ -5,6 +5,7 @@ import { ImpersonationBanner } from "@/components/impersonation-banner";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { SignOutButton } from "@/components/sign-out-button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { StudentNav } from "@/features/learn/components/student-nav";
 import { Link } from "@/i18n/navigation";
 import { requireApprovedStudent } from "@/server/dal/guards";
 
@@ -18,9 +19,12 @@ export default async function StudentLayout({ children }: { children: ReactNode 
       {viewer.impersonatedBy && <ImpersonationBanner studentName={viewer.name} />}
       <header className="border-b bg-card/80 backdrop-blur supports-[backdrop-filter]:bg-card/60">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <Link href="/app" className="rounded-md">
-            <Logo />
-          </Link>
+          <div className="flex items-center gap-6">
+            <Link href="/app" className="rounded-md">
+              <Logo collapseOnMobile />
+            </Link>
+            <StudentNav />
+          </div>
           <div className="flex items-center gap-1">
             <LocaleSwitcher />
             <ThemeToggle />

@@ -2,7 +2,8 @@
 
 Plateforme internationale premium d'apprentissage de l'anglais (CECRL A1 → B2), avec cours en direct sur Google Meet et accès sur approbation.
 
-> **État : phase 2 / 7 terminée** — fondations et sécurité (phase 1), back-office administrateur (phase 2).
+> **État : phase 3 / 7 terminée** — fondations et sécurité (1), back-office (2), contenus pédagogiques et CMS (3).
+> Sécurité : [docs/SECURITY.md](docs/SECURITY.md).
 > Architecture complète : [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Stack
@@ -89,6 +90,50 @@ Actions disponibles sur un compte étudiant, toutes journalisées :
 
 Les routes HTTP du plugin admin de Better Auth (`/api/auth/admin/*`) sont fermées : toute action d'administration passe par les Server Actions, qui vérifient la 2FA et écrivent dans le journal d'audit.
 
+## Contenus pédagogiques (phase 3)
+
+Hiérarchie : **niveau → compétence → unité → leçon → blocs**. Une leçon est composée de blocs : texte riche, encadré, vidéo, audio, image, liste de vocabulaire. Les blocs d'exercices et de devoirs arrivent en phase 4.
+
+| Page | Rôle |
+|---|---|
+| `/admin/content` | vue d'ensemble des 4 niveaux × 4 compétences |
+| `/admin/content/[niveau]/[compétence]` | unités et leçons : création, réorganisation par glisser-déposer (souris ou clavier), publication |
+| `/admin/content/lessons/[id]` | éditeur de leçon par blocs (éditeur TipTap) et paramètres (durée, XP, statut) |
+| `/admin/content/lessons/[id]/preview` | aperçu « vue étudiant », quel que soit le statut |
+| `/admin/media` | médiathèque : vidéos (Mux ou locales), audio, images, PDF |
+| `/admin/media/videos/[id]` | chapitres et sous-titres anglais/français (WebVTT ou SRT) |
+| `/app/learn/[niveau]/…` | parcours de l'étudiant : compétences, unités, leçons, progression |
+
+**Publication** : brouillon, publié, programmé (visible automatiquement à la date choisie, sans tâche planifiée) ou archivé. Un étudiant ne voit que les contenus publiés de son niveau, plus les niveaux qu'il a validés si le réglage `access.lowerLevelsAccessible` est actif.
+
+**Vidéo** :
+- avec les clés `MUX_*` : upload direct vers Mux, lecture **signée** par un jeton de 4 h émis après contrôle d'accès, sans MP4 téléchargeable ;
+- sans ces clés (développement) : fichier local servi après la même vérification ;
+- dans les deux cas : chapitres, sous-titres EN/FR, transcription synchronisée cliquable, vitesse de lecture, reprise de la position, et filigrane à l'adresse de l'étudiant.
+
+**Fichiers** :
+- avec les clés `R2_*` : Cloudflare R2 (bucket privé) ;
+- sinon : dossier `.dev-storage/` ;
+- dans les deux cas : URLs signées de 5 minutes, vérification du type réel (signature binaire), SVG refusé.
+
+**Contenu de démonstration** : le seed crée 4 unités complètes en A1 (texte, encadrés, vocabulaire, vidéo sous-titrée avec chapitres) et une unité d'introduction par compétence pour A2, B1 et B2, uniquement dans les compétences encore vides. La vidéo de démo (`prisma/demo/demo-lesson.webm`) se régénère avec :
+
+```bash
+node scripts/make-demo-video.mjs
+```
+
+### Configurer Mux (production)
+
+1. Dans le tableau de bord Mux, créez un token d'API (Video : lecture et écriture) : `MUX_TOKEN_ID` et `MUX_TOKEN_SECRET`.
+2. Créez une clé de signature (*Signing keys*) : `MUX_SIGNING_KEY_ID` et `MUX_SIGNING_PRIVATE_KEY` (clé privée encodée en base64, telle que fournie).
+3. Créez un webhook vers `https://<votre-domaine>/api/webhooks/mux` et récupérez son secret : `MUX_WEBHOOK_SECRET`.
+
+### Configurer Cloudflare R2 (production)
+
+1. Créez un bucket **privé** (sans accès public) : `R2_BUCKET`.
+2. Créez un token d'API R2 avec lecture et écriture sur ce bucket : `R2_ACCESS_KEY_ID` et `R2_SECRET_ACCESS_KEY`. Votre identifiant de compte va dans `R2_ACCOUNT_ID`.
+3. Dans la politique CORS du bucket, autorisez `PUT` et `GET` depuis votre domaine (uploads directs depuis le navigateur).
+
 ## Tests automatisés
 
 Les tests utilisent une **base dédiée**, jamais celle de développement : la suite vide ses tables.
@@ -123,7 +168,9 @@ Ce qui est couvert aujourd'hui :
 - **Back-office** : changement de niveau (promotion ou réaffectation) ; anti-IDOR sur la révocation de sessions ; filtres et tableau de bord ; export CSV protégé contre l'injection de formules ; journal d'audit ; routes admin HTTP fermées ; impersonation en lecture seule et non applicable aux administrateurs.
 - **E2E** :
   - inscription → email → attente → admin avec 2FA → approbation B1 → accès ;
-  - fiche étudiant → approbation A2 → « voir en tant que » → sortie → suspension avec motif → étudiant bloqué → audit → export CSV.
+  - fiche étudiant → approbation A2 → « voir en tant que » → sortie → suspension avec motif → étudiant bloqué → audit → export CSV ;
+  - étudiant A1 : vidéo sous-titrée, transcription, flux refusé aux anonymes, leçon B1 introuvable ; l'admin crée et publie une leçon, que l'étudiant voit ensuite.
+- **Contenus** : isolation par niveau et par statut de publication ; accès aux médias uniquement via une leçon autorisée ; liste blanche du texte riche (XSS) ; réordonnancement anti-IDOR ; signature binaire des uploads ; jetons de stockage ; protection contre le path traversal.
 
 ## Scripts
 
