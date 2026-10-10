@@ -21,7 +21,7 @@ export function SectionHeading({ eyebrow, title, subtitle, children, center = tr
   );
 }
 
-/** Carte au style de la maquette : image, pastille d'icône, titre, sous-titre, jauge et pied. */
+/** Carte au style de la maquette : image (pastille d'icône facultative), titre, sous-titre, jauge et pied. */
 export function PhotoCard({
   image,
   imageAlt,
@@ -31,10 +31,13 @@ export function PhotoCard({
   meter,
   footer,
   href,
+  aspect = "photo",
 }: {
   image: SiteImageKey;
   imageAlt: string;
-  badge: ReactNode;
+  badge?: ReactNode;
+  /** Proportions de l'image : 4/3 pour une photo, 16/9 pour une affiche à ne pas recadrer. */
+  aspect?: "photo" | "poster";
   title: string;
   subtitle: string;
   meter?: { value: number; label: string; className: string };
@@ -44,8 +47,14 @@ export function PhotoCard({
   const body = (
     <>
       <div className="relative">
-        <SitePhoto name={image} alt={imageAlt} className="aspect-[4/3] w-full rounded-xl" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" />
-        <span className="absolute top-3 left-3 flex size-9 items-center justify-center rounded-lg bg-white/95 shadow-sm">{badge}</span>
+        <SitePhoto
+          name={image}
+          alt={imageAlt}
+          position={aspect === "poster" ? "top" : "center"} // le titre des affiches est en haut
+          className={cn("w-full rounded-xl", aspect === "poster" ? "aspect-video" : "aspect-[4/3]")}
+          sizes={aspect === "poster" ? "(min-width: 640px) 50vw, 100vw" : "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"}
+        />
+        {badge && <span className="absolute top-3 left-3 flex size-9 items-center justify-center rounded-lg bg-white/95 shadow-sm">{badge}</span>}
       </div>
       <div className="grid gap-1 px-1 pt-4">
         <h3 className="font-display text-xl">{title}</h3>
@@ -71,7 +80,7 @@ export function PhotoCard({
   );
 }
 
-/** « Nos formations » — les quatre niveaux du CECRL. */
+/** « Nos formations » — les quatre niveaux du CECRL, illustrés par leurs affiches (deux par ligne pour qu'elles restent lisibles). */
 export async function LevelsSection() {
   const t = await getTranslations("site.levels");
   const tp = await getTranslations("site.photos");
@@ -80,10 +89,9 @@ export async function LevelsSection() {
   return (
     <section id="formations" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-20">
       <SectionHeading eyebrow={t("eyebrow")} title={t("title")} subtitle={t("subtitle")} />
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 sm:grid-cols-2">
         {LEVEL_CODES.map((code) => {
           const theme = LEVEL_THEME[code];
-          const Icon = theme.icon;
           const facts = LEVEL_FACTS[code];
           return (
             <PhotoCard
@@ -91,7 +99,7 @@ export async function LevelsSection() {
               href="/sign-up"
               image={images[code]!}
               imageAlt={tp(images[code]!)}
-              badge={<Icon className={cn("size-4", theme.text)} aria-hidden />}
+              aspect="poster"
               title={`${code} · ${tl(`${code}.name`)}`}
               subtitle={tl(`${code}.tagline`)}
               meter={{ value: facts.difficulty * 25, label: t("difficulty", { n: facts.difficulty }), className: theme.bg }}
