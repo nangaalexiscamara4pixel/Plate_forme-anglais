@@ -49,3 +49,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# e2e
+.e2e-admin-totp*
+
+# PostgreSQL local
+.pg/

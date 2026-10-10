@@ -1,9 +1,5 @@
-import { config } from "dotenv";
 import { expect, test } from "@playwright/test";
-import { totp, waitForEmailLink } from "./helpers";
-
-const env: Record<string, string> = {};
-config({ path: ".env.test", processEnv: env, quiet: true });
+import { registerStudent, signInAdmin, testEnv } from "./helpers";
 
 const STUDENT = { name: "Amina Diallo", email: "amina.e2e@example.test", password: "Violet-Harbour-Lantern-42" };
 
@@ -17,20 +13,8 @@ test("un visiteur est redirigé vers la connexion depuis l'espace privé", async
 });
 
 test("inscription → attente → approbation par l'admin (2FA) → accès au niveau", async ({ browser }) => {
-  // 1. L'étudiant s'inscrit
-  const studentCtx = await browser.newContext();
-  const student = await studentCtx.newPage();
-  await student.goto("/sign-up");
-  await student.getByLabel("Nom complet").fill(STUDENT.name);
-  await student.getByLabel("Adresse email").fill(STUDENT.email);
-  await student.getByLabel("Mot de passe").fill(STUDENT.password);
-  await student.getByRole("checkbox").check();
-  await student.getByRole("button", { name: "Envoyer ma demande" }).click();
-  await expect(student.getByText("Vérifiez votre boîte de réception")).toBeVisible();
-
-  // 2. Il confirme son email → page d'attente
-  await student.goto(await waitForEmailLink(STUDENT.email, "/api/auth/verify-email"));
-  await expect(student).toHaveURL(/\/pending$/);
+  // 1-2. L'étudiant s'inscrit et confirme son email → page d'attente
+  const student = await registerStudent(browser, STUDENT);
   await expect(student.getByRole("heading", { name: "Votre demande est en cours d'examen" })).toBeVisible();
 
   // 3. Tant qu'il n'est pas approuvé, il n'accède à rien
@@ -39,23 +23,10 @@ test("inscription → attente → approbation par l'admin (2FA) → accès au ni
   await student.goto("/admin");
   await expect(student.getByRole("heading", { name: "Page introuvable" })).toBeVisible();
 
-  // 4. L'administrateur se connecte : la 2FA est obligatoire
-  const adminCtx = await browser.newContext();
-  const admin = await adminCtx.newPage();
-  await admin.goto("/sign-in");
-  await admin.getByLabel("Adresse email").fill(env.SEED_ADMIN_EMAIL!);
-  await admin.getByLabel("Mot de passe").fill(env.SEED_ADMIN_PASSWORD!);
-  await admin.getByRole("button", { name: "Se connecter" }).click();
-  await expect(admin).toHaveURL(/\/setup-2fa$/);
+  // 4. L'administrateur se connecte (2FA obligatoire)
+  const admin = await signInAdmin(browser);
 
-  await admin.getByLabel("Mot de passe").fill(env.SEED_ADMIN_PASSWORD!);
-  await admin.getByRole("button", { name: "Continuer" }).click();
-  const secret = (await admin.locator("code").first().textContent())!.trim();
-  await admin.locator('input[name="code"]').fill(totp(secret));
-  await admin.getByRole("button", { name: "Activer la double authentification" }).click();
-  await expect(admin).toHaveURL(/\/admin$/);
-
-  // 5. Il approuve la demande en attribuant le niveau B1
+  // 5. Il approuve la demande depuis le tableau de bord en attribuant le niveau B1
   const row = admin.getByRole("listitem").filter({ hasText: STUDENT.email });
   await row.getByRole("combobox", { name: "Niveau" }).click();
   await admin.getByRole("option", { name: /B1/ }).click();
@@ -72,11 +43,11 @@ test("inscription → attente → approbation par l'admin (2FA) → accès au ni
   await student.goto("/admin");
   await expect(student.getByRole("heading", { name: "Page introuvable" })).toBeVisible();
 
-  // 8. Une connexion admin ultérieure exige le code TOTP
+  // 8. Un code TOTP invalide est refusé
   const admin2 = await (await browser.newContext()).newPage();
   await admin2.goto("/sign-in");
-  await admin2.getByLabel("Adresse email").fill(env.SEED_ADMIN_EMAIL!);
-  await admin2.getByLabel("Mot de passe").fill(env.SEED_ADMIN_PASSWORD!);
+  await admin2.getByLabel("Adresse email").fill(testEnv.SEED_ADMIN_EMAIL!);
+  await admin2.getByLabel("Mot de passe").fill(testEnv.SEED_ADMIN_PASSWORD!);
   await admin2.getByRole("button", { name: "Se connecter" }).click();
   await expect(admin2).toHaveURL(/\/two-factor$/);
   await admin2.locator('input[name="code"]').fill("000000");

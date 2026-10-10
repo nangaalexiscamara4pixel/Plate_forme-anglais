@@ -9,7 +9,7 @@
 - **Inscription uniquement via Server Action** : l'endpoint HTTP `/api/auth/sign-up/email` est bloqué. Cela garantit la validation Zod, le consentement RGPD et le contrôle de robustesse du mot de passe.
 - **Plugin next-intl remplacé par un alias** `next-intl/config` dans `next.config.ts` : le plugin charge un binaire natif (SWC) inutile ici.
 - **`forbidden()` non utilisé** : l'API est encore expérimentale. Un étudiant qui tente d'accéder au back-office reçoit une 404, qui ne révèle pas l'existence de la zone.
-- **Développement local sans Docker** : serveur `prisma dev` (PGlite). Une base séparée sert aux tests.
+- **Développement local sans Docker** : PostgreSQL 17 embarqué (binaires officiels via le paquet npm `embedded-postgres`, script `scripts/db.mjs`), avec deux instances, développement et test. *Phase 2* : le serveur `prisma dev` (PGlite), d'abord retenu, fermait des connexions sous charge concurrente. Il a été abandonné.
 > Plateforme premium d'apprentissage de l'anglais (CECRL A1 → B2), cours live sur Google Meet.
 
 ---

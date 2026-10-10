@@ -11,7 +11,12 @@
     "backHome": "Back to home",
     "loading": "Loading…",
     "language": "Language",
-    "theme": { "label": "Theme", "light": "Light", "dark": "Dark", "system": "System" },
+    "theme": {
+      "label": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
     "skipToContent": "Skip to main content",
     "email": "Email address",
     "password": "Password",
@@ -20,10 +25,22 @@
     "save": "Save"
   },
   "levels": {
-    "A1": { "name": "Discovery", "tagline": "Beginner — your first steps" },
-    "A2": { "name": "Explorer", "tagline": "Elementary — gaining confidence" },
-    "B1": { "name": "Navigator", "tagline": "Intermediate — charting your course" },
-    "B2": { "name": "Ambassador", "tagline": "Upper intermediate — speaking with assurance" }
+    "A1": {
+      "name": "Discovery",
+      "tagline": "Beginner — your first steps"
+    },
+    "A2": {
+      "name": "Explorer",
+      "tagline": "Elementary — gaining confidence"
+    },
+    "B1": {
+      "name": "Navigator",
+      "tagline": "Intermediate — charting your course"
+    },
+    "B2": {
+      "name": "Ambassador",
+      "tagline": "Upper intermediate — speaking with assurance"
+    }
   },
   "skills": {
     "READING": "Reading",
@@ -72,7 +89,13 @@
     },
     "password": {
       "strength": "Password strength",
-      "levels": ["Very weak", "Weak", "Fair", "Strong", "Excellent"],
+      "levels": [
+        "Very weak",
+        "Weak",
+        "Fair",
+        "Strong",
+        "Excellent"
+      ],
       "hint": "At least 12 characters. A passphrase is ideal."
     },
     "forgot": {
@@ -121,7 +144,12 @@
       "eyebrow": "Application received",
       "title": "Your application is under review",
       "body": "Thank you {name}. Our teaching team is reviewing your profile to assign the level that suits you. You will receive an email as soon as your access is activated.",
-      "steps": ["Account created", "Email confirmed", "Team review", "Access to your level"],
+      "steps": [
+        "Account created",
+        "Email confirmed",
+        "Team review",
+        "Access to your level"
+      ],
       "delay": "Usual turnaround: less than 48 business hours.",
       "meanwhile": "In the meantime, you can safely close this page."
     },
@@ -155,6 +183,244 @@
     "approved": "Account approved.",
     "rejected": "Application rejected.",
     "stats": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "SUSPENDED": "Suspended"
+    },
+    "nav": {
+      "label": "Administration navigation",
+      "open": "Open menu",
+      "dashboard": "Dashboard",
+      "students": "Students",
+      "audit": "Audit log",
+      "account": "My account",
+      "pendingBadge": "{count, plural, one {# pending application} other {# pending applications}}"
+    },
+    "notifications": {
+      "label": "Notifications ({count} unread)",
+      "title": "Notifications",
+      "empty": "No notifications.",
+      "registration": "New access request: {name}"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "pageOf": "Page {page} of {pageCount}",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Hello {name}, here is the state of the Academy.",
+      "statusesLabel": "Student accounts by status",
+      "seeAll": "See all",
+      "registrations": "Registrations",
+      "registrationsTitle": "Registrations — last 30 days",
+      "registrationsTotal": "{count, plural, =0 {No registrations in this period} one {# registration in this period} other {# registrations in this period}}",
+      "date": "Date",
+      "byLevelTitle": "Active students by level",
+      "byLevelSubtitle": "{count, plural, =0 {No approved students} one {# approved student} other {# approved students}}",
+      "activityTitle": "Recent activity",
+      "fullLog": "Full log",
+      "noActivity": "No activity recorded yet."
+    },
+    "students": {
+      "title": "Students",
+      "count": "{count, plural, =0 {No accounts} one {# account} other {# accounts}}",
+      "exportCsv": "Export CSV",
+      "searchLabel": "Search for a student",
+      "searchPlaceholder": "Name or email…",
+      "statusFilter": "Filter by status",
+      "levelFilter": "Filter by level",
+      "sortLabel": "Sort",
+      "allStatuses": "All statuses",
+      "allLevels": "All levels",
+      "sort": {
+        "recent": "Most recent",
+        "oldest": "Oldest",
+        "name": "Name (A → Z)",
+        "lastLogin": "Last sign-in"
+      },
+      "apply": "Filter",
+      "reset": "Reset",
+      "empty": "No matching students",
+      "emptyBody": "Change the search or filters.",
+      "unverified": "Email not confirmed",
+      "never": "Never",
+      "columns": {
+        "student": "Student",
+        "status": "Status",
+        "level": "Level",
+        "country": "Country",
+        "registered": "Registered",
+        "lastLogin": "Last sign-in",
+        "actions": "Actions"
+      },
+      "actionsFor": "Actions for {name}",
+      "viewAccount": "View account",
+      "viewAs": "View as student"
+    },
+    "student": {
+      "pageTitle": "Student account",
+      "back": "Back to list",
+      "tabs": {
+        "profile": "Profile",
+        "progress": "Progress",
+        "attendance": "Attendance",
+        "sessions": "Sessions",
+        "history": "History"
+      },
+      "identity": "Details",
+      "country": "Country",
+      "timezone": "Time zone",
+      "language": "Interface language",
+      "nativeLanguage": "Native language",
+      "registered": "Registered",
+      "lastLogin": "Last sign-in",
+      "goals": "Goals",
+      "accountSecurity": "Account & security",
+      "emailVerified": "Email confirmed",
+      "twoFactor": "Two-factor authentication",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "yes": "Yes",
+      "no": "No",
+      "failedLogins": "Failed sign-ins",
+      "lockedUntil": "locked until {date}",
+      "statusChanged": "Last status change",
+      "statusChangedBy": "{date} by {name}",
+      "statusReason": "Reason",
+      "consent": "GDPR consent",
+      "levelHistory": "Level history",
+      "noEnrollment": "No level assigned.",
+      "enrollment": {
+        "ACTIVE": "In progress",
+        "COMPLETED": "Completed",
+        "LOCKED": "Removed"
+      },
+      "lessonsCompleted": "Lessons completed",
+      "attempts": "Exercises done",
+      "submissions": "Assignments submitted",
+      "certificates": "Certificates",
+      "recentAttempts": "Latest exercises",
+      "recentSubmissions": "Latest assignments",
+      "noAttempts": "No exercises yet",
+      "noSubmissions": "No assignments submitted",
+      "noAttendance": "No attendance recorded",
+      "noDataYet": "Data will appear as soon as the student takes lessons and classes.",
+      "attendanceStatus": {
+        "PRESENT": "Present",
+        "LATE": "Late",
+        "ABSENT": "Absent",
+        "EXCUSED": "Excused"
+      },
+      "noSessions": "No active sessions.",
+      "sessionMeta": "IP {ip} · opened {created} · active {active}",
+      "impersonationSession": "“view as” session",
+      "revoke": "Revoke",
+      "revokeOneTitle": "Revoke this session?",
+      "revokeOneBody": "The device will be signed out immediately.",
+      "noHistory": "No actions recorded on this account.",
+      "manage": "Account management",
+      "approve": "Approve",
+      "approveTitle": "Approve {name}",
+      "approveBody": "Choose the assigned level. The student will get an email and immediate access to their space.",
+      "approved": "Account approved.",
+      "reject": "Reject application",
+      "rejectTitle": "Reject {name}'s application",
+      "rejectBody": "The student will be notified by email. You can revisit this decision later.",
+      "rejected": "Application rejected.",
+      "suspend": "Suspend account",
+      "suspendTitle": "Suspend {name}",
+      "suspendBody": "The student will be signed out of all devices and lose access to content.",
+      "suspended": "Account suspended.",
+      "reactivate": "Reactivate account",
+      "reactivateTitle": "Reactivate {name}",
+      "reactivateBody": "The student will regain access to their current level and be notified by email.",
+      "reactivated": "Account reactivated.",
+      "changeLevel": "Change level",
+      "changeLevelTitle": "Change level",
+      "promoteBody": "The current level will be marked as completed and the student congratulated by email.",
+      "reassignBody": "Assignment correction: the previous level will no longer be accessible.",
+      "modeLabel": "Type of change",
+      "mode": {
+        "promote": "Move up a level",
+        "reassign": "Reassignment"
+      },
+      "modeHint": {
+        "promote": "The student has completed their level.",
+        "reassign": "The initial level was not suitable."
+      },
+      "levelChanged": "Level updated.",
+      "levelLabel": "Level",
+      "chooseLevel": "Choose a level",
+      "viewAs": "View as student",
+      "resetPassword": "Send a reset link",
+      "resetPasswordTitle": "Reset password",
+      "resetPasswordBody": "A link valid for 30 minutes will be sent to the student. You will never see their password.",
+      "sendLink": "Send link",
+      "resetSent": "Reset link sent.",
+      "revokeAll": "Sign out of all devices",
+      "revokeAllTitle": "Sign out all devices",
+      "revokeAllBody": "All of {name}'s sessions will be closed immediately.",
+      "revoked": "Session(s) revoked.",
+      "reasonLabel": "Reason (optional)",
+      "reasonPlaceholder": "This reason will be shared with the student.",
+      "reasonHint": "500 characters max. Visible to the student.",
+      "cancel": "Cancel"
+    },
+    "audit": {
+      "title": "Audit log",
+      "subtitle": "{count, plural, =0 {No entries} one {# entry} other {# entries}} — every administrative action is recorded.",
+      "action": "Action",
+      "actor": "Author",
+      "target": "Account",
+      "date": "Date",
+      "origin": "Origin",
+      "from": "From",
+      "to": "To",
+      "allActions": "All actions",
+      "allActors": "All administrators",
+      "filter": "Filter",
+      "reset": "Reset",
+      "empty": "No entries match these filters.",
+      "system": "System"
+    },
+    "auditActions": {
+      "student_approve": "approved an account",
+      "student_reject": "rejected an application",
+      "student_suspend": "suspended an account",
+      "student_reactivate": "reactivated an account",
+      "student_level_change": "changed a level",
+      "student_view": "viewed an account",
+      "student_sessions_revoke": "signed out all devices",
+      "student_session_revoke": "revoked a session",
+      "student_password_reset": "sent a password reset",
+      "student_export_csv": "exported the student list",
+      "admin_signin": "signed in",
+      "admin_password_change": "changed their password",
+      "admin_sessions_revoke": "closed their other sessions",
+      "impersonation_start": "started a “view as” session",
+      "impersonation_stop": "left “view as” mode"
+    },
+    "account": {
+      "title": "My account",
+      "subtitle": "Security of your administrator account.",
+      "twoFactorOn": "Two-factor authentication enabled",
+      "twoFactorBody": "It is mandatory for administrators. Keep your backup codes somewhere safe.",
+      "password": "Password",
+      "passwordBody": "Your other sessions will be closed after the change.",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "changePassword": "Change password",
+      "passwordChanged": "Password changed. Your other sessions have been closed.",
+      "sessions": "Active sessions",
+      "sessionsBody": "Devices currently signed in to your account.",
+      "thisDevice": "this device",
+      "revokeOthers": "Sign out other devices",
+      "othersRevoked": "Other devices have been signed out."
+    },
+    "statusBadge": {
       "PENDING": "Pending",
       "APPROVED": "Approved",
       "REJECTED": "Rejected",
@@ -203,6 +469,14 @@
       "title": "Something went wrong",
       "body": "Our team has been notified. You can try again.",
       "retry": "Try again"
-    }
+    },
+    "NOT_APPROVED": "This action requires an approved account.",
+    "SAME_LEVEL": "The student is already at this level.",
+    "LEVEL_NOT_FOUND": "Level not found.",
+    "NOT_A_STUDENT": "This action only applies to student accounts."
+  },
+  "impersonation": {
+    "banner": "“View as” mode: {name} — read only",
+    "exit": "Exit this mode"
   }
 }

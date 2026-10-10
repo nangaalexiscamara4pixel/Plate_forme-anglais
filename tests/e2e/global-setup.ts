@@ -20,4 +20,6 @@ export default async function globalSetup() {
 
   execSync("npx tsx prisma/seed.ts", { env, stdio: "pipe" });
   await rm(".dev-mailbox-e2e", { recursive: true, force: true });
+  await rm(".e2e-admin-totp", { force: true });
+  await rm(".e2e-admin-totp-step", { force: true });
 }

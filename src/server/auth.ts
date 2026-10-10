@@ -1,11 +1,12 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { APIError, createAuthMiddleware } from "better-auth/api";
+import { APIError, createAuthMiddleware, getSessionFromCtx } from "better-auth/api";
 import { nextCookies } from "better-auth/next-js";
 import { admin, twoFactor } from "better-auth/plugins";
 import { createAccessControl } from "better-auth/plugins/access";
 import { adminAc, defaultStatements, userAc } from "better-auth/plugins/admin/access";
 import { env, isProd } from "@/env";
+import { audit } from "@/server/audit";
 import { db } from "@/server/db";
 import { sendEmail } from "@/server/email/send";
 import { resetPassword, verifyEmail } from "@/server/email/templates";
@@ -22,8 +23,19 @@ const roles = {
 
 /** Chemins de Better Auth qui ne peuvent PAS être appelés directement en HTTP :
  *  ils passent obligatoirement par nos Server Actions (validation Zod, consentement RGPD,
- *  rate limiting applicatif). */
-const SERVER_ACTION_ONLY_PATHS = new Set(["/sign-up/email"]);
+ *  rate limiting applicatif, 2FA admin, journal d'audit). */
+function isServerActionOnly(path: string) {
+  if (path === "/sign-up/email") return true;
+  // Toutes les routes du plugin admin (rôles, mots de passe, suppression, impersonation…)
+  // sauf la sortie d'impersonation : nos actions vérifient la 2FA et journalisent.
+  return path.startsWith("/admin/") && path !== "/admin/stop-impersonating";
+}
+
+/** Seules opérations permises pendant une impersonation (lecture seule). */
+const IMPERSONATION_ALLOWED_PATHS = new Set(["/get-session", "/sign-out", "/admin/stop-impersonating", "/list-sessions"]);
+
+/** Chemins dont une réussite constitue une connexion complète (après 2FA éventuelle). */
+const SIGN_IN_COMPLETION_PATHS = new Set(["/sign-in/email", "/two-factor/verify-totp", "/two-factor/verify-backup-code"]);
 
 export const auth = betterAuth({
   appName: "GlobeSpeak Academy",
@@ -108,8 +120,16 @@ export const auth = betterAuth({
 
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
-      if (SERVER_ACTION_ONLY_PATHS.has(ctx.path) && ctx.request) {
+      if (ctx.request && isServerActionOnly(ctx.path)) {
         throw new APIError("FORBIDDEN", { message: "Not allowed" });
+      }
+      // Impersonation en lecture seule : aucune modification de compte (mot de passe, email,
+      // 2FA, sessions…) ne peut être faite au nom de l'étudiant.
+      if (!IMPERSONATION_ALLOWED_PATHS.has(ctx.path)) {
+        const current = await getSessionFromCtx(ctx, { disableRefresh: true }).catch(() => null);
+        if (current?.session.impersonatedBy) {
+          throw new APIError("FORBIDDEN", { message: "Read-only impersonation", code: "READ_ONLY" });
+        }
       }
       if (ctx.path === "/sign-in/email") {
         const email = typeof ctx.body?.email === "string" ? ctx.body.email : "";
@@ -117,13 +137,29 @@ export const auth = betterAuth({
       }
     }),
     after: createAuthMiddleware(async (ctx) => {
-      if (ctx.path !== "/sign-in/email") return;
-      const email = typeof ctx.body?.email === "string" ? ctx.body.email : "";
-      const returned = ctx.context.returned;
-      if (returned instanceof APIError) {
-        if (returned.status === "UNAUTHORIZED") await onSignInFailure(email);
-      } else {
-        await onSignInSuccess(email);
+      if (ctx.path === "/sign-in/email") {
+        const email = typeof ctx.body?.email === "string" ? ctx.body.email : "";
+        const returned = ctx.context.returned;
+        if (returned instanceof APIError) {
+          if (returned.status === "UNAUTHORIZED") await onSignInFailure(email);
+        } else {
+          await onSignInSuccess(email);
+        }
+      }
+      // Journal d'audit : connexion complète d'un administrateur.
+      const signedIn = ctx.context.newSession;
+      if (SIGN_IN_COMPLETION_PATHS.has(ctx.path) && signedIn && signedIn.user.role === "ADMIN") {
+        const h = ctx.request?.headers ?? ctx.headers;
+        await audit(
+          {
+            actorId: signedIn.user.id,
+            ip: h?.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null,
+            userAgent: h?.get("user-agent") ?? null,
+          },
+          "admin.signin",
+          undefined,
+          { method: ctx.path === "/sign-in/email" ? "password" : ctx.path.endsWith("totp") ? "totp" : "backup-code" },
+        );
       }
     }),
   },

@@ -1,18 +1,25 @@
 import type { Prisma } from "@/generated/prisma/client";
 import { db } from "@/server/db";
 
-export type AuditAction =
-  | "student.approve"
-  | "student.reject"
-  | "student.suspend"
-  | "student.reactivate"
-  | "student.level.change"
-  | "student.sessions.revoke"
-  | "student.password.reset"
-  | "student.export.csv"
-  | "admin.signin"
-  | "impersonation.start"
-  | "impersonation.stop";
+export const AUDIT_ACTIONS = [
+  "student.approve",
+  "student.reject",
+  "student.suspend",
+  "student.reactivate",
+  "student.level.change",
+  "student.view",
+  "student.sessions.revoke",
+  "student.session.revoke",
+  "student.password.reset",
+  "student.export.csv",
+  "admin.signin",
+  "admin.password.change",
+  "admin.sessions.revoke",
+  "impersonation.start",
+  "impersonation.stop",
+] as const;
+
+export type AuditAction = (typeof AUDIT_ACTIONS)[number];
 
 export type AuditContext = {
   actorId: string;

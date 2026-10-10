@@ -137,6 +137,34 @@ export function statusChanged({
   };
 }
 
+export function levelPromoted({
+  name,
+  levelName,
+  url,
+  locale,
+}: {
+  name: string;
+  levelName: string;
+  url: string;
+  locale: EmailLocale;
+}): EmailMessage {
+  const fr = locale === "fr";
+  const subject = fr ? `Félicitations : vous passez au niveau ${levelName}` : `Congratulations: you are moving up to ${levelName}`;
+  return {
+    subject,
+    react: (
+      <EmailLayout locale={locale} preview={subject} heading={fr ? `Bravo, ${name} !` : `Well done, ${name}!`}>
+        <P>
+          {fr
+            ? `Votre progression a été validée par l'équipe pédagogique. Votre nouvel espace ${levelName} vous attend.`
+            : `Your progress has been validated by the teaching team. Your new ${levelName} space is waiting for you.`}
+        </P>
+        <CTA href={url}>{fr ? "Découvrir mon nouveau niveau" : "Discover my new level"}</CTA>
+      </EmailLayout>
+    ),
+  };
+}
+
 export function accountLocked({
   name,
   minutes,

@@ -22,6 +22,8 @@ export type Viewer = {
   status: AccountStatus;
   levelId: string | null;
   twoFactorEnabled: boolean;
+  /** Fuseau IANA du profil — toutes les dates affichées à cette personne l'utilisent. */
+  timezone: string;
   /** Renseigné quand un administrateur consulte la plateforme « en tant que » cet étudiant. */
   impersonatedBy: string | null;
   ip: string | null;
@@ -45,6 +47,7 @@ export const getViewer = cache(async (): Promise<Viewer | null> => {
       currentLevelId: true,
       twoFactorEnabled: true,
       deletedAt: true,
+      profile: { select: { timezone: true } },
     },
   });
   if (!user || user.deletedAt) return null;
@@ -60,6 +63,7 @@ export const getViewer = cache(async (): Promise<Viewer | null> => {
     status: user.status,
     levelId: user.currentLevelId,
     twoFactorEnabled: Boolean(user.twoFactorEnabled),
+    timezone: user.profile?.timezone ?? "Europe/Paris",
     impersonatedBy: (session.session as { impersonatedBy?: string | null }).impersonatedBy ?? null,
     ip: h.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null,
     userAgent: h.get("user-agent"),

@@ -11,7 +11,12 @@
     "backHome": "Retour à l'accueil",
     "loading": "Chargement…",
     "language": "Langue",
-    "theme": { "label": "Thème", "light": "Clair", "dark": "Sombre", "system": "Système" },
+    "theme": {
+      "label": "Thème",
+      "light": "Clair",
+      "dark": "Sombre",
+      "system": "Système"
+    },
     "skipToContent": "Aller au contenu principal",
     "email": "Adresse email",
     "password": "Mot de passe",
@@ -20,10 +25,22 @@
     "save": "Enregistrer"
   },
   "levels": {
-    "A1": { "name": "Discovery", "tagline": "Débutant — vos premiers pas" },
-    "A2": { "name": "Explorer", "tagline": "Élémentaire — gagner en aisance" },
-    "B1": { "name": "Navigator", "tagline": "Intermédiaire — tracer votre route" },
-    "B2": { "name": "Ambassador", "tagline": "Intermédiaire avancé — parler avec assurance" }
+    "A1": {
+      "name": "Discovery",
+      "tagline": "Débutant — vos premiers pas"
+    },
+    "A2": {
+      "name": "Explorer",
+      "tagline": "Élémentaire — gagner en aisance"
+    },
+    "B1": {
+      "name": "Navigator",
+      "tagline": "Intermédiaire — tracer votre route"
+    },
+    "B2": {
+      "name": "Ambassador",
+      "tagline": "Intermédiaire avancé — parler avec assurance"
+    }
   },
   "skills": {
     "READING": "Reading",
@@ -72,7 +89,13 @@
     },
     "password": {
       "strength": "Robustesse du mot de passe",
-      "levels": ["Très faible", "Faible", "Moyen", "Solide", "Excellent"],
+      "levels": [
+        "Très faible",
+        "Faible",
+        "Moyen",
+        "Solide",
+        "Excellent"
+      ],
       "hint": "12 caractères minimum. Une phrase de passe est idéale."
     },
     "forgot": {
@@ -121,7 +144,12 @@
       "eyebrow": "Demande reçue",
       "title": "Votre demande est en cours d'examen",
       "body": "Merci {name}. Notre équipe pédagogique étudie votre profil afin de vous attribuer le niveau qui vous correspond. Vous recevrez un email dès que votre accès sera activé.",
-      "steps": ["Compte créé", "Email confirmé", "Examen par l'équipe", "Accès à votre niveau"],
+      "steps": [
+        "Compte créé",
+        "Email confirmé",
+        "Examen par l'équipe",
+        "Accès à votre niveau"
+      ],
       "delay": "Délai habituel : moins de 48 heures ouvrées.",
       "meanwhile": "En attendant, vous pouvez fermer cette page en toute sérénité."
     },
@@ -159,6 +187,244 @@
       "APPROVED": "Approuvés",
       "REJECTED": "Rejetés",
       "SUSPENDED": "Suspendus"
+    },
+    "nav": {
+      "label": "Navigation de l'administration",
+      "open": "Ouvrir le menu",
+      "dashboard": "Tableau de bord",
+      "students": "Étudiants",
+      "audit": "Journal d'audit",
+      "account": "Mon compte",
+      "pendingBadge": "{count, plural, one {# demande en attente} other {# demandes en attente}}"
+    },
+    "notifications": {
+      "label": "Notifications ({count} non lues)",
+      "title": "Notifications",
+      "empty": "Aucune notification.",
+      "registration": "Nouvelle demande d'accès : {name}"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "pageOf": "Page {page} sur {pageCount}",
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "subtitle": "Bonjour {name}, voici l'état de l'Académie.",
+      "statusesLabel": "Comptes étudiants par statut",
+      "seeAll": "Tout voir",
+      "registrations": "Inscriptions",
+      "registrationsTitle": "Inscriptions — 30 derniers jours",
+      "registrationsTotal": "{count, plural, =0 {Aucune inscription sur la période} one {# inscription sur la période} other {# inscriptions sur la période}}",
+      "date": "Date",
+      "byLevelTitle": "Étudiants actifs par niveau",
+      "byLevelSubtitle": "{count, plural, =0 {Aucun étudiant approuvé} one {# étudiant approuvé} other {# étudiants approuvés}}",
+      "activityTitle": "Activité récente",
+      "fullLog": "Journal complet",
+      "noActivity": "Aucune activité enregistrée pour l'instant."
+    },
+    "students": {
+      "title": "Étudiants",
+      "count": "{count, plural, =0 {Aucun compte} one {# compte} other {# comptes}}",
+      "exportCsv": "Exporter en CSV",
+      "searchLabel": "Rechercher un étudiant",
+      "searchPlaceholder": "Nom ou email…",
+      "statusFilter": "Filtrer par statut",
+      "levelFilter": "Filtrer par niveau",
+      "sortLabel": "Trier",
+      "allStatuses": "Tous les statuts",
+      "allLevels": "Tous les niveaux",
+      "sort": {
+        "recent": "Plus récents",
+        "oldest": "Plus anciens",
+        "name": "Nom (A → Z)",
+        "lastLogin": "Dernière connexion"
+      },
+      "apply": "Filtrer",
+      "reset": "Réinitialiser",
+      "empty": "Aucun étudiant ne correspond",
+      "emptyBody": "Modifiez la recherche ou les filtres.",
+      "unverified": "Email non confirmé",
+      "never": "Jamais",
+      "columns": {
+        "student": "Étudiant",
+        "status": "Statut",
+        "level": "Niveau",
+        "country": "Pays",
+        "registered": "Inscription",
+        "lastLogin": "Dernière connexion",
+        "actions": "Actions"
+      },
+      "actionsFor": "Actions pour {name}",
+      "viewAccount": "Voir le compte",
+      "viewAs": "Voir en tant qu'étudiant"
+    },
+    "student": {
+      "pageTitle": "Compte étudiant",
+      "back": "Retour à la liste",
+      "tabs": {
+        "profile": "Profil",
+        "progress": "Progression",
+        "attendance": "Présences",
+        "sessions": "Sessions",
+        "history": "Historique"
+      },
+      "identity": "Informations",
+      "country": "Pays",
+      "timezone": "Fuseau horaire",
+      "language": "Langue de l'interface",
+      "nativeLanguage": "Langue maternelle",
+      "registered": "Inscription",
+      "lastLogin": "Dernière connexion",
+      "goals": "Objectifs",
+      "accountSecurity": "Compte et sécurité",
+      "emailVerified": "Email confirmé",
+      "twoFactor": "Double authentification",
+      "enabled": "Activée",
+      "disabled": "Désactivée",
+      "yes": "Oui",
+      "no": "Non",
+      "failedLogins": "Échecs de connexion",
+      "lockedUntil": "verrouillé jusqu'au {date}",
+      "statusChanged": "Dernier changement de statut",
+      "statusChangedBy": "{date} par {name}",
+      "statusReason": "Motif",
+      "consent": "Consentement RGPD",
+      "levelHistory": "Historique des niveaux",
+      "noEnrollment": "Aucun niveau attribué.",
+      "enrollment": {
+        "ACTIVE": "En cours",
+        "COMPLETED": "Validé",
+        "LOCKED": "Retiré"
+      },
+      "lessonsCompleted": "Leçons terminées",
+      "attempts": "Exercices réalisés",
+      "submissions": "Devoirs rendus",
+      "certificates": "Certificats",
+      "recentAttempts": "Derniers exercices",
+      "recentSubmissions": "Derniers devoirs",
+      "noAttempts": "Aucun exercice réalisé",
+      "noSubmissions": "Aucun devoir rendu",
+      "noAttendance": "Aucune présence enregistrée",
+      "noDataYet": "Les données apparaîtront dès que l'étudiant suivra des leçons et des cours.",
+      "attendanceStatus": {
+        "PRESENT": "Présent",
+        "LATE": "En retard",
+        "ABSENT": "Absent",
+        "EXCUSED": "Excusé"
+      },
+      "noSessions": "Aucune session active.",
+      "sessionMeta": "IP {ip} · ouverte le {created} · active {active}",
+      "impersonationSession": "session « voir en tant que »",
+      "revoke": "Révoquer",
+      "revokeOneTitle": "Révoquer cette session ?",
+      "revokeOneBody": "L'appareil concerné sera immédiatement déconnecté.",
+      "noHistory": "Aucune action enregistrée sur ce compte.",
+      "manage": "Gestion du compte",
+      "approve": "Approuver",
+      "approveTitle": "Approuver {name}",
+      "approveBody": "Choisissez le niveau attribué. L'étudiant recevra un email et accédera immédiatement à son espace.",
+      "approved": "Compte approuvé.",
+      "reject": "Rejeter la demande",
+      "rejectTitle": "Rejeter la demande de {name}",
+      "rejectBody": "L'étudiant sera informé par email. Vous pourrez revenir sur cette décision plus tard.",
+      "rejected": "Demande rejetée.",
+      "suspend": "Suspendre le compte",
+      "suspendTitle": "Suspendre {name}",
+      "suspendBody": "L'étudiant sera déconnecté de tous ses appareils et ne pourra plus accéder aux contenus.",
+      "suspended": "Compte suspendu.",
+      "reactivate": "Réactiver le compte",
+      "reactivateTitle": "Réactiver {name}",
+      "reactivateBody": "L'étudiant retrouvera l'accès à son niveau actuel et sera prévenu par email.",
+      "reactivated": "Compte réactivé.",
+      "changeLevel": "Changer de niveau",
+      "changeLevelTitle": "Changer le niveau",
+      "promoteBody": "Le niveau actuel sera marqué comme validé et l'étudiant sera félicité par email.",
+      "reassignBody": "Correction d'affectation : l'ancien niveau ne sera plus accessible.",
+      "modeLabel": "Type de changement",
+      "mode": {
+        "promote": "Passage au niveau supérieur",
+        "reassign": "Réaffectation"
+      },
+      "modeHint": {
+        "promote": "L'étudiant a validé son niveau.",
+        "reassign": "Le niveau initial n'était pas adapté."
+      },
+      "levelChanged": "Niveau mis à jour.",
+      "levelLabel": "Niveau",
+      "chooseLevel": "Choisir un niveau",
+      "viewAs": "Voir en tant qu'étudiant",
+      "resetPassword": "Envoyer un lien de réinitialisation",
+      "resetPasswordTitle": "Réinitialiser le mot de passe",
+      "resetPasswordBody": "Un lien valable 30 minutes sera envoyé à l'étudiant. Vous ne verrez jamais son mot de passe.",
+      "sendLink": "Envoyer le lien",
+      "resetSent": "Lien de réinitialisation envoyé.",
+      "revokeAll": "Déconnecter de tous les appareils",
+      "revokeAllTitle": "Déconnecter tous les appareils",
+      "revokeAllBody": "Toutes les sessions de {name} seront fermées immédiatement.",
+      "revoked": "Session(s) révoquée(s).",
+      "reasonLabel": "Motif (facultatif)",
+      "reasonPlaceholder": "Ce motif sera communiqué à l'étudiant.",
+      "reasonHint": "500 caractères maximum. Visible par l'étudiant.",
+      "cancel": "Annuler"
+    },
+    "audit": {
+      "title": "Journal d'audit",
+      "subtitle": "{count, plural, =0 {Aucune entrée} one {# entrée} other {# entrées}} — chaque action d'administration est tracée.",
+      "action": "Action",
+      "actor": "Auteur",
+      "target": "Compte concerné",
+      "date": "Date",
+      "origin": "Origine",
+      "from": "Du",
+      "to": "Au",
+      "allActions": "Toutes les actions",
+      "allActors": "Tous les administrateurs",
+      "filter": "Filtrer",
+      "reset": "Réinitialiser",
+      "empty": "Aucune entrée ne correspond à ces filtres.",
+      "system": "Système"
+    },
+    "auditActions": {
+      "student_approve": "a approuvé un compte",
+      "student_reject": "a rejeté une demande",
+      "student_suspend": "a suspendu un compte",
+      "student_reactivate": "a réactivé un compte",
+      "student_level_change": "a changé un niveau",
+      "student_view": "a consulté un compte",
+      "student_sessions_revoke": "a déconnecté tous les appareils",
+      "student_session_revoke": "a révoqué une session",
+      "student_password_reset": "a envoyé une réinitialisation de mot de passe",
+      "student_export_csv": "a exporté la liste des étudiants",
+      "admin_signin": "s'est connecté",
+      "admin_password_change": "a changé son mot de passe",
+      "admin_sessions_revoke": "a fermé ses autres sessions",
+      "impersonation_start": "a commencé une consultation « en tant que »",
+      "impersonation_stop": "a quitté le mode « en tant que »"
+    },
+    "account": {
+      "title": "Mon compte",
+      "subtitle": "Sécurité de votre compte administrateur.",
+      "twoFactorOn": "Double authentification activée",
+      "twoFactorBody": "Elle est obligatoire pour les administrateurs. Conservez vos codes de secours en lieu sûr.",
+      "password": "Mot de passe",
+      "passwordBody": "Vos autres sessions seront fermées après le changement.",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "changePassword": "Changer le mot de passe",
+      "passwordChanged": "Mot de passe modifié. Vos autres sessions ont été fermées.",
+      "sessions": "Sessions actives",
+      "sessionsBody": "Appareils actuellement connectés à votre compte.",
+      "thisDevice": "cet appareil",
+      "revokeOthers": "Déconnecter les autres appareils",
+      "othersRevoked": "Les autres appareils ont été déconnectés."
+    },
+    "statusBadge": {
+      "PENDING": "En attente",
+      "APPROVED": "Approuvé",
+      "REJECTED": "Rejeté",
+      "SUSPENDED": "Suspendu"
     }
   },
   "validation": {
@@ -203,6 +469,14 @@
       "title": "Un incident est survenu",
       "body": "Notre équipe en a été informée. Vous pouvez réessayer.",
       "retry": "Réessayer"
-    }
+    },
+    "NOT_APPROVED": "Cette action nécessite un compte approuvé.",
+    "SAME_LEVEL": "L'étudiant est déjà à ce niveau.",
+    "LEVEL_NOT_FOUND": "Niveau introuvable.",
+    "NOT_A_STUDENT": "Cette action ne concerne que les comptes étudiants."
+  },
+  "impersonation": {
+    "banner": "Mode « voir en tant que » : {name} — lecture seule",
+    "exit": "Quitter ce mode"
   }
 }

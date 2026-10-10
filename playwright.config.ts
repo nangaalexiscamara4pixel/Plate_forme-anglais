@@ -12,8 +12,8 @@ export default defineConfig({
   workers: 1,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? "github" : "list",
-  timeout: 90_000,
-  expect: { timeout: 15_000 },
+  timeout: 300_000,
+  expect: { timeout: 30_000 },
   globalSetup: "./tests/e2e/global-setup.ts",
   use: {
     baseURL: testEnv.APP_URL ?? "http://localhost:3100",

@@ -78,10 +78,12 @@
   --gold-ink: oklch(0.5 0.09 75);
   --paper: oklch(0.98 0.007 85);
 
-  --level-a1: oklch(0.55 0.12 160);
-  --level-a2: oklch(0.55 0.1 205);
-  --level-b1: oklch(0.48 0.17 275);
-  --level-b2: oklch(0.45 0.15 12);
+  /* Couleurs de niveau validées (daltonisme ΔE ≥ 8, vision normale ΔE ≥ 15, contraste ≥ 3:1) :
+     A1 émeraude · A2 océan · B1 violet · B2 cramoisi */
+  --level-a1: oklch(0.55 0.13 155);
+  --level-a2: oklch(0.6 0.13 230);
+  --level-b1: oklch(0.48 0.17 290);
+  --level-b2: oklch(0.52 0.17 25);
 
   --success: oklch(0.52 0.12 150);
   --warning: oklch(0.62 0.14 65);
@@ -122,10 +124,10 @@
 
 .dark {
   --gold-ink: oklch(0.8 0.09 85);
-  --level-a1: oklch(0.72 0.12 160);
-  --level-a2: oklch(0.72 0.1 205);
-  --level-b1: oklch(0.7 0.14 275);
-  --level-b2: oklch(0.7 0.13 12);
+  --level-a1: oklch(0.64 0.14 150);
+  --level-a2: oklch(0.66 0.12 225);
+  --level-b1: oklch(0.56 0.18 300);
+  --level-b2: oklch(0.62 0.17 22);
   --success: oklch(0.72 0.13 150);
   --warning: oklch(0.78 0.13 70);
 

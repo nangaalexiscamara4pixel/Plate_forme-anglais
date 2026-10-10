@@ -24,7 +24,7 @@ export default async function StudentLayout({ children }: { children: ReactNode 
           <div className="flex items-center gap-1">
             <LocaleSwitcher />
             <ThemeToggle />
-            <SignOutButton />
+            {!viewer.impersonatedBy && <SignOutButton />}
           </div>
         </div>
       </header>

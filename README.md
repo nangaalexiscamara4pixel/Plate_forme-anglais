@@ -2,7 +2,7 @@
 
 Plateforme internationale premium d'apprentissage de l'anglais (CECRL A1 → B2), avec cours en direct sur Google Meet et accès sur approbation.
 
-> **État : phase 1 / 7 terminée** (fondations, authentification, workflow d'approbation, sécurité).
+> **État : phase 2 / 7 terminée** — fondations et sécurité (phase 1), back-office administrateur (phase 2).
 > Architecture complète : [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Stack
@@ -21,10 +21,10 @@ npm install
 npm run db:start
 ```
 
-Cette commande démarre un serveur PostgreSQL local (Prisma Postgres, basé sur PGlite) et affiche son URL `postgres://…`.
+Cette commande démarre un **vrai PostgreSQL 17** local. Les binaires officiels sont fournis par le paquet npm `embedded-postgres` et pilotés par [scripts/db.mjs](scripts/db.mjs). Les données sont stockées dans `.pg/dev/`, et le serveur n'écoute que sur `127.0.0.1:54320`. Il continue de tourner en arrière-plan ; `npm run db:stop` l'arrête.
 
 1. Copiez `.env.example` en `.env` et renseignez :
-   - `DATABASE_URL` : l'URL **TCP** affichée par `npm run db:start` (remplacez `localhost` par `127.0.0.1`) ;
+   - `DATABASE_URL` : la valeur par défaut correspond déjà à `npm run db:start` ;
    - `BETTER_AUTH_SECRET` et `ENCRYPTION_KEY` : générez-les avec la commande ci-dessous ;
    - `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` : identifiants du premier administrateur (12 caractères minimum).
 
@@ -69,6 +69,26 @@ Changez ensuite le mot de passe initial (fonction disponible en phase 2) et reti
 3. Dans une autre fenêtre (navigation privée), connectez-vous en administrateur. Sur `/admin`, choisissez un niveau et cliquez **Approuver**.
 4. Rechargez la fenêtre de l'étudiant : son espace s'ouvre, au niveau attribué. Il a reçu un email de confirmation.
 
+## Back-office (phase 2)
+
+| Page | Contenu |
+|---|---|
+| `/admin` | tableau de bord : statuts, demandes en attente, inscriptions sur 30 jours, étudiants actifs par niveau, activité récente |
+| `/admin/students` | liste filtrable (statut, niveau, recherche, tri), pagination, export CSV |
+| `/admin/students/[id]` | fiche complète (profil, progression, présences, sessions actives, historique) et gestion du compte |
+| `/admin/audit` | journal d'audit filtrable (action, auteur, période) |
+| `/admin/account` | mot de passe, sessions de l'administrateur |
+
+Actions disponibles sur un compte étudiant, toutes journalisées :
+
+- approuver avec un niveau, rejeter ou suspendre avec un motif, réactiver ;
+- passer au niveau supérieur (l'ancien niveau est marqué validé) ou réaffecter ;
+- envoyer un lien de réinitialisation du mot de passe : l'administrateur ne voit jamais le mot de passe ;
+- révoquer une session ou toutes les sessions ;
+- **« Voir en tant qu'étudiant »** : session de 30 minutes en **lecture seule**, avec un bandeau rouge et un bouton « Quitter ce mode ».
+
+Les routes HTTP du plugin admin de Better Auth (`/api/auth/admin/*`) sont fermées : toute action d'administration passe par les Server Actions, qui vérifient la 2FA et écrivent dans le journal d'audit.
+
 ## Tests automatisés
 
 Les tests utilisent une **base dédiée**, jamais celle de développement : la suite vide ses tables.
@@ -77,7 +97,7 @@ Les tests utilisent une **base dédiée**, jamais celle de développement : la s
 npm run db:test:start
 ```
 
-Copiez `.env.test.example` en `.env.test` et mettez-y l'URL affichée par la commande précédente (avec `127.0.0.1`).
+Cette commande démarre une seconde instance (port 54321, base `globespeak_test`). Copiez ensuite `.env.test.example` en `.env.test` : les valeurs par défaut lui correspondent.
 
 ```bash
 npm test
@@ -100,7 +120,10 @@ Ce qui est couvert aujourd'hui :
 - **Approbation** : un nouveau compte est toujours un étudiant en attente ; la machine à états des statuts ; le niveau obligatoire à l'approbation ; l'audit ; les emails ; la révocation des sessions au rejet ou à la suspension.
 - **Contrôle d'accès** : un compte non approuvé est bloqué partout ; le back-office renvoie une 404 aux étudiants ; la 2FA est imposée à l'admin ; les sessions admin expirent après 12 h ; l'impersonation est autorisée côté étudiant et refusée côté admin.
 - **Sécurité** : verrouillage progressif après 5 échecs ; limitation de débit (identifiants hachés) ; inscription HTTP directe interdite ; hachage Argon2id ; chiffrement AES-GCM ; protection contre les redirections ouvertes ; en-têtes CSP/HSTS.
-- **E2E** : inscription → email → attente → admin avec 2FA → approbation B1 → accès.
+- **Back-office** : changement de niveau (promotion ou réaffectation) ; anti-IDOR sur la révocation de sessions ; filtres et tableau de bord ; export CSV protégé contre l'injection de formules ; journal d'audit ; routes admin HTTP fermées ; impersonation en lecture seule et non applicable aux administrateurs.
+- **E2E** :
+  - inscription → email → attente → admin avec 2FA → approbation B1 → accès ;
+  - fiche étudiant → approbation A2 → « voir en tant que » → sortie → suspension avec motif → étudiant bloqué → audit → export CSV.
 
 ## Scripts
 
@@ -109,7 +132,8 @@ Ce qui est couvert aujourd'hui :
 | `npm run dev` | serveur de développement |
 | `npm run build` / `npm start` | build et serveur de production |
 | `npm run typecheck` · `npm run lint` | TypeScript · ESLint |
-| `npm run db:start` / `db:stop` | serveur Postgres local |
+| `npm run db:start` / `db:stop` | PostgreSQL local de développement |
+| `npm run db:test:start` / `db:test:stop` | PostgreSQL local de test |
 | `npm run db:migrate` | crée/applique les migrations (dev) |
 | `npm run db:deploy` | applique les migrations (production) |
 | `npm run db:seed` | données initiales (idempotent) |
