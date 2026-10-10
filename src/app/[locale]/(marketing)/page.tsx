@@ -5,8 +5,7 @@ import { SitePhoto } from "@/features/marketing/components/site-photo";
 import { SkillsExplorer } from "@/features/marketing/components/skills-explorer";
 
 /**
- * Page d'accueil publique, inspirée de la maquette fournie : mosaïque de photos et titre en
- * surimpression, formations, compétences avec recherche, cours en direct, témoignages, FAQ.
+ * Page d'accueil publique, inspirée de la maquette fournie : mosaïque de photos et titre défilant en surimpression, formations, compétences avec recherche, cours en direct, témoignages, FAQ.
  * Les photos se configurent dans src/features/marketing/site-config.ts.
  */
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
@@ -20,11 +19,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       <Hero
         tiles={{
-          main: <SitePhoto name="heroMain" alt={t("heroMain")} sizes={big} priority />,
-          topLeft: <SitePhoto name="heroTopLeft" alt={t("heroTopLeft")} sizes={small} />,
-          bottomLeft: <SitePhoto name="heroBottomLeft" alt={t("heroBottomLeft")} sizes={small} />,
-          topRight: <SitePhoto name="heroTopRight" alt={t("heroTopRight")} sizes={small} />,
-          bottomRight: <SitePhoto name="heroBottomRight" alt={t("heroBottomRight")} sizes={small} />,
+          main: <SitePhoto name="heroLondon" alt={t("heroLondon")} sizes={big} priority />,
+          topLeft: <SitePhoto name="heroDenim" alt={t("heroDenim")} sizes={small} position="top" />,
+          bottomLeft: <SitePhoto name="heroNewYork" alt={t("heroNewYork")} sizes={small} />,
+          topRight: <SitePhoto name="heroBus" alt={t("heroBus")} sizes={small} />,
+          bottomRight: <SitePhoto name="heroUniform" alt={t("heroUniform")} sizes={small} />,
         }}
       />
       <LevelsSection />

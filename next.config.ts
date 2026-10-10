@@ -20,12 +20,8 @@ const nextConfig: NextConfig = {
     // Équivalent de createNextIntlPlugin() : le plugin charge @swc/core (binaire natif)
     // uniquement pour des fonctions expérimentales que nous n'utilisons pas.
     resolveAlias: { "next-intl/config": "./src/i18n/request.ts" },
-    rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
-    },
+    // Tailwind passe par PostCSS (postcss.config.mjs) : le chargeur @tailwindcss/turbopack ne
+    // suivait pas les fichiers source et ne régénérait pas le CSS en développement.
   },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];

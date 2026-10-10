@@ -750,11 +750,6 @@
       "play": "Resume the slideshow"
     },
     "photos": {
-      "heroMain": "A smiling student taking a class on her laptop",
-      "heroTopLeft": "A student reading a book",
-      "heroBottomLeft": "Students talking in a lecture hall",
-      "heroTopRight": "The Manhattan skyline and the East River, New York",
-      "heroBottomRight": "A red double-decker bus on a London street",
       "skillReading": "A woman reading a book on a sofa",
       "skillListening": "A student listening with headphones",
       "skillSpeaking": "A group of friends talking and laughing outdoors",
@@ -763,7 +758,12 @@
       "levelA2": "The Empire State Building in New York at sunset",
       "levelB1": "The Golden Gate Bridge in San Francisco",
       "levelB2": "The Radcliffe Camera at the University of Oxford",
-      "liveClass": "Two people talking on a video call"
+      "liveClass": "Two people talking on a video call",
+      "heroLondon": "A smiling student holding books in front of Big Ben and the British flag",
+      "heroDenim": "A smiling student in a denim jacket with a leather bag gives a thumbs up",
+      "heroUniform": "A young pupil in school uniform smiles while holding her books",
+      "heroNewYork": "The Manhattan skyline and the East River, New York",
+      "heroBus": "A red double-decker bus on a London street"
     },
     "levels": {
       "eyebrow": "Our courses",

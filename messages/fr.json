@@ -750,11 +750,6 @@
       "play": "Reprendre le défilement"
     },
     "photos": {
-      "heroMain": "Une étudiante souriante suit un cours sur son ordinateur portable",
-      "heroTopLeft": "Une étudiante lit un livre",
-      "heroBottomLeft": "Des étudiants discutent dans un amphithéâtre",
-      "heroTopRight": "Les gratte-ciel de Manhattan et l'East River, à New York",
-      "heroBottomRight": "Un bus rouge à impériale dans une rue de Londres",
       "skillReading": "Une femme lit un livre dans un canapé",
       "skillListening": "Une étudiante écoute avec un casque audio",
       "skillSpeaking": "Un groupe d'amis discute et rit en plein air",
@@ -763,7 +758,12 @@
       "levelA2": "L'Empire State Building à New York au coucher du soleil",
       "levelB1": "Le Golden Gate Bridge à San Francisco",
       "levelB2": "La Radcliffe Camera à l'université d'Oxford",
-      "liveClass": "Deux personnes échangent en visioconférence"
+      "liveClass": "Deux personnes échangent en visioconférence",
+      "heroLondon": "Un étudiant souriant tient des livres devant Big Ben et le drapeau britannique",
+      "heroDenim": "Une étudiante souriante en veste en jean, sacoche en cuir sous le bras, lève le pouce",
+      "heroUniform": "Une jeune élève en uniforme serre ses livres contre elle en souriant",
+      "heroNewYork": "Les gratte-ciel de Manhattan et l'East River, à New York",
+      "heroBus": "Un bus rouge à impériale dans une rue de Londres"
     },
     "levels": {
       "eyebrow": "Nos formations",

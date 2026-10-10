@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.64.0",
-    "@tailwindcss/turbopack": "^4",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^24.19.2",
     "@types/pg": "^8.23.1",
     "@types/qrcode": "^1.5.6",

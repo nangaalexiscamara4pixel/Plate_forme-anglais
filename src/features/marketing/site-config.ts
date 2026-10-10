@@ -4,16 +4,19 @@
  * PHOTOS : déposez vos images dans `public/images/site/` (JPEG/WebP, ~1600 px de large pour
  * le héros, ~900 px pour les cartes) et renseignez `src`. Tant que `src` est vide, un visuel
  * de remplacement aux couleurs de l'Académie est affiché.
- * Photos actuelles : Unsplash (licence libre) — voir public/images/site/CREDITS.md.
+ * Photos des cartes : Unsplash (licence libre) — voir public/images/site/CREDITS.md.
+ * Photos de la première section : fournies par l'Académie.
  */
-export type SiteImage = { src?: string; tone: "night" | "red" | "a1" | "a2" | "b1" | "b2" };
+/** `cutout` : image détourée (PNG transparent), posée en bas d'un fond dégradé de la couleur `tone`. */
+export type SiteImage = { src?: string; tone: "night" | "red" | "flag" | "a1" | "a2" | "b1" | "b2"; cutout?: boolean };
 
 export const SITE_IMAGES = {
-  heroMain: { tone: "night", src: "/images/site/hero-main.jpg" },
-  heroTopLeft: { tone: "a1", src: "/images/site/hero-reading.jpg" },
-  heroBottomLeft: { tone: "red", src: "/images/site/hero-students.jpg" },
-  heroTopRight: { tone: "b1", src: "/images/site/hero-new-york.jpg" },
-  heroBottomRight: { tone: "a2", src: "/images/site/hero-london.jpg" },
+  // Première section : trois portraits d'étudiants
+  heroLondon: { tone: "night", src: "/images/site/hero-student-london.jpg" },
+  heroDenim: { tone: "night", src: "/images/site/hero-student-denim.jpg" },
+  heroUniform: { tone: "flag", src: "/images/site/hero-student-uniform.png", cutout: true },
+  heroNewYork: { tone: "a2", src: "/images/site/hero-new-york.jpg" },
+  heroBus: { tone: "red", src: "/images/site/hero-london.jpg" },
   levelA1: { tone: "a1", src: "/images/site/level-a1-london.jpg" },
   levelA2: { tone: "a2", src: "/images/site/level-a2-new-york.jpg" },
   levelB1: { tone: "b1", src: "/images/site/level-b1-san-francisco.jpg" },
