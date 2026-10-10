@@ -19,10 +19,10 @@ export const SITE_IMAGES = {
   levelA2: { tone: "a2", src: "/images/site/level-a2.webp" },
   levelB1: { tone: "b1", src: "/images/site/level-b1.webp" },
   levelB2: { tone: "b2", src: "/images/site/level-b2.webp" },
-  skillReading: { tone: "a2", src: "/images/site/skill-reading.jpg" },
-  skillListening: { tone: "b1", src: "/images/site/skill-listening.jpg" },
-  skillSpeaking: { tone: "red", src: "/images/site/skill-speaking.jpg" },
-  skillWriting: { tone: "a1", src: "/images/site/skill-writing.jpg" },
+  skillReading: { tone: "a2", src: "/images/site/skill-reading-books.jpg" },
+  skillListening: { tone: "b1", src: "/images/site/skill-listening-headphones.jpg" },
+  skillSpeaking: { tone: "red", src: "/images/site/skill-speaking-stage.jpg" },
+  skillWriting: { tone: "a1", src: "/images/site/skill-writing-pencil.jpg" },
   liveClass: { tone: "night", src: "/images/site/live-class.jpg" },
 } satisfies Record<string, SiteImage>;
 

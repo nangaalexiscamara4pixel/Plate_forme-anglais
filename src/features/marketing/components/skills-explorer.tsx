@@ -56,7 +56,7 @@ export function SkillsExplorer({ photos }: { photos: Record<SkillKey, ReactNode>
               const Icon = ICONS[item.key];
               return (
                 <article key={item.key} className="rounded-2xl border bg-card p-3 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
-                  <div className="relative [&>div]:aspect-[4/3] [&>div]:w-full [&>div]:rounded-xl">
+                  <div className="relative [&>div]:aspect-[4/5] [&>div]:w-full [&>div]:rounded-xl">
                     {photos[item.key]}
                     <span className="absolute top-3 left-3 flex size-9 items-center justify-center rounded-lg bg-white/95 shadow-sm">
                       <Icon className="size-4 text-brand-ink" aria-hidden />
