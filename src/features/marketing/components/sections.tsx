@@ -36,7 +36,7 @@ export function PhotoCard({
   image: SiteImageKey;
   imageAlt: string;
   badge?: ReactNode;
-  /** Proportions de l'image : 4/3 pour une photo, 16/9 pour une affiche à ne pas recadrer. */
+  /** Proportions de l'image : 4/3 pour une photo recadrée, 16/9 pour une affiche montrée en entier. */
   aspect?: "photo" | "poster";
   title: string;
   subtitle: string;
@@ -50,7 +50,7 @@ export function PhotoCard({
         <SitePhoto
           name={image}
           alt={imageAlt}
-          position={aspect === "poster" ? "top" : "center"} // le titre des affiches est en haut
+          fit={aspect === "poster" ? "contain" : "cover"}
           className={cn("w-full rounded-xl", aspect === "poster" ? "aspect-video" : "aspect-[4/3]")}
           sizes={aspect === "poster" ? "(min-width: 640px) 50vw, 100vw" : "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"}
         />

@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
   // Application authentifiée et personnalisée : rendu dynamique par défaut, sans
   // Cache Components, pour éviter tout risque de mise en cache de données par utilisateur.
   poweredByHeader: false,
+  // 90 : affiches dont le texte est intégré à l'image (niveaux) ; 75 : photos.
+  images: { qualities: [75, 90] },
   serverExternalPackages: ["@node-rs/argon2", "pino"],
   turbopack: {
     // Équivalent de createNextIntlPlugin() : le plugin charge @swc/core (binaire natif)

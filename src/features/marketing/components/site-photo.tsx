@@ -26,6 +26,7 @@ const ICONS: Partial<Record<SiteImageKey, LucideIcon>> = {
 /**
  * Photo du site public (configurée dans site-config.ts).
  *  - photo classique : recadrée pour remplir le cadre (`position` règle le point d'intérêt) ;
+ *  - affiche (`fit="contain"`) : montrée en entier, sans recadrage, pour que son texte reste lisible ;
  *  - photo détourée (`cutout`) : posée en bas d'un fond dégradé aux couleurs de l'Académie ;
  *  - sans photo : visuel de remplacement (dégradé, motif discret, icône).
  */
@@ -36,6 +37,7 @@ export function SitePhoto({
   sizes = "(min-width: 1024px) 33vw, 100vw",
   priority = false,
   position = "center",
+  fit = "cover",
 }: {
   name: SiteImageKey;
   alt: string;
@@ -43,6 +45,7 @@ export function SitePhoto({
   sizes?: string;
   priority?: boolean;
   position?: "center" | "top";
+  fit?: "cover" | "contain";
 }) {
   const image: SiteImage = SITE_IMAGES[name];
   const tone = TONES[image.tone];
@@ -51,6 +54,15 @@ export function SitePhoto({
       <div className={cn("relative overflow-hidden bg-gradient-to-br", tone, className)}>
         <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:18px_18px]" aria-hidden />
         <Image src={image.src} alt={alt} fill sizes={sizes} priority={priority} className="object-contain object-bottom" />
+      </div>
+    );
+  }
+  if (image.src && fit === "contain") {
+    return (
+      <div className={cn("relative overflow-hidden bg-white", className)}>
+        {/* Fond flou tiré de l'affiche : comble les bandes quand ses proportions diffèrent du cadre */}
+        <Image src={image.src} alt="" aria-hidden fill sizes={sizes} quality={90} className="scale-110 object-cover opacity-60 blur-xl" />
+        <Image src={image.src} alt={alt} fill sizes={sizes} priority={priority} quality={90} className="object-contain" />
       </div>
     );
   }
