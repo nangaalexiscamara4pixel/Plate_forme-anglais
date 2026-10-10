@@ -61,7 +61,7 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
 
       <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
-          <span className="flex size-14 items-center justify-center rounded-full bg-accent font-display text-xl text-gold-ink" aria-hidden>
+          <span className="flex size-14 items-center justify-center rounded-full bg-accent font-display text-xl text-brand-ink" aria-hidden>
             {student.name
               .split(" ")
               .map((p) => p[0])

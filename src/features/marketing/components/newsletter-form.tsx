@@ -32,7 +32,7 @@ export function NewsletterForm() {
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
       <div className="flex gap-2">
         <Input type="email" name="email" required autoComplete="email" placeholder={t("emailPlaceholder")} aria-label={t("emailPlaceholder")} className="bg-background" />
-        <Button type="submit" disabled={pending} className="bg-gold text-night hover:bg-gold/90">
+        <Button type="submit" disabled={pending} className="bg-brand text-white hover:bg-brand/90">
           {pending && <Loader2 className="size-4 animate-spin" aria-hidden />}
           {t("subscribe")}
         </Button>

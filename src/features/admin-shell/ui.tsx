@@ -102,7 +102,7 @@ export async function Pagination({
 export function EmptyState({ icon, title, body }: { icon: ReactNode; title: string; body?: string }) {
   return (
     <div className="flex flex-col items-center justify-center rounded-xl border border-dashed px-6 py-14 text-center">
-      <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-accent text-gold-ink">{icon}</div>
+      <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-accent text-brand-ink">{icon}</div>
       <p className="font-medium">{title}</p>
       {body && <p className="mt-1 max-w-sm text-sm text-muted-foreground">{body}</p>}
     </div>

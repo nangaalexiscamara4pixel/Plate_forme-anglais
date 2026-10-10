@@ -69,7 +69,7 @@ export default async function SkillPage({ params }: { params: Promise<{ level: s
                         className="flex items-center gap-4 px-6 py-4 transition-colors hover:bg-accent/60"
                       >
                         <StatusIcon
-                          className={cn("size-5 shrink-0", status === "COMPLETED" ? "text-success" : status ? "text-gold-ink" : "text-muted-foreground")}
+                          className={cn("size-5 shrink-0", status === "COMPLETED" ? "text-success" : status ? "text-brand-ink" : "text-muted-foreground")}
                           aria-label={t(`status.${status ?? "NOT_STARTED"}`)}
                         />
                         <span className="min-w-0 flex-1">

@@ -35,7 +35,7 @@ export function SkillsExplorer({ photos }: { photos: Record<SkillKey, ReactNode>
       <div className="mx-auto max-w-6xl px-4 py-20">
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
-            <p className="mb-2 text-xs font-semibold tracking-[0.3em] text-gold-ink uppercase">{t("eyebrow")}</p>
+            <p className="mb-2 text-xs font-semibold tracking-[0.3em] text-brand-ink uppercase">{t("eyebrow")}</p>
             <h2 className="text-3xl font-medium text-balance sm:text-4xl">{t("title")}</h2>
             <p className="mt-3 text-muted-foreground">{t("subtitle")}</p>
           </div>
@@ -59,7 +59,7 @@ export function SkillsExplorer({ photos }: { photos: Record<SkillKey, ReactNode>
                   <div className="relative [&>div]:aspect-[4/3] [&>div]:w-full [&>div]:rounded-xl">
                     {photos[item.key]}
                     <span className="absolute top-3 left-3 flex size-9 items-center justify-center rounded-lg bg-white/95 shadow-sm">
-                      <Icon className="size-4 text-gold-ink" aria-hidden />
+                      <Icon className="size-4 text-brand-ink" aria-hidden />
                     </span>
                   </div>
                   <div className="grid gap-1 px-1 pt-4 pb-2">

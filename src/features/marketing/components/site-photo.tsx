@@ -4,12 +4,12 @@ import { cn } from "@/lib/utils";
 import { SITE_IMAGES, type SiteImageKey } from "../site-config";
 
 const TONES = {
-  night: "from-[oklch(0.3_0.08_263)] to-night",
-  gold: "from-[oklch(0.82_0.08_85)] to-[oklch(0.62_0.1_75)]",
+  night: "from-[oklch(0.38_0.15_264)] to-night",
+  red: "from-[oklch(0.62_0.2_25)] to-brand",
   a1: "from-[oklch(0.68_0.12_155)] to-level-a1",
   a2: "from-[oklch(0.72_0.11_230)] to-level-a2",
   b1: "from-[oklch(0.62_0.15_290)] to-level-b1",
-  b2: "from-[oklch(0.66_0.15_25)] to-level-b2",
+  b2: "from-[oklch(0.8_0.11_82)] to-level-b2",
 } as const;
 
 const ICONS: Partial<Record<SiteImageKey, LucideIcon>> = {

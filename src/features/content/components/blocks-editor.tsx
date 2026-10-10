@@ -163,7 +163,7 @@ function BlockCard({
     <article className="rounded-xl border bg-card" aria-label={t(`kind.${kind}`)}>
       <header className="flex items-center gap-2 border-b px-3 py-2">
         {handle}
-        <Icon className="size-4 text-gold-ink" aria-hidden />
+        <Icon className="size-4 text-brand-ink" aria-hidden />
         <span className="flex-1 text-sm font-medium">{t(`kind.${kind}`)}</span>
         <span className="text-xs text-muted-foreground" aria-live="polite">
           {dirty ? t("unsaved") : (

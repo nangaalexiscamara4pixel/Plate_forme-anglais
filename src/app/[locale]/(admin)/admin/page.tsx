@@ -35,7 +35,7 @@ export default async function AdminDashboardPage() {
             href={`/admin/students?status=${s}`}
             className={cn(
               "rounded-xl border bg-card p-5 transition-shadow hover:shadow-md focus-visible:ring-2",
-              s === "PENDING" && data.statuses.PENDING > 0 && "border-gold/60 ring-2 ring-gold/20",
+              s === "PENDING" && data.statuses.PENDING > 0 && "border-brand/60 ring-2 ring-brand/20",
             )}
           >
             <p className="text-sm text-muted-foreground">{t(`stats.${s}`)}</p>
@@ -45,7 +45,7 @@ export default async function AdminDashboardPage() {
       </section>
 
       {data.pending.length > 0 && (
-        <Card className="border-gold/50">
+        <Card className="border-brand/50">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="font-display text-xl font-medium">{t("pendingTitle")}</CardTitle>
             <Button asChild variant="ghost" size="sm">

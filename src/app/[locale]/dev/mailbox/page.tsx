@@ -46,7 +46,7 @@ export default async function DevMailboxPage() {
                 <ul className="mt-3 grid gap-1">
                   {links.map((href) => (
                     <li key={href} className="truncate text-sm">
-                      <a href={href} className="text-primary underline underline-offset-4 dark:text-gold-ink">
+                      <a href={href} className="text-primary underline underline-offset-4 dark:text-brand-ink">
                         {href}
                       </a>
                     </li>

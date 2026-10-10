@@ -39,7 +39,7 @@ export function NotificationBell({ items, unread }: { items: BellItem[]; unread:
         <Button variant="ghost" size="icon" className="relative" aria-label={t("label", { count: unread })}>
           <Bell className="size-4" aria-hidden />
           {unread > 0 && (
-            <span className="absolute top-1.5 right-1.5 flex size-4 items-center justify-center rounded-full bg-gold text-[10px] font-bold text-night">
+            <span className="absolute top-1.5 right-1.5 flex size-4 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">
               {unread > 9 ? "9+" : unread}
             </span>
           )}
@@ -54,7 +54,7 @@ export function NotificationBell({ items, unread }: { items: BellItem[]; unread:
           items.map((n) => (
             <DropdownMenuItem key={n.id} asChild>
               <Link href={n.studentId ? `/admin/students/${n.studentId}` : "/admin"} className="flex items-start gap-3">
-                <UserPlus className="mt-0.5 size-4 text-gold-ink" aria-hidden />
+                <UserPlus className="mt-0.5 size-4 text-brand-ink" aria-hidden />
                 <span className="grid gap-0.5">
                   <span className={n.readAt ? "text-muted-foreground" : "font-medium"}>
                     {n.type === "registration.pending" ? t("registration", { name: n.name ?? "?" }) : n.type}

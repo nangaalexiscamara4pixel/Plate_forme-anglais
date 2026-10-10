@@ -6,9 +6,9 @@
 
 /*
  * GlobeSpeak Academy — design tokens
- * Bleu nuit (#0B1B3A) · or doux (#C9A961) · blanc cassé (#FAF8F3)
- * Le doré n'est jamais utilisé pour du texte courant sur fond clair (contraste) :
- * on utilise alors --gold-ink, plus foncé, conforme AA.
+ * Couleurs du monde anglophone (drapeaux britannique et américain) :
+ * bleu marine (#0A2463) · rouge (#C8102E) · blanc. Le rouge sert aux boutons
+ * d'action et aux accents ; --brand-ink est la variante conforme AA pour du texte.
  */
 
 @theme inline {
@@ -21,8 +21,9 @@
 
   --color-night: var(--night);
   --color-night-foreground: var(--night-foreground);
-  --color-gold: var(--gold);
-  --color-gold-ink: var(--gold-ink);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
   --color-paper: var(--paper);
 
   --color-level-a1: var(--level-a1);
@@ -72,84 +73,87 @@
 }
 
 :root {
-  --night: oklch(0.22 0.07 263);
-  --night-foreground: oklch(0.98 0.007 85);
-  --gold: oklch(0.74 0.09 85);
-  --gold-ink: oklch(0.5 0.09 75);
-  --paper: oklch(0.98 0.007 85);
+  /* Couleurs des drapeaux britannique et américain : bleu marine, rouge, blanc */
+  --night: oklch(0.27 0.13 264); /* bleu marine ≈ #0A2463 */
+  --night-foreground: oklch(0.99 0.003 255);
+  --brand: oklch(0.53 0.21 25); /* rouge ≈ #C8102E — boutons, accents */
+  --brand-ink: oklch(0.5 0.2 25); /* rouge pour du texte sur fond clair (contraste AA) */
+  --brand-soft: oklch(0.76 0.14 20); /* rouge clair pour du texte/icône sur bleu marine (contraste AA) */
+  --paper: oklch(0.99 0.003 255); /* blanc légèrement froid */
 
   /* Couleurs de niveau validées (daltonisme ΔE ≥ 8, vision normale ΔE ≥ 15, contraste ≥ 3:1) :
-     A1 émeraude · A2 océan · B1 violet · B2 cramoisi */
+     A1 émeraude · A2 océan · B1 violet · B2 ambre (distinct du rouge de la marque) */
   --level-a1: oklch(0.55 0.13 155);
   --level-a2: oklch(0.6 0.13 230);
   --level-b1: oklch(0.48 0.17 290);
-  --level-b2: oklch(0.52 0.17 25);
+  --level-b2: oklch(0.66 0.13 75);
 
   --success: oklch(0.52 0.12 150);
   --warning: oklch(0.62 0.14 65);
 
   --background: var(--paper);
-  --foreground: oklch(0.23 0.03 268);
+  --foreground: oklch(0.22 0.05 264);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.23 0.03 268);
+  --card-foreground: oklch(0.22 0.05 264);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.23 0.03 268);
+  --popover-foreground: oklch(0.22 0.05 264);
   --primary: var(--night);
-  --primary-foreground: oklch(0.98 0.007 85);
-  --secondary: oklch(0.95 0.012 85);
-  --secondary-foreground: oklch(0.23 0.05 263);
-  --muted: oklch(0.95 0.01 85);
-  --muted-foreground: oklch(0.46 0.025 265);
-  --accent: oklch(0.94 0.025 85);
-  --accent-foreground: oklch(0.23 0.05 263);
+  --primary-foreground: oklch(0.99 0.003 255);
+  --secondary: oklch(0.96 0.01 255);
+  --secondary-foreground: oklch(0.27 0.1 264);
+  --muted: oklch(0.965 0.008 255);
+  --muted-foreground: oklch(0.46 0.03 262);
+  --accent: oklch(0.95 0.018 255);
+  --accent-foreground: oklch(0.27 0.1 264);
   --destructive: oklch(0.55 0.21 27);
-  --border: oklch(0.9 0.015 85);
-  --input: oklch(0.88 0.015 85);
-  --ring: oklch(0.62 0.09 80);
+  --border: oklch(0.91 0.012 255);
+  --input: oklch(0.89 0.014 255);
+  --ring: oklch(0.5 0.17 262);
   --chart-1: var(--level-a1);
   --chart-2: var(--level-a2);
   --chart-3: var(--level-b1);
   --chart-4: var(--level-b2);
-  --chart-5: var(--gold);
+  --chart-5: var(--brand);
   --radius: 0.75rem;
   --sidebar: var(--night);
-  --sidebar-foreground: oklch(0.92 0.01 85);
-  --sidebar-primary: var(--gold);
-  --sidebar-primary-foreground: var(--night);
-  --sidebar-accent: oklch(0.3 0.07 263);
-  --sidebar-accent-foreground: oklch(0.98 0.007 85);
-  --sidebar-border: oklch(0.32 0.06 263);
-  --sidebar-ring: var(--gold);
+  --sidebar-foreground: oklch(0.93 0.01 255);
+  --sidebar-primary: var(--brand);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.34 0.13 264);
+  --sidebar-accent-foreground: oklch(0.99 0.003 255);
+  --sidebar-border: oklch(0.36 0.11 264);
+  --sidebar-ring: var(--brand);
 }
 
 .dark {
-  --gold-ink: oklch(0.8 0.09 85);
+  --brand: oklch(0.6 0.21 25);
+  --brand-ink: oklch(0.72 0.16 22);
   --level-a1: oklch(0.64 0.14 150);
   --level-a2: oklch(0.66 0.12 225);
   --level-b1: oklch(0.56 0.18 300);
-  --level-b2: oklch(0.62 0.17 22);
+  --level-b2: oklch(0.67 0.13 75);
   --success: oklch(0.72 0.13 150);
   --warning: oklch(0.78 0.13 70);
 
-  --background: oklch(0.16 0.04 263);
-  --foreground: oklch(0.95 0.01 85);
-  --card: oklch(0.2 0.05 263);
-  --card-foreground: oklch(0.95 0.01 85);
-  --popover: oklch(0.2 0.05 263);
-  --popover-foreground: oklch(0.95 0.01 85);
-  --primary: var(--gold);
-  --primary-foreground: oklch(0.18 0.06 263);
-  --secondary: oklch(0.26 0.05 263);
-  --secondary-foreground: oklch(0.95 0.01 85);
-  --muted: oklch(0.24 0.045 263);
-  --muted-foreground: oklch(0.74 0.02 265);
-  --accent: oklch(0.28 0.05 263);
-  --accent-foreground: oklch(0.95 0.01 85);
+  --background: oklch(0.16 0.05 264);
+  --foreground: oklch(0.96 0.006 255);
+  --card: oklch(0.2 0.06 264);
+  --card-foreground: oklch(0.96 0.006 255);
+  --popover: oklch(0.2 0.06 264);
+  --popover-foreground: oklch(0.96 0.006 255);
+  --primary: oklch(0.96 0.006 255);
+  --primary-foreground: oklch(0.2 0.08 264);
+  --secondary: oklch(0.26 0.06 264);
+  --secondary-foreground: oklch(0.96 0.006 255);
+  --muted: oklch(0.24 0.055 264);
+  --muted-foreground: oklch(0.75 0.025 262);
+  --accent: oklch(0.28 0.07 264);
+  --accent-foreground: oklch(0.96 0.006 255);
   --destructive: oklch(0.68 0.19 25);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: var(--gold);
-  --sidebar: oklch(0.13 0.04 263);
+  --ring: oklch(0.72 0.12 262);
+  --sidebar: oklch(0.13 0.05 264);
   --sidebar-border: oklch(1 0 0 / 8%);
 }
 
@@ -199,16 +203,16 @@
     @apply mt-8 text-xl font-medium;
   }
   .prose-academy h4 {
-    @apply mt-6 font-sans text-base font-semibold tracking-wide uppercase text-gold-ink;
+    @apply mt-6 font-sans text-base font-semibold tracking-wide uppercase text-brand-ink;
   }
   .prose-academy ul {
-    @apply list-disc space-y-1.5 pl-6 marker:text-gold-ink;
+    @apply list-disc space-y-1.5 pl-6 marker:text-brand-ink;
   }
   .prose-academy ol {
-    @apply list-decimal space-y-1.5 pl-6 marker:text-gold-ink;
+    @apply list-decimal space-y-1.5 pl-6 marker:text-brand-ink;
   }
   .prose-academy blockquote {
-    @apply border-l-4 border-gold/60 pl-4 text-lg italic text-muted-foreground;
+    @apply border-l-4 border-brand/60 pl-4 text-lg italic text-muted-foreground;
     font-family: var(--font-fraunces), Georgia, serif;
   }
   .prose-academy hr {
@@ -229,6 +233,10 @@
 }
 
 @layer utilities {
+  /* Filet bleu-blanc-rouge, clin d'œil aux drapeaux britannique et américain */
+  .flag-rule {
+    background: linear-gradient(90deg, var(--night) 0 33.33%, oklch(1 0 0) 33.33% 66.66%, var(--brand) 66.66% 100%);
+  }
   /* Texture subtile « papier » pour les grands aplats */
   .bg-grain {
     background-image: radial-gradient(oklch(0 0 0 / 3%) 1px, transparent 1px);

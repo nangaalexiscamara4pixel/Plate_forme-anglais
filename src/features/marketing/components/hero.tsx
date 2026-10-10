@@ -46,9 +46,10 @@ export function Hero({ tiles }: { tiles: { main: ReactNode; topLeft: ReactNode; 
         <div className="hidden overflow-hidden rounded-2xl md:block [&>*]:h-full">{tiles.bottomRight}</div>
 
         {/* Encadré de titre, à cheval sur la mosaïque comme sur la maquette */}
-        <div className="relative -mt-24 mx-3 rounded-2xl bg-night/90 p-6 text-white shadow-2xl backdrop-blur-sm sm:p-8 md:absolute md:top-1/2 md:left-[12%] md:mx-0 md:mt-0 md:w-[min(560px,62%)] md:-translate-y-1/2">
-          <p className="mb-3 text-xs font-semibold tracking-[0.3em] text-gold uppercase">{t("eyebrow")}</p>
-          <div aria-live={running ? "off" : "polite"} className="min-h-[7.5rem] sm:min-h-[8.5rem]">
+        <div className="relative -mt-24 mx-3 rounded-2xl bg-night/90 p-6 text-white shadow-2xl backdrop-blur-sm sm:p-8 md:absolute md:bottom-6 md:left-[4%] md:mx-0 md:mt-0 md:w-[min(500px,46%)] md:p-7">
+          <div className="flag-rule mb-4 h-1 w-14 rounded-full" aria-hidden />
+          <p className="mb-3 text-xs font-semibold tracking-[0.3em] text-white/80 uppercase">{t("eyebrow")}</p>
+          <div aria-live={running ? "off" : "polite"} className="min-h-[7.5rem] sm:min-h-[8.5rem] md:min-h-[7.5rem]">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={index}
@@ -59,13 +60,13 @@ export function Hero({ tiles }: { tiles: { main: ReactNode; topLeft: ReactNode; 
                 aria-roledescription="slide"
                 aria-label={t("slideOf", { index: index + 1, total: slides.length })}
               >
-                <h1 className="text-3xl leading-tight font-medium text-balance sm:text-4xl">{slide.title}</h1>
+                <h1 className="text-3xl leading-tight font-medium text-balance sm:text-4xl md:text-[2rem]">{slide.title}</h1>
                 <p className="mt-3 text-white/75">{slide.text}</p>
               </motion.div>
             </AnimatePresence>
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Button asChild size="lg" className="bg-gold text-night hover:bg-gold/90">
+            <Button asChild size="lg" className="bg-brand text-white hover:bg-brand/90">
               <Link href="/sign-up">
                 {t("cta")} <ArrowRight className="size-4" aria-hidden />
               </Link>
@@ -87,7 +88,7 @@ export function Hero({ tiles }: { tiles: { main: ReactNode; topLeft: ReactNode; 
             aria-current={i === index ? "true" : undefined}
             className="flex size-6 items-center justify-center"
           >
-            <span className={cn("size-2 rounded-full transition-all", i === index ? "w-6 bg-gold" : "bg-muted-foreground/40 hover:bg-muted-foreground/70")} />
+            <span className={cn("size-2 rounded-full transition-all", i === index ? "w-6 bg-brand" : "bg-muted-foreground/40 hover:bg-muted-foreground/70")} />
           </button>
         ))}
         {!reduce && (

@@ -21,7 +21,7 @@ export function AdminMobileNav({ pending }: { pending: number }) {
       <SheetContent side="left" className="w-72 border-sidebar-border bg-sidebar p-4 text-sidebar-foreground">
         <SheetTitle className="sr-only">{t("label")}</SheetTitle>
         <div className="mb-6 px-2 pt-2">
-          <Logo className="[&_.text-gold-ink]:text-gold" />
+          <Logo className="[&_.text-brand-ink]:text-brand-soft" />
         </div>
         <AdminNav pending={pending} onNavigate={() => setOpen(false)} />
       </SheetContent>

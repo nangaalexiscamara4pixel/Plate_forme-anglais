@@ -134,7 +134,7 @@ export function LessonVideoPlayer({
             playbackId={video.source.playbackId}
             tokens={video.source.tokens}
             startTime={startAt}
-            accentColor="#C9A961"
+            accentColor="#C8102E"
             metadata={{ video_title: video.title }}
             onTimeUpdate={(e: Event) => onTime(e.target as unknown as MediaLike)}
             className="aspect-video w-full"
@@ -221,7 +221,7 @@ export function LessonVideoPlayer({
                   key={`${c.start}-${i}`}
                   type="button"
                   onClick={() => seek(c.start)}
-                  className={cn("mr-1 rounded px-0.5 text-left transition-colors hover:bg-accent", i === activeCue && "bg-gold/30")}
+                  className={cn("mr-1 rounded px-0.5 text-left transition-colors hover:bg-accent", i === activeCue && "bg-brand/30")}
                 >
                   {c.text}
                 </button>

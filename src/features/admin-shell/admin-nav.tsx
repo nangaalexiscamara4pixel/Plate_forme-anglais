@@ -32,11 +32,11 @@ export function AdminNav({ pending, onNavigate }: { pending: number; onNavigate?
               active && "bg-sidebar-accent font-medium text-sidebar-accent-foreground",
             )}
           >
-            <Icon className={cn("size-4", active && "text-gold")} aria-hidden />
+            <Icon className={cn("size-4", active && "text-brand-soft")} aria-hidden />
             <span className="flex-1">{t(key)}</span>
             {key === "students" && pending > 0 && (
               <span
-                className="rounded-full bg-gold px-2 py-0.5 text-xs font-semibold text-night"
+                className="rounded-full bg-brand px-2 py-0.5 text-xs font-semibold text-white"
                 aria-label={t("pendingBadge", { count: pending })}
               >
                 {pending}

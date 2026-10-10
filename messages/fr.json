@@ -750,15 +750,20 @@
       "play": "Reprendre le défilement"
     },
     "photos": {
-      "heroMain": "Une étudiante suit un cours d'anglais en ligne",
-      "heroTopLeft": "Un étudiant lit un texte en anglais",
-      "heroBottomLeft": "Des étudiants échangent en anglais",
-      "heroTopRight": "Une étudiante s'entraîne à l'oral",
-      "heroBottomRight": "Un étudiant rédige un texte",
-      "skillReading": "Lecture d'un texte en anglais",
-      "skillListening": "Écoute d'un enregistrement",
-      "skillSpeaking": "Pratique de l'oral",
-      "skillWriting": "Rédaction d'un texte"
+      "heroMain": "Une étudiante souriante suit un cours sur son ordinateur portable",
+      "heroTopLeft": "Une étudiante lit un livre",
+      "heroBottomLeft": "Des étudiants discutent dans un amphithéâtre",
+      "heroTopRight": "Les gratte-ciel de Manhattan et l'East River, à New York",
+      "heroBottomRight": "Un bus rouge à impériale dans une rue de Londres",
+      "skillReading": "Une femme lit un livre dans un canapé",
+      "skillListening": "Une étudiante écoute avec un casque audio",
+      "skillSpeaking": "Un groupe d'amis discute et rit en plein air",
+      "skillWriting": "Une main écrit au stylo rouge dans un cahier",
+      "levelA1": "Big Ben et un bus rouge à Londres",
+      "levelA2": "L'Empire State Building à New York au coucher du soleil",
+      "levelB1": "Le Golden Gate Bridge à San Francisco",
+      "levelB2": "La Radcliffe Camera à l'université d'Oxford",
+      "liveClass": "Deux personnes échangent en visioconférence"
     },
     "levels": {
       "eyebrow": "Nos formations",
@@ -820,7 +825,7 @@
           "text": "Supports et enregistrement restent disponibles après la séance."
         }
       ],
-      "imageAlt": "Un cours en direct sur Google Meet",
+      "imageAlt": "Deux personnes échangent en visioconférence",
       "badge": "Accès réservé aux étudiants inscrits"
     },
     "testimonials": {

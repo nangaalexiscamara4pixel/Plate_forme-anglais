@@ -357,8 +357,8 @@ Consentement explicite à l'inscription (version de la politique horodatée), ba
 
 ## 6. Design system
 
-- **Palette** : bleu nuit `#0B1B3A` (primaire), or doux `#C9A961` (accent), blanc cassé `#FAF8F3` (fond), encre `#1A1F2E` ; mode sombre dérivé (fond `#070F22`, or légèrement éclairci). Tous les couples texte/fond vérifiés AA.
-- **Accents de niveau** : A1 Discovery — émeraude ; A2 Explorer — turquoise ; B1 Navigator — indigo ; B2 Ambassador — bordeaux/pourpre. Chaque niveau a icône dédiée (boussole, longue-vue, gouvernail, globe/laurier…).
+- **Palette** (révisée à la demande du client) : couleurs des drapeaux britannique et américain. Bleu marine `#0A2463` en primaire, rouge `#C8102E` pour les actions et accents, blanc légèrement froid en fond. Un filet bleu-blanc-rouge sert de signature. Sur fond bleu marine, le texte rouge utilise une variante claire, conforme AA.
+- **Accents de niveau** (palette validée pour le daltonisme et le contraste) : A1 Discovery émeraude, A2 Explorer bleu océan, B1 Navigator violet, B2 Ambassador ambre. Chaque niveau est illustré par une ville anglophone : Londres, New York, San Francisco, Oxford.
 - **Typographie** : *Fraunces* (serif display élégante, titres) + *Inter* (texte), via `next/font` (auto-hébergées, pas d'appel Google Fonts à l'exécution → RGPD).
 - **Tokens** en variables CSS (Tailwind v4 `@theme`), thèmes clair/sombre via `next-themes`.
 - **Mouvement** : transitions 150–300 ms, `prefers-reduced-motion` respecté partout.

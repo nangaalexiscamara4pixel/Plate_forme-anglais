@@ -13,10 +13,10 @@ import {
 import type { ReactNode } from "react";
 
 const colors = {
-  night: "#0B1B3A",
-  gold: "#C9A961",
-  paper: "#FAF8F3",
-  ink: "#1A1F2E",
+  night: "#0A2463",
+  red: "#C8102E",
+  paper: "#F7F9FC",
+  ink: "#13203F",
   muted: "#5B6275",
 };
 
@@ -39,7 +39,7 @@ export function EmailLayout({
         <Container style={{ maxWidth: 560, margin: "0 auto", padding: "40px 24px" }}>
           <Section style={{ textAlign: "center", paddingBottom: 24 }}>
             <Text style={{ color: colors.night, fontSize: 20, letterSpacing: 2, margin: 0 }}>
-              GLOBESPEAK <span style={{ color: colors.gold }}>ACADEMY</span>
+              GLOBESPEAK <span style={{ color: colors.red }}>ACADEMY</span>
             </Text>
           </Section>
           <Section
@@ -47,7 +47,7 @@ export function EmailLayout({
               backgroundColor: "#ffffff",
               borderRadius: 12,
               padding: "32px 32px 24px",
-              borderTop: `4px solid ${colors.gold}`,
+              borderTop: `4px solid ${colors.red}`,
             }}
           >
             <Heading as="h1" style={{ color: colors.night, fontSize: 24, fontWeight: 600, margin: "0 0 16px" }}>
@@ -55,7 +55,7 @@ export function EmailLayout({
             </Heading>
             {children}
           </Section>
-          <Hr style={{ borderColor: "#E7E2D6", margin: "32px 0 16px" }} />
+          <Hr style={{ borderColor: "#DDE3EE", margin: "32px 0 16px" }} />
           <Text style={{ color: colors.muted, fontSize: 12, textAlign: "center", fontFamily: "Arial, sans-serif" }}>
             {locale === "fr"
               ? "Vous recevez cet email car un compte GlobeSpeak Academy est associé à cette adresse."

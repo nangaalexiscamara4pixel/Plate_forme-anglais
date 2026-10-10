@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-/** Emblème : globe à méridiens traversé d'une orbite dorée. */
+/** Emblème : globe à méridiens traversé d'une orbite rouge. */
 export function GlobeMark({
   className,
   title,
@@ -8,10 +8,10 @@ export function GlobeMark({
 }: {
   className?: string;
   title?: string;
-  /** Version décorative grand format : orbite dorée atténuée pour ne pas concurrencer le texte. */
+  /** Version décorative grand format : orbite atténuée pour ne pas concurrencer le texte. */
   subtle?: boolean;
 }) {
-  const goldOpacity = subtle ? 0.28 : 1;
+  const accentOpacity = subtle ? 0.28 : 1;
   return (
     <svg
       viewBox="0 0 48 48"
@@ -29,12 +29,12 @@ export function GlobeMark({
         rx="22"
         ry="7"
         fill="none"
-        stroke="var(--gold)"
-        strokeOpacity={goldOpacity}
+        stroke="var(--brand)"
+        strokeOpacity={accentOpacity}
         strokeWidth={subtle ? 0.8 : 2}
         transform="rotate(-24 24 24)"
       />
-      <circle cx="42.5" cy="15.5" r={subtle ? 1.2 : 2.4} fill="var(--gold)" fillOpacity={subtle ? 0.6 : 1} />
+      <circle cx="42.5" cy="15.5" r={subtle ? 1.2 : 2.4} fill="var(--brand)" fillOpacity={subtle ? 0.6 : 1} />
     </svg>
   );
 }
@@ -56,7 +56,7 @@ export function Logo({
       {!compact && (
         <span className={cn("flex flex-col leading-none", collapseOnMobile && "max-sm:hidden")}>
           <span className="font-display text-lg font-semibold tracking-wide">GlobeSpeak</span>
-          <span className="text-[0.62rem] font-medium uppercase tracking-[0.32em] text-gold-ink">Academy</span>
+          <span className="text-[0.62rem] font-medium uppercase tracking-[0.32em] text-brand-ink">Academy</span>
         </span>
       )}
     </span>

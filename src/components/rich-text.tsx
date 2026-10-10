@@ -27,13 +27,13 @@ function renderText(node: RichNode, key: number): ReactNode {
         el = <code className="rounded bg-muted px-1 py-0.5 font-mono text-[0.9em]">{el}</code>;
         break;
       case "highlight":
-        el = <mark className="rounded-sm bg-gold/30 px-0.5 text-inherit">{el}</mark>;
+        el = <mark className="rounded-sm bg-brand/30 px-0.5 text-inherit">{el}</mark>;
         break;
       case "link": {
         const href = safeHref(mark.attrs?.href);
         if (href) {
           el = (
-            <a href={href} target="_blank" rel="noopener noreferrer nofollow" className="font-medium text-primary underline underline-offset-4 dark:text-gold-ink">
+            <a href={href} target="_blank" rel="noopener noreferrer nofollow" className="font-medium text-primary underline underline-offset-4 dark:text-brand-ink">
               {el}
             </a>
           );

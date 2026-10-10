@@ -10,20 +10,20 @@ export async function AuthShell({ children }: { children: ReactNode }) {
   const t = await getTranslations("auth");
   return (
     <div className="grid min-h-dvh lg:grid-cols-[1.05fr_1fr]">
-      <aside className="relative hidden overflow-hidden bg-night text-night-foreground lg:flex lg:flex-col lg:justify-between lg:p-12">
+      <aside className="relative hidden overflow-hidden border-t-4 border-brand bg-night text-night-foreground lg:flex lg:flex-col lg:justify-between lg:p-12">
         <div className="pointer-events-none absolute -right-40 top-1/2 size-[640px] -translate-y-1/2 text-white/[0.07]" aria-hidden>
           <GlobeMark subtle className="size-full" />
         </div>
         <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,oklch(0.74_0.09_85/0.18),transparent_55%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,oklch(0.53_0.2_25/0.18),transparent_55%)]"
           aria-hidden
         />
         <Link href="/" className="relative w-fit rounded-md">
-          <Logo className="[&_.text-gold-ink]:text-gold" />
+          <Logo className="[&_.text-brand-ink]:text-brand-soft" />
         </Link>
         <figure className="relative max-w-md">
           <blockquote className="font-display text-3xl leading-snug font-light text-balance">{t("shellQuote")}</blockquote>
-          <figcaption className="mt-4 text-sm tracking-widest text-gold uppercase">{t("shellQuoteAuthor")}</figcaption>
+          <figcaption className="mt-4 text-sm tracking-widest text-brand-soft uppercase">{t("shellQuoteAuthor")}</figcaption>
         </figure>
         <div className="relative flex gap-3 text-xs tracking-[0.3em] text-white/50 uppercase">
           <span>A1</span>·<span>A2</span>·<span>B1</span>·<span>B2</span>

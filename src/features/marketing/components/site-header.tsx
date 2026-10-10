@@ -35,6 +35,7 @@ export function SiteHeader() {
 
   return (
     <header className={cn("sticky top-0 z-40 border-b bg-background/90 backdrop-blur transition-shadow", scrolled ? "border-border shadow-sm" : "border-transparent")}>
+      <div className="flag-rule h-1" aria-hidden />
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:h-[72px]">
         <Link href="/" className="rounded-md" aria-label={tc("brand")}>
           <Logo collapseOnMobile />
@@ -58,7 +59,7 @@ export function SiteHeader() {
           <Link href="/sign-in" className="hidden px-2 text-sm font-medium text-foreground/80 hover:text-foreground sm:inline">
             {tc("signIn")}
           </Link>
-          <Button asChild size="sm" className="hidden bg-gold text-night hover:bg-gold/90 sm:inline-flex">
+          <Button asChild size="sm" className="hidden bg-brand text-white hover:bg-brand/90 sm:inline-flex">
             <Link href="/sign-up">{tc("requestAccess")}</Link>
           </Button>
           <Sheet open={open} onOpenChange={setOpen}>
@@ -82,7 +83,7 @@ export function SiteHeader() {
                 </ul>
               </nav>
               <div className="mt-8 grid gap-2">
-                <Button asChild className="bg-gold text-night hover:bg-gold/90">
+                <Button asChild className="bg-brand text-white hover:bg-brand/90">
                   <Link href="/sign-up">{tc("requestAccess")}</Link>
                 </Button>
                 <Button asChild variant="outline">

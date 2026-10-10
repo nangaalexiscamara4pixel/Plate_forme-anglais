@@ -4,24 +4,25 @@
  * PHOTOS : déposez vos images dans `public/images/site/` (JPEG/WebP, ~1600 px de large pour
  * le héros, ~900 px pour les cartes) et renseignez `src`. Tant que `src` est vide, un visuel
  * de remplacement aux couleurs de l'Académie est affiché.
+ * Photos actuelles : Unsplash (licence libre) — voir public/images/site/CREDITS.md.
  */
-export type SiteImage = { src?: string; tone: "night" | "gold" | "a1" | "a2" | "b1" | "b2" };
+export type SiteImage = { src?: string; tone: "night" | "red" | "a1" | "a2" | "b1" | "b2" };
 
 export const SITE_IMAGES = {
-  heroMain: { tone: "night" },
-  heroTopLeft: { tone: "a1" },
-  heroBottomLeft: { tone: "gold" },
-  heroTopRight: { tone: "b1" },
-  heroBottomRight: { tone: "a2" },
-  levelA1: { tone: "a1" },
-  levelA2: { tone: "a2" },
-  levelB1: { tone: "b1" },
-  levelB2: { tone: "b2" },
-  skillReading: { tone: "a2" },
-  skillListening: { tone: "b1" },
-  skillSpeaking: { tone: "gold" },
-  skillWriting: { tone: "a1" },
-  liveClass: { tone: "night" },
+  heroMain: { tone: "night", src: "/images/site/hero-main.jpg" },
+  heroTopLeft: { tone: "a1", src: "/images/site/hero-reading.jpg" },
+  heroBottomLeft: { tone: "red", src: "/images/site/hero-students.jpg" },
+  heroTopRight: { tone: "b1", src: "/images/site/hero-new-york.jpg" },
+  heroBottomRight: { tone: "a2", src: "/images/site/hero-london.jpg" },
+  levelA1: { tone: "a1", src: "/images/site/level-a1-london.jpg" },
+  levelA2: { tone: "a2", src: "/images/site/level-a2-new-york.jpg" },
+  levelB1: { tone: "b1", src: "/images/site/level-b1-san-francisco.jpg" },
+  levelB2: { tone: "b2", src: "/images/site/level-b2-oxford.jpg" },
+  skillReading: { tone: "a2", src: "/images/site/skill-reading.jpg" },
+  skillListening: { tone: "b1", src: "/images/site/skill-listening.jpg" },
+  skillSpeaking: { tone: "red", src: "/images/site/skill-speaking.jpg" },
+  skillWriting: { tone: "a1", src: "/images/site/skill-writing.jpg" },
+  liveClass: { tone: "night", src: "/images/site/live-class.jpg" },
 } satisfies Record<string, SiteImage>;
 
 export type SiteImageKey = keyof typeof SITE_IMAGES;

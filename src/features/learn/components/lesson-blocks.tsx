@@ -9,7 +9,7 @@ import { VocabList } from "./vocab-list";
 
 const CALLOUT_STYLE = {
   info: { icon: Info, cls: "border-level-a2/40 bg-level-a2/5 [&_.callout-icon]:text-level-a2" },
-  tip: { icon: Lightbulb, cls: "border-gold/50 bg-gold/10 [&_.callout-icon]:text-gold-ink" },
+  tip: { icon: Lightbulb, cls: "border-brand/50 bg-brand/10 [&_.callout-icon]:text-brand-ink" },
   warning: { icon: TriangleAlert, cls: "border-warning/50 bg-warning/10 [&_.callout-icon]:text-warning" },
   culture: { icon: Globe2, cls: "border-level-b1/40 bg-level-b1/5 [&_.callout-icon]:text-level-b1" },
   grammar: { icon: BookMarked, cls: "border-level-a1/40 bg-level-a1/5 [&_.callout-icon]:text-level-a1" },

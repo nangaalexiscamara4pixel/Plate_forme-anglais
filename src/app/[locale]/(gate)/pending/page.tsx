@@ -17,10 +17,10 @@ export default async function PendingPage() {
 
   return (
     <div className="w-full max-w-xl text-center">
-      <span className="mx-auto mb-8 flex size-20 items-center justify-center rounded-full border border-gold/40 bg-card shadow-sm">
-        <Hourglass className="size-9 text-gold-ink motion-safe:animate-[spin_6s_ease-in-out_infinite]" aria-hidden />
+      <span className="mx-auto mb-8 flex size-20 items-center justify-center rounded-full border border-brand/40 bg-card shadow-sm">
+        <Hourglass className="size-9 text-brand-ink motion-safe:animate-[spin_6s_ease-in-out_infinite]" aria-hidden />
       </span>
-      <p className="mb-3 text-xs font-semibold tracking-[0.3em] text-gold-ink uppercase">{t("eyebrow")}</p>
+      <p className="mb-3 text-xs font-semibold tracking-[0.3em] text-brand-ink uppercase">{t("eyebrow")}</p>
       <h1 className="mb-5 text-3xl font-medium text-balance sm:text-4xl">{t("title")}</h1>
       <p className="mx-auto max-w-lg leading-relaxed text-muted-foreground">{t("body", { name: viewer.name })}</p>
 
@@ -33,7 +33,7 @@ export default async function PendingPage() {
               key={label}
               className={cn(
                 "flex items-center gap-3 rounded-lg border bg-card px-4 py-3 text-sm",
-                active && "border-gold/50 ring-2 ring-gold/15",
+                active && "border-brand/50 ring-2 ring-brand/15",
                 !done && !active && "opacity-60",
               )}
               aria-current={active ? "step" : undefined}
@@ -42,7 +42,7 @@ export default async function PendingPage() {
                 className={cn(
                   "flex size-6 shrink-0 items-center justify-center rounded-full border text-xs",
                   done && "border-success bg-success text-white",
-                  active && "border-gold text-gold-ink",
+                  active && "border-brand text-brand-ink",
                 )}
               >
                 {done ? <Check className="size-3.5" aria-hidden /> : i + 1}

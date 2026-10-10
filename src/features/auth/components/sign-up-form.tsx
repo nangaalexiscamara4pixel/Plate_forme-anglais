@@ -51,7 +51,7 @@ export function SignUpForm({
   if (state?.ok) {
     return (
       <div className="space-y-4 text-center" role="status">
-        <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-accent text-gold-ink">
+        <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-accent text-brand-ink">
           <MailCheck className="size-7" aria-hidden />
         </span>
         <h2 className="text-2xl font-medium">{t("successTitle")}</h2>

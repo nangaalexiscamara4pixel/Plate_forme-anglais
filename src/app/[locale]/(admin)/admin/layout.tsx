@@ -33,7 +33,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     <div className="min-h-dvh lg:grid lg:grid-cols-[16rem_1fr]">
       <aside className="sticky top-0 hidden h-dvh flex-col border-r border-sidebar-border bg-sidebar p-4 text-sidebar-foreground lg:flex">
         <Link href="/admin" className="mb-8 rounded-md px-2 pt-2">
-          <Logo className="[&_.text-gold-ink]:text-gold" />
+          <Logo className="[&_.text-brand-ink]:text-brand-soft" />
         </Link>
         <AdminNav pending={pending} />
         <div className="mt-auto rounded-lg border border-sidebar-border px-3 py-2 text-xs text-sidebar-foreground/70">
@@ -46,7 +46,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background/85 px-4 backdrop-blur sm:px-6">
           <div className="flex items-center gap-2">
             <AdminMobileNav pending={pending} />
-            <span className="text-xs font-semibold tracking-[0.25em] text-gold-ink uppercase">{t("title")}</span>
+            <span className="text-xs font-semibold tracking-[0.25em] text-brand-ink uppercase">{t("title")}</span>
           </div>
           <div className="flex items-center gap-1">
             <NotificationBell items={bellItems} unread={unread} />

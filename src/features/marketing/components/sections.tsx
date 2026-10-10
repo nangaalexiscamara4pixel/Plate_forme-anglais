@@ -12,7 +12,7 @@ export function SectionHeading({ eyebrow, title, subtitle, children, center = tr
   return (
     <div className={cn("mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between", center && !children && "sm:justify-center sm:text-center")}>
       <div className={cn("max-w-2xl", center && !children && "mx-auto")}>
-        {eyebrow && <p className="mb-2 text-xs font-semibold tracking-[0.3em] text-gold-ink uppercase">{eyebrow}</p>}
+        {eyebrow && <p className="mb-2 text-xs font-semibold tracking-[0.3em] text-brand-ink uppercase">{eyebrow}</p>}
         <h2 className="text-3xl font-medium text-balance sm:text-4xl">{title}</h2>
         {subtitle && <p className="mt-3 text-muted-foreground">{subtitle}</p>}
       </div>
@@ -74,6 +74,7 @@ export function PhotoCard({
 /** « Nos formations » — les quatre niveaux du CECRL. */
 export async function LevelsSection() {
   const t = await getTranslations("site.levels");
+  const tp = await getTranslations("site.photos");
   const tl = await getTranslations("levels");
   const images: Record<string, SiteImageKey> = { A1: "levelA1", A2: "levelA2", B1: "levelB1", B2: "levelB2" };
   return (
@@ -89,7 +90,7 @@ export async function LevelsSection() {
               key={code}
               href="/sign-up"
               image={images[code]!}
-              imageAlt={t("imageAlt", { level: `${code} ${tl(`${code}.name`)}` })}
+              imageAlt={tp(images[code]!)}
               badge={<Icon className={cn("size-4", theme.text)} aria-hidden />}
               title={`${code} · ${tl(`${code}.name`)}`}
               subtitle={tl(`${code}.tagline`)}
@@ -123,7 +124,7 @@ export async function LiveSection() {
     <section id="cours-en-direct" className="scroll-mt-24 bg-night text-night-foreground">
       <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 lg:grid-cols-2 lg:items-center">
         <div>
-          <p className="mb-2 text-xs font-semibold tracking-[0.3em] text-gold uppercase">{t("eyebrow")}</p>
+          <p className="mb-2 text-xs font-semibold tracking-[0.3em] text-brand-soft uppercase">{t("eyebrow")}</p>
           <h2 className="text-3xl font-medium text-balance sm:text-4xl">{t("title")}</h2>
           <p className="mt-3 text-white/70">{t("subtitle")}</p>
           <ol className="mt-8 grid gap-5">
@@ -131,12 +132,12 @@ export async function LiveSection() {
               const Icon = icons[i] ?? CheckCircle2;
               return (
                 <li key={s.title} className="flex gap-4">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-gold">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-brand-soft">
                     <Icon className="size-5" aria-hidden />
                   </span>
                   <div>
                     <p className="font-medium">
-                      <span className="mr-2 text-gold">{i + 1}.</span>
+                      <span className="mr-2 text-brand-soft">{i + 1}.</span>
                       {s.title}
                     </p>
                     <p className="text-sm text-white/65">{s.text}</p>
@@ -173,7 +174,7 @@ export async function TestimonialsSection() {
           const theme = LEVEL_THEME[item.level];
           return (
             <figure key={item.name} className="flex flex-col rounded-2xl border bg-card p-6 shadow-sm">
-              <Quote className="size-8 text-gold" aria-hidden />
+              <Quote className="size-8 text-brand" aria-hidden />
               <blockquote className="mt-4 flex-1 leading-relaxed">{item.quote[locale]}</blockquote>
               <figcaption className="mt-6 flex items-center gap-3 border-t pt-4">
                 <span className={cn("flex size-10 items-center justify-center rounded-full font-display text-white", theme.bg)} aria-hidden>
@@ -228,10 +229,10 @@ export async function CtaSection() {
     <section className="mx-auto max-w-6xl px-4 py-20">
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-night to-[oklch(0.3_0.08_263)] px-6 py-14 text-center text-white sm:px-12">
         <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden />
-        <Headphones className="relative mx-auto mb-5 size-10 text-gold" aria-hidden />
+        <Headphones className="relative mx-auto mb-5 size-10 text-brand-soft" aria-hidden />
         <h2 className="relative text-3xl font-medium text-balance sm:text-4xl">{t("title")}</h2>
         <p className="relative mx-auto mt-3 max-w-xl text-white/75">{t("text")}</p>
-        <Button asChild size="lg" className="relative mt-8 bg-gold text-night hover:bg-gold/90">
+        <Button asChild size="lg" className="relative mt-8 bg-brand text-white hover:bg-brand/90">
           <Link href="/sign-up">{tc("requestAccess")}</Link>
         </Button>
       </div>

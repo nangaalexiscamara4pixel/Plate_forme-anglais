@@ -14,7 +14,7 @@ export default async function GateLayout({ children }: { children: ReactNode }) 
     <div className="relative flex min-h-dvh flex-col overflow-hidden bg-grain">
       {viewer?.impersonatedBy && <ImpersonationBanner studentName={viewer.name} />}
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-[480px] bg-[radial-gradient(ellipse_at_top,oklch(0.74_0.09_85/0.16),transparent_65%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[480px] bg-[radial-gradient(ellipse_at_top,oklch(0.53_0.2_25/0.16),transparent_65%)]"
         aria-hidden
       />
       <header className="relative flex items-center justify-between p-4 sm:p-6">
