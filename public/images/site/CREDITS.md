@@ -4,7 +4,6 @@ Photos issues d'[Unsplash](https://unsplash.com), utilisées sous la [licence Un
 
 | Fichier | Photo |
 |---|---|
-| hero-london.jpg | https://unsplash.com/photos/sLtmudkaL9M |
 | hero-new-york.jpg | https://unsplash.com/photos/SVVTZtTGyaU |
 | level-a1-london.jpg | https://unsplash.com/photos/xqT1dfWb9RE |
 | level-a2-new-york.jpg | https://unsplash.com/photos/5omwAMDxmkU |

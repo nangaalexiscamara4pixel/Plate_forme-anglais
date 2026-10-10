@@ -16,7 +16,6 @@ const TONES = {
 const ICONS: Partial<Record<SiteImageKey, LucideIcon>> = {
   heroLondon: GraduationCap,
   heroDenim: Users,
-  heroUniform: BookOpen,
   skillReading: BookOpen,
   skillListening: Ear,
   skillSpeaking: Mic,

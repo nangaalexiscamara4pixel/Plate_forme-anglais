@@ -14,9 +14,7 @@ export const SITE_IMAGES = {
   // Première section : trois portraits d'étudiants
   heroLondon: { tone: "night", src: "/images/site/hero-student-london.jpg" },
   heroDenim: { tone: "night", src: "/images/site/hero-student-denim.jpg" },
-  heroUniform: { tone: "flag", src: "/images/site/hero-student-uniform.png", cutout: true },
   heroNewYork: { tone: "a2", src: "/images/site/hero-new-york.jpg" },
-  heroBus: { tone: "red", src: "/images/site/hero-london.jpg" },
   levelA1: { tone: "a1", src: "/images/site/level-a1-london.jpg" },
   levelA2: { tone: "a2", src: "/images/site/level-a2-new-york.jpg" },
   levelB1: { tone: "b1", src: "/images/site/level-b1-san-francisco.jpg" },

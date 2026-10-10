@@ -9,11 +9,11 @@ import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 /**
- * Héros : mosaïque de photos (fournies par le serveur) et encadré sombre dont le titre défile.
+ * Héros : mosaïque de photos (fournies par le serveur) — deux photos à gauche, une grande à droite — et encadré sombre dont le titre défile.
  * Le défilement s'arrête au survol, au focus, sur demande (bouton pause) et si l'utilisateur
  * préfère réduire les animations.
  */
-export function Hero({ tiles }: { tiles: { main: ReactNode; topLeft: ReactNode; bottomLeft: ReactNode; topRight: ReactNode; bottomRight: ReactNode } }) {
+export function Hero({ tiles }: { tiles: { main: ReactNode; topLeft: ReactNode; bottomLeft: ReactNode } }) {
   const t = useTranslations("site.hero");
   const slides = t.raw("slides") as { title: string; text: string }[];
   const reduce = useReducedMotion();
@@ -33,17 +33,15 @@ export function Hero({ tiles }: { tiles: { main: ReactNode; topLeft: ReactNode; 
   return (
     <section aria-roledescription="carousel" aria-label={t("label")} className="mx-auto max-w-6xl px-4 pt-6 sm:pt-10">
       <div
-        className="relative grid gap-3 md:h-[520px] md:grid-cols-[1fr_1.6fr_1fr] md:grid-rows-2"
+        className="relative grid gap-3 md:h-[520px] md:grid-cols-[1fr_2.6fr] md:grid-rows-2"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onFocus={() => setHovered(true)}
         onBlur={() => setHovered(false)}
       >
         <div className="hidden overflow-hidden rounded-2xl md:block [&>*]:h-full">{tiles.topLeft}</div>
-        <div className="h-72 overflow-hidden rounded-2xl sm:h-96 md:row-span-2 md:h-auto [&>*]:h-full">{tiles.main}</div>
-        <div className="hidden overflow-hidden rounded-2xl md:block [&>*]:h-full">{tiles.topRight}</div>
+        <div className="h-72 overflow-hidden rounded-2xl sm:h-96 md:col-start-2 md:row-span-2 md:row-start-1 md:h-auto [&>*]:h-full">{tiles.main}</div>
         <div className="hidden overflow-hidden rounded-2xl md:block [&>*]:h-full">{tiles.bottomLeft}</div>
-        <div className="hidden overflow-hidden rounded-2xl md:block [&>*]:h-full">{tiles.bottomRight}</div>
 
         {/* Encadré de titre, à cheval sur la mosaïque comme sur la maquette */}
         <div className="relative -mt-24 mx-3 rounded-2xl bg-night/90 p-6 text-white shadow-2xl backdrop-blur-sm sm:p-8 md:absolute md:bottom-6 md:left-[4%] md:mx-0 md:mt-0 md:w-[min(500px,46%)] md:p-7">

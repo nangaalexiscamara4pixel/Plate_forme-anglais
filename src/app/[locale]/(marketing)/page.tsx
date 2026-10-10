@@ -12,7 +12,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("site.photos");
-  const big = "(min-width: 768px) 45vw, 100vw";
+  const big = "(min-width: 768px) 70vw, 100vw";
   const small = "(min-width: 768px) 25vw, 0px";
 
   return (
@@ -22,8 +22,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           main: <SitePhoto name="heroLondon" alt={t("heroLondon")} sizes={big} priority />,
           topLeft: <SitePhoto name="heroDenim" alt={t("heroDenim")} sizes={small} position="top" />,
           bottomLeft: <SitePhoto name="heroNewYork" alt={t("heroNewYork")} sizes={small} />,
-          topRight: <SitePhoto name="heroBus" alt={t("heroBus")} sizes={small} />,
-          bottomRight: <SitePhoto name="heroUniform" alt={t("heroUniform")} sizes={small} />,
         }}
       />
       <LevelsSection />
