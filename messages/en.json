@@ -65,6 +65,8 @@
       "title": "Request access",
       "subtitle": "Create your account: our team will review your application and assign your level.",
       "name": "Full name",
+      "whatsapp": "WhatsApp number",
+      "whatsappHint": "Include your country code, e.g. +44 7700 900123. Our team will use it to contact you about your application.",
       "country": "Country (optional)",
       "countryPlaceholder": "Select a country",
       "timezone": "Time zone",
@@ -267,6 +269,7 @@
       },
       "identity": "Details",
       "country": "Country",
+      "whatsapp": "WhatsApp",
       "timezone": "Time zone",
       "language": "Interface language",
       "nativeLanguage": "Native language",
@@ -616,7 +619,8 @@
     "backupCodeInvalid": "Invalid backup code.",
     "titleTooShort": "Title too short.",
     "dateInvalid": "Invalid date.",
-    "altRequired": "Alternative text is required."
+    "altRequired": "Alternative text is required.",
+    "whatsappInvalid": "Invalid WhatsApp number: include your country code (e.g. +44 7700 900123)."
   },
   "errors": {
     "validation": "Please correct the highlighted fields.",
@@ -869,6 +873,9 @@
       "linksLabel": "Useful links",
       "privacy": "Privacy",
       "studentArea": "Student area",
+      "contactTitle": "Contact us",
+      "contactText": "Message us on WhatsApp or by email.",
+      "whatsappLabel": "Message {number} on WhatsApp",
       "newsletterTitle": "Newsletter",
       "newsletterText": "Tips to improve and Academy news, once or twice a month.",
       "emailPlaceholder": "Your email address",

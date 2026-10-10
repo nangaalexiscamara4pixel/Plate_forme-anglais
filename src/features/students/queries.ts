@@ -42,7 +42,7 @@ export const studentListSelect = {
   lastLoginAt: true,
   twoFactorEnabled: true,
   currentLevel: { select: { code: true, name: true } },
-  profile: { select: { country: true, timezone: true, uiLocale: true } },
+  profile: { select: { country: true, whatsapp: true, timezone: true, uiLocale: true } },
 } satisfies Prisma.UserSelect;
 
 export async function listStudents(f: StudentFilters) {
@@ -74,6 +74,7 @@ export async function getStudentDetail(id: string) {
       profile: {
         select: {
           country: true,
+          whatsapp: true,
           timezone: true,
           uiLocale: true,
           nativeLanguage: true,

@@ -75,6 +75,18 @@ export function SignUpForm({
         maxLength={80}
         onChange={(e) => setName(e.target.value)}
       />
+      <Field
+        name="whatsapp"
+        label={t("whatsapp")}
+        hint={t("whatsappHint")}
+        state={state}
+        type="tel"
+        autoComplete="tel"
+        inputMode="tel"
+        placeholder="+33 6 12 34 56 78"
+        required
+        maxLength={32}
+      />
       <Field name="email" label={tc("email")} state={state} type="email" autoComplete="email" required inputMode="email" />
       <div className="grid gap-2">
         <Field

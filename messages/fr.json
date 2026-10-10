@@ -65,6 +65,8 @@
       "title": "Demander mon accès",
       "subtitle": "Créez votre compte : notre équipe examinera votre demande et vous attribuera votre niveau.",
       "name": "Nom complet",
+      "whatsapp": "Numéro WhatsApp",
+      "whatsappHint": "Avec l'indicatif du pays, par ex. +33 6 12 34 56 78. Notre équipe l'utilisera pour vous contacter au sujet de votre inscription.",
       "country": "Pays (optionnel)",
       "countryPlaceholder": "Choisir un pays",
       "timezone": "Fuseau horaire",
@@ -267,6 +269,7 @@
       },
       "identity": "Informations",
       "country": "Pays",
+      "whatsapp": "WhatsApp",
       "timezone": "Fuseau horaire",
       "language": "Langue de l'interface",
       "nativeLanguage": "Langue maternelle",
@@ -616,7 +619,8 @@
     "backupCodeInvalid": "Code de secours invalide.",
     "titleTooShort": "Titre trop court.",
     "dateInvalid": "Date invalide.",
-    "altRequired": "Le texte alternatif est obligatoire."
+    "altRequired": "Le texte alternatif est obligatoire.",
+    "whatsappInvalid": "Numéro WhatsApp invalide : indiquez-le avec l'indicatif du pays (ex. +33 6 12 34 56 78)."
   },
   "errors": {
     "validation": "Merci de corriger les champs indiqués.",
@@ -869,6 +873,9 @@
       "linksLabel": "Liens utiles",
       "privacy": "Confidentialité",
       "studentArea": "Espace étudiant",
+      "contactTitle": "Nous contacter",
+      "contactText": "Écrivez-nous sur WhatsApp ou par email.",
+      "whatsappLabel": "Écrire sur WhatsApp au {number}",
       "newsletterTitle": "Newsletter",
       "newsletterText": "Conseils pour progresser et nouveautés de l'Académie, une à deux fois par mois.",
       "emailPlaceholder": "Votre adresse email",

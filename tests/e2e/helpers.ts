@@ -94,6 +94,7 @@ export async function registerStudent(browser: Browser, s: { name: string; email
   const page = await (await browser.newContext()).newPage();
   await page.goto("/sign-up");
   await page.getByLabel("Nom complet").fill(s.name);
+  await page.getByLabel("Numéro WhatsApp").fill("+33 6 12 34 56 78");
   await page.getByLabel("Adresse email").fill(s.email);
   await page.getByLabel("Mot de passe").fill(s.password);
   await page.getByRole("checkbox").check();

@@ -315,6 +315,7 @@ model Profile {
   userId               String    @unique
   avatarKey            String?
   country              String?   // ISO 3166-1 alpha-2
+  whatsapp             String?   // E.164 (ex. +33612345678), demandé à l'inscription
   nativeLanguage       String?   // BCP 47
   timezone             String    @default("Europe/Paris") // IANA
   uiLocale             String    @default("fr")

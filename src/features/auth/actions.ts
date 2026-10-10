@@ -63,6 +63,7 @@ export const signUpAction = createAction(signUpSchema, async (input): Promise<Ac
     where: { userId: result.user.id },
     data: {
       country: input.country ?? null,
+      whatsapp: input.whatsapp,
       timezone: input.timezone,
       uiLocale: input.locale,
       privacyConsentAt: new Date(),

@@ -108,6 +108,20 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
               <CardContent>
                 <dl className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                   <Info label={t("country")}>{countryName}</Info>
+                  <Info label={t("whatsapp")}>
+                    {student.profile?.whatsapp ? (
+                      <a
+                        href={`https://wa.me/${student.profile.whatsapp.slice(1)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium underline-offset-4 hover:underline"
+                      >
+                        {student.profile.whatsapp}
+                      </a>
+                    ) : (
+                      "—"
+                    )}
+                  </Info>
                   <Info label={t("timezone")}>{student.profile?.timezone ?? "—"}</Info>
                   <Info label={t("language")}>{student.profile?.uiLocale?.toUpperCase() ?? "—"}</Info>
                   <Info label={t("nativeLanguage")}>{student.profile?.nativeLanguage ?? "—"}</Info>

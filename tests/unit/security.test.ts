@@ -28,6 +28,7 @@ describe("politique de mot de passe", () => {
 describe("inscription", () => {
   const valid = {
     name: "Amina",
+    whatsapp: "+221 77 123 45 67",
     email: "  Amina@Example.TEST ",
     password: "Violet-Harbour-42",
     timezone: "Africa/Dakar",
@@ -39,6 +40,15 @@ describe("inscription", () => {
   });
   it("exige le consentement RGPD", () => {
     expect(signUpSchema.safeParse({ ...valid, consent: undefined }).success).toBe(false);
+  });
+  it("normalise le numéro WhatsApp au format international", () => {
+    expect(signUpSchema.parse(valid).whatsapp).toBe("+221771234567");
+    expect(signUpSchema.parse({ ...valid, whatsapp: "00 33 (6) 12-34-56-78" }).whatsapp).toBe("+33612345678");
+  });
+  it("exige un numéro WhatsApp avec indicatif", () => {
+    for (const whatsapp of [undefined, "", "06 12 34 56 78", "+0612345678", "+33 abc", "+1234"]) {
+      expect(signUpSchema.safeParse({ ...valid, whatsapp }).success).toBe(false);
+    }
   });
   it("rejette un fuseau horaire inventé", () => {
     expect(signUpSchema.safeParse({ ...valid, timezone: "Mars/Olympus" }).success).toBe(false);

@@ -37,8 +37,17 @@ const timezoneSchema = z
     }
   }, "timezoneInvalid");
 
+/** Numéro WhatsApp au format international E.164 : espaces, tirets, points et parenthèses ignorés ; « 00 » vaut « + ». */
+export const whatsappSchema = z
+  .string()
+  .trim()
+  .max(32, "whatsappInvalid")
+  .transform((v) => v.replace(/[\s().-]/g, "").replace(/^00/, "+"))
+  .pipe(z.string().min(1, "required").regex(/^\+[1-9]\d{7,14}$/, "whatsappInvalid"));
+
 export const signUpSchema = z.object({
   name: z.string().trim().min(2, "nameTooShort").max(80, "nameTooLong"),
+  whatsapp: whatsappSchema,
   email: emailSchema,
   password: passwordSchema,
   country: z
