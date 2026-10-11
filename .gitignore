@@ -55,3 +55,6 @@ next-env.d.ts
 
 # PostgreSQL local
 .pg/
+
+# Comptes de démonstration locaux (jamais versionnés)
+.dev-accounts.md
