@@ -18,6 +18,8 @@ const schema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   APP_URL: z.url(),
   DATABASE_URL: z.string().min(1),
+  /** Connexion directe (sans pool) : migrations et écoute temps réel (LISTEN ne passe pas par PgBouncer). */
+  DATABASE_URL_UNPOOLED: optional,
   BETTER_AUTH_SECRET: z.string().min(32),
   ENCRYPTION_KEY: base64Key32,
   GOOGLE_CLIENT_ID: optional,
@@ -62,14 +64,11 @@ if (!parsed.success) {
   throw new Error(`Configuration invalide (.env) :\n${issues}`);
 }
 
-// En production, l'envoi d'emails est indispensable (vérification, réinitialisation).
-// Le contrôle est ignoré pendant `next build`, qui évalue les modules sans les exécuter en service.
-if (
-  parsed.data.NODE_ENV === "production" &&
-  process.env.NEXT_PHASE !== "phase-production-build" &&
-  !parsed.data.RESEND_API_KEY
-) {
-  throw new Error("RESEND_API_KEY est obligatoire en production.");
+// En production, l'envoi d'emails est nécessaire (vérification des comptes, mot de passe oublié).
+// Sans clé, le site démarre quand même (consultation, connexion de l'administrateur) mais aucun
+// email ne part : on le signale clairement dans les journaux plutôt que de bloquer tout le site.
+if (parsed.data.NODE_ENV === "production" && process.env.NEXT_PHASE !== "phase-production-build" && !parsed.data.RESEND_API_KEY) {
+  console.error("[config] RESEND_API_KEY manquante : aucun email ne sera envoyé (inscriptions impossibles).");
 }
 
 export const env = parsed.data;

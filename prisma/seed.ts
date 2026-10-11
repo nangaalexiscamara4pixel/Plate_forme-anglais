@@ -190,7 +190,8 @@ async function main() {
   await seedLevels();
   await seedSettings();
   await seedAdmin();
-  await seedDemoContent();
+  // Contenus de démonstration : développement uniquement (en production, l'Académie ajoute les siens).
+  if (process.env.SEED_DEMO_CONTENT !== "false") await seedDemoContent();
 }
 
 main()

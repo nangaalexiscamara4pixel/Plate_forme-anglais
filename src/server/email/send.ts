@@ -24,6 +24,11 @@ export async function sendEmail(to: string | string[], message: EmailMessage): P
   const html = await render(message.react);
   const text = await render(message.react, { plainText: true });
 
+  if (!resend && process.env.NODE_ENV === "production") {
+    // Pas de boîte de développement en production (disque en lecture seule) : l'email est perdu.
+    logger.error({ subject: message.subject }, "email non envoyé : RESEND_API_KEY manquante");
+    return;
+  }
   if (!resend) {
     await mkdir(DEV_MAILBOX_DIR, { recursive: true });
     const id = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;

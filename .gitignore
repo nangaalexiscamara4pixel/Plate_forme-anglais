@@ -58,3 +58,6 @@ next-env.d.ts
 
 # Comptes de démonstration locaux (jamais versionnés)
 .dev-accounts.md
+
+# Projet Vercel lié localement
+.vercel

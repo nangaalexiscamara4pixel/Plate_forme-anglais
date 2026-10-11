@@ -25,7 +25,8 @@ const bus: Bus = (g.liveBus ??= { client: null, connecting: null, listeners: new
 export async function ensureListening(): Promise<void> {
   if (bus.client) return;
   bus.connecting ??= (async () => {
-    const client = new Client({ connectionString: env.DATABASE_URL });
+    // LISTEN exige une connexion directe : un pool en mode transaction (PgBouncer) perdrait l'abonnement.
+    const client = new Client({ connectionString: env.DATABASE_URL_UNPOOLED ?? env.DATABASE_URL });
     client.on("notification", (msg) => {
       if (msg.channel !== CHANNEL || !msg.payload) return;
       try {
