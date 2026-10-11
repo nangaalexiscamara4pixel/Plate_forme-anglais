@@ -8,6 +8,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { AdminNav } from "@/features/admin-shell/admin-nav";
 import { AdminMobileNav } from "@/features/admin-shell/mobile-nav";
 import { NotificationBell, type BellItem } from "@/features/admin-shell/notification-bell";
+import { pendingReviewCount } from "@/features/assignments/server";
 import { pendingCount } from "@/features/students/queries";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/server/db";
@@ -19,8 +20,9 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   // Garde serveur : rôle ADMIN + 2FA activée + session < 12 h (sinon 404 / redirection).
   const admin = await requireAdmin();
   const t = await getTranslations("admin");
-  const [pending, notifications, unread] = await Promise.all([
+  const [pending, reviews, notifications, unread] = await Promise.all([
     pendingCount(),
+    pendingReviewCount(),
     db.notification.findMany({ where: { userId: admin.userId }, orderBy: { createdAt: "desc" }, take: 8 }),
     db.notification.count({ where: { userId: admin.userId, readAt: null } }),
   ]);
@@ -35,7 +37,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         <Link href="/admin" className="mb-8 rounded-md px-2 pt-2">
           <Logo className="[&_.text-brand-ink]:text-brand-soft" />
         </Link>
-        <AdminNav pending={pending} />
+        <AdminNav pending={pending} reviews={reviews} />
         <div className="mt-auto rounded-lg border border-sidebar-border px-3 py-2 text-xs text-sidebar-foreground/70">
           <p className="truncate font-medium text-sidebar-foreground">{admin.name}</p>
           <p className="truncate">{admin.email}</p>
@@ -45,7 +47,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
       <div className="flex min-w-0 flex-col">
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background/85 px-4 backdrop-blur sm:px-6">
           <div className="flex items-center gap-2">
-            <AdminMobileNav pending={pending} />
+            <AdminMobileNav pending={pending} reviews={reviews} />
             <span className="text-xs font-semibold tracking-[0.25em] text-brand-ink uppercase">{t("title")}</span>
           </div>
           <div className="flex items-center gap-1">

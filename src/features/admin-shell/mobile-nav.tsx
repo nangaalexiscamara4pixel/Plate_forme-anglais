@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { AdminNav } from "./admin-nav";
 
-export function AdminMobileNav({ pending }: { pending: number }) {
+export function AdminMobileNav({ pending, reviews }: { pending: number; reviews?: number }) {
   const t = useTranslations("admin.nav");
   const [open, setOpen] = useState(false);
   return (
@@ -23,7 +23,7 @@ export function AdminMobileNav({ pending }: { pending: number }) {
         <div className="mb-6 px-2 pt-2">
           <Logo className="[&_.text-brand-ink]:text-brand-soft" />
         </div>
-        <AdminNav pending={pending} onNavigate={() => setOpen(false)} />
+        <AdminNav pending={pending} reviews={reviews} onNavigate={() => setOpen(false)} />
       </SheetContent>
     </Sheet>
   );

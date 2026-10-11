@@ -7,7 +7,7 @@ import { parseChapters, parseSubtitles } from "@/features/video/captions";
 import { extensionFor, matchesSignature, MEDIA_POLICY, type UploadPurpose } from "./policy";
 
 /**
- * Médiathèque du CMS (administrateurs uniquement — l'appelant vérifie le rôle).
+ * Médiathèque du CMS et enregistrements d'étudiants (l'appelant vérifie le rôle et la propriété).
  * Upload en deux temps : URL signée → envoi direct par le navigateur → confirmation
  * serveur (taille + signature binaire). Un fichier non confirmé n'est jamais servi.
  */
@@ -20,7 +20,7 @@ export class MediaError extends Error {
 
 export async function requestUpload(
   actor: AuditContext,
-  input: { purpose: UploadPurpose; mime: string; size: number; name: string },
+  input: { purpose: UploadPurpose; mime: string; size: number; name: string; ownerUserId?: string },
 ): Promise<{ mediaId: string; upload: PresignedUpload }> {
   const policy = MEDIA_POLICY[input.purpose];
   if (!(policy.mimes as readonly string[]).includes(input.mime)) throw new MediaError("TYPE_NOT_ALLOWED");
@@ -37,6 +37,7 @@ export async function requestUpload(
       originalName: input.name.slice(0, 200),
       purpose: input.purpose,
       uploadedById: actor.actorId,
+      ownerUserId: input.ownerUserId ?? null,
     },
   });
   return { mediaId: media.id, upload: await storage.presignUpload(key, input.mime, input.size) };

@@ -10,7 +10,7 @@ export type UploadState = { status: "idle" } | { status: "uploading"; progress: 
  * Upload direct navigateur → stockage (URL signée), avec progression,
  * puis confirmation serveur (taille et signature binaire vérifiées).
  */
-export function useUpload(purpose: UploadPurpose) {
+export function useUpload(purpose: Exclude<UploadPurpose, "SUBMISSION_AUDIO">) {
   const [state, setState] = useState<UploadState>({ status: "idle" });
 
   const upload = useCallback(

@@ -10,6 +10,8 @@ export const MEDIA_POLICY = {
   LESSON_AUDIO: { maxBytes: 50 * MB, mimes: ["audio/mpeg", "audio/mp4", "audio/x-m4a", "audio/webm", "audio/ogg", "audio/wav", "audio/x-wav"] },
   LESSON_IMAGE: { maxBytes: 10 * MB, mimes: ["image/jpeg", "image/png", "image/webp", "image/avif"] },
   LESSON_DOCUMENT: { maxBytes: 25 * MB, mimes: ["application/pdf"] },
+  // Enregistrements des étudiants (devoirs d'expression orale), produits par le navigateur
+  SUBMISSION_AUDIO: { maxBytes: 20 * MB, mimes: ["audio/webm", "audio/ogg", "audio/mp4"] },
 } as const;
 
 export type UploadPurpose = keyof typeof MEDIA_POLICY;

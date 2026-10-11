@@ -111,3 +111,13 @@ export async function registerStudent(browser: Browser, s: { name: string; email
   await expect(page).toHaveURL(/\/pending$/);
   return page;
 }
+
+/** Approuve un étudiant en attente depuis sa fiche, au niveau donné (ex. « A1 – Discovery »). */
+export async function approveStudent(admin: Page, name: string, levelLabel: string) {
+  await admin.goto("/admin/students?status=PENDING");
+  await admin.getByRole("link", { name: new RegExp(name) }).click();
+  await admin.getByRole("button", { name: "Approuver" }).click();
+  await admin.getByRole("dialog").getByLabel("Niveau").selectOption({ label: levelLabel });
+  await admin.getByRole("dialog").getByRole("button", { name: "Approuver" }).click();
+  await expect(admin.getByText("Compte approuvé.")).toBeVisible();
+}

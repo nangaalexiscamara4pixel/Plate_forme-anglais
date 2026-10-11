@@ -1,6 +1,6 @@
 "use client";
 
-import { Clapperboard, LayoutDashboard, Library, Radio, ScrollText, ShieldCheck, Users } from "lucide-react";
+import { ClipboardList, Clapperboard, LayoutDashboard, Library, NotebookPen, Radio, ScrollText, ShieldCheck, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
@@ -10,12 +10,14 @@ const ITEMS = [
   { href: "/admin/students", key: "students", icon: Users },
   { href: "/admin/content", key: "content", icon: Library },
   { href: "/admin/media", key: "media", icon: Clapperboard },
+  { href: "/admin/exercises", key: "exercises", icon: ClipboardList },
+  { href: "/admin/assignments", key: "assignments", icon: NotebookPen },
   { href: "/admin/live", key: "live", icon: Radio },
   { href: "/admin/audit", key: "audit", icon: ScrollText },
   { href: "/admin/account", key: "account", icon: ShieldCheck },
 ] as const;
 
-export function AdminNav({ pending, onNavigate }: { pending: number; onNavigate?: () => void }) {
+export function AdminNav({ pending, reviews = 0, onNavigate }: { pending: number; reviews?: number; onNavigate?: () => void }) {
   const t = useTranslations("admin.nav");
   const pathname = usePathname();
   return (
@@ -35,6 +37,11 @@ export function AdminNav({ pending, onNavigate }: { pending: number; onNavigate?
           >
             <Icon className={cn("size-4", active && "text-brand-soft")} aria-hidden />
             <span className="flex-1">{t(key)}</span>
+            {key === "assignments" && reviews > 0 && (
+              <span className="rounded-full bg-brand px-2 py-0.5 text-xs font-semibold text-white" aria-label={t("reviewBadge", { count: reviews })}>
+                {reviews}
+              </span>
+            )}
             {key === "students" && pending > 0 && (
               <span
                 className="rounded-full bg-brand px-2 py-0.5 text-xs font-semibold text-white"

@@ -27,6 +27,7 @@ export default defineConfig({
     url: "http://localhost:3100",
     timeout: 180_000,
     reuseExistingServer: false,
-    env: { ...testEnv, DEV_MAILBOX_DIR: E2E_MAILBOX },
+    // Next.js lit aussi .env : on neutralise les services externes (salle virtuelle en mode démo).
+    env: { ...testEnv, DEV_MAILBOX_DIR: E2E_MAILBOX, LIVEKIT_URL: "", LIVEKIT_API_KEY: "", LIVEKIT_API_SECRET: "" },
   },
 });

@@ -133,7 +133,8 @@ export const deleteBlockAction = createAction(z.object({ blockId: id }), async (
 
 export const requestUploadAction = createAction(
   z.object({
-    purpose: z.enum(Object.keys(MEDIA_POLICY) as [keyof typeof MEDIA_POLICY, ...(keyof typeof MEDIA_POLICY)[]]),
+    // Médiathèque : fichiers de cours uniquement (les enregistrements d'étudiants ont leur propre circuit).
+    purpose: z.enum(["LESSON_VIDEO", "LESSON_AUDIO", "LESSON_IMAGE", "LESSON_DOCUMENT"]),
     mime: z.string().max(100),
     size: z.number().int().positive(),
     name: z.string().max(255),

@@ -31,6 +31,17 @@ export const AUDIT_ACTIONS = [
   "live.session.create",
   "live.session.cancel",
   "live.message.delete",
+  "exercise.create",
+  "exercise.update",
+  "exercise.status",
+  "exercise.delete",
+  "exercise.question.save",
+  "exercise.question.delete",
+  "assignment.create",
+  "assignment.update",
+  "assignment.status",
+  "assignment.delete",
+  "submission.review",
 ] as const;
 
 export type AuditAction = (typeof AUDIT_ACTIONS)[number];

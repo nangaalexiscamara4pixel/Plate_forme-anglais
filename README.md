@@ -151,6 +151,21 @@ node scripts/make-demo-video.mjs
 2. Créez un token d'API R2 avec lecture et écriture sur ce bucket : `R2_ACCESS_KEY_ID` et `R2_SECRET_ACCESS_KEY`. Votre identifiant de compte va dans `R2_ACCOUNT_ID`.
 3. Dans la politique CORS du bucket, autorisez `PUT` et `GET` depuis votre domaine (uploads directs depuis le navigateur).
 
+## Exercices et devoirs
+
+Deux espaces vides, prêts à recevoir vos contenus :
+
+| Où | Ce qu'on y fait |
+|---|---|
+| `/admin/exercises` | créer un exercice (niveau, type, seuil de réussite, tentatives, durée), y ajouter des questions, le publier ; voir les résultats des étudiants |
+| `/admin/assignments` | créer un devoir d'expression écrite (nombre de mots) ou orale (durée max.), le publier ; file des copies à corriger, note sur 100 et commentaire |
+| `/app/exercises` | l'étudiant passe les exercices publiés de ses niveaux : correction immédiate, explications, meilleur score |
+| `/app/assignments` | l'étudiant rédige (brouillon enregistré automatiquement) ou s'enregistre au micro, envoie, puis lit la correction ; il peut renvoyer une version améliorée |
+
+Types de questions : choix unique, compréhension orale (audio + choix), choix multiples, vrai/faux, texte à trous (`I {am|'m} a student.` : réponses entre accolades, variantes séparées par `|`), réponse courte (casse, espaces et ponctuation finale ignorés), remettre dans l'ordre, associer. Crédit partiel pour les textes à trous et les associations.
+
+Sécurité : la clé de correction n'est jamais envoyée au navigateur avant la validation ; la note est calculée sur le serveur ; tentatives et durée sont contrôlées côté serveur ; un étudiant ne voit que les contenus publiés de ses niveaux (sinon 404) et n'accède qu'à ses propres enregistrements ; un exercice ou un devoir déjà rendu s'archive au lieu d'être supprimé (les résultats sont conservés).
+
 ## Salle virtuelle (cours en direct)
 
 Les cours en direct se déroulent dans la salle virtuelle intégrée, sans lien externe :
@@ -206,6 +221,7 @@ Ce qui est couvert aujourd'hui :
   - inscription → email → attente → admin avec 2FA → approbation B1 → accès ;
   - fiche étudiant → approbation A2 → « voir en tant que » → sortie → suspension avec motif → étudiant bloqué → audit → export CSV ;
   - étudiant A1 : vidéo sous-titrée, transcription, flux refusé aux anonymes, leçon B1 introuvable ; l'admin crée et publie une leçon, que l'étudiant voit ensuite.
+- **Exercices et devoirs** : les 8 types de questions (saisie, version publique sans clé, correction tolérante, crédit partiel) ; en E2E, création d'un exercice et de ses questions, passage par un étudiant A1 avec correction détaillée, devoir écrit (brouillon, nombre de mots, envoi, correction, note visible par l'étudiant), devoir oral (enregistrement au micro, envoi, écoute par l'enseignant, fichier refusé aux anonymes), progression sur la fiche étudiant.
 - **Salle virtuelle** : fenêtre d'ouverture, isolation par niveau, rôle enseignant, ordre des participants ; en E2E, séance d'un autre niveau introuvable (page et flux temps réel), présence, chat dans les deux sens, « j'aime », main levée → notification → prise de parole, suppression d'un message par l'enseignant.
 - **Contenus** : isolation par niveau et par statut de publication ; accès aux médias uniquement via une leçon autorisée ; liste blanche du texte riche (XSS) ; réordonnancement anti-IDOR ; signature binaire des uploads ; jetons de stockage ; protection contre le path traversal.
 
