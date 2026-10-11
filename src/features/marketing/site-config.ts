@@ -23,7 +23,6 @@ export const SITE_IMAGES = {
   skillListening: { tone: "b1", src: "/images/site/skill-listening-headphones.jpg" },
   skillSpeaking: { tone: "red", src: "/images/site/skill-speaking-stage.jpg" },
   skillWriting: { tone: "a1", src: "/images/site/skill-writing-pencil.jpg" },
-  liveClass: { tone: "night", src: "/images/site/live-class.jpg" },
 } satisfies Record<string, SiteImage>;
 
 export type SiteImageKey = keyof typeof SITE_IMAGES;

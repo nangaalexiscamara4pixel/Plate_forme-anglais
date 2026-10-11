@@ -215,6 +215,10 @@ model User {
   vocab            UserVocab[]
   attendances      Attendance[]          @relation("AttendanceStudent")
   attendanceMarked Attendance[]          @relation("AttendanceMarkedBy")
+  liveMessages     LiveChatMessage[]     @relation("LiveChatAuthor")
+  liveMessagesDeleted LiveChatMessage[]  @relation("LiveChatDeletedBy")
+  liveLikes        LiveChatLike[]
+  livePresences    LiveRoomPresence[]
   liveSeries       LiveSeries[]
   xpEvents         XpEvent[]
   dailyActivity    DailyActivity[]
@@ -791,6 +795,8 @@ model LiveSession {
   materials      LiveSessionMaterial[]
   attendances    Attendance[]
   reminders      ReminderLog[]
+  chatMessages   LiveChatMessage[]
+  presences      LiveRoomPresence[]
 
   @@index([levelId, startsAt])
   @@index([startsAt, status])
@@ -804,6 +810,51 @@ model LiveSessionMaterial {
   mediaFile   MediaFile   @relation(fields: [mediaFileId], references: [id], onDelete: Cascade)
 
   @@unique([sessionId, mediaFileId])
+}
+
+// ── Salle virtuelle : chat, likes, présence et mains levées ──
+// La vidéo passe par LiveKit (salle « gs-<id de séance> ») ; ces tables portent tout le reste,
+// diffusé en temps réel par Postgres LISTEN/NOTIFY + Server-Sent Events.
+
+model LiveChatMessage {
+  id          String         @id @default(cuid())
+  sessionId   String
+  userId      String
+  body        String         // texte brut (500 caractères max), jamais interprété comme HTML
+  createdAt   DateTime       @default(now())
+  deletedAt   DateTime?
+  deletedById String?
+  session     LiveSession    @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  user        User           @relation("LiveChatAuthor", fields: [userId], references: [id], onDelete: Cascade)
+  deletedBy   User?          @relation("LiveChatDeletedBy", fields: [deletedById], references: [id], onDelete: SetNull)
+  likes       LiveChatLike[]
+
+  @@index([sessionId, createdAt])
+}
+
+model LiveChatLike {
+  messageId String
+  userId    String
+  createdAt DateTime        @default(now())
+  message   LiveChatMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([messageId, userId])
+}
+
+/// Une ligne par personne et par séance : présente si lastSeenAt est récent (pulsation toutes les 20 s).
+model LiveRoomPresence {
+  sessionId      String
+  userId         String
+  joinedAt       DateTime    @default(now())
+  lastSeenAt     DateTime    @default(now())
+  handRaisedAt   DateTime?
+  floorGrantedAt DateTime?
+  session        LiveSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([sessionId, userId])
+  @@index([sessionId, lastSeenAt])
 }
 
 model Attendance {

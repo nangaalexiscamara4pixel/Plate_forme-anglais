@@ -1,6 +1,6 @@
 "use client";
 
-import { Clapperboard, LayoutDashboard, Library, ScrollText, ShieldCheck, Users } from "lucide-react";
+import { Clapperboard, LayoutDashboard, Library, Radio, ScrollText, ShieldCheck, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
@@ -10,6 +10,7 @@ const ITEMS = [
   { href: "/admin/students", key: "students", icon: Users },
   { href: "/admin/content", key: "content", icon: Library },
   { href: "/admin/media", key: "media", icon: Clapperboard },
+  { href: "/admin/live", key: "live", icon: Radio },
   { href: "/admin/audit", key: "audit", icon: ScrollText },
   { href: "/admin/account", key: "account", icon: ShieldCheck },
 ] as const;

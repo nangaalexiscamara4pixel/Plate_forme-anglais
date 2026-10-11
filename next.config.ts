@@ -7,8 +7,9 @@ const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
-  // Le micro est autorisé sur notre origine (exercices Speaking) ; tout le reste est désactivé.
-  { key: "Permissions-Policy", value: "camera=(), microphone=(self), geolocation=(), payment=(), usb=()" },
+  // Caméra, micro et partage d'écran autorisés sur notre origine (salle virtuelle, exercices Speaking) ;
+  // tout le reste est désactivé.
+  { key: "Permissions-Policy", value: "camera=(self), microphone=(self), display-capture=(self), geolocation=(), payment=(), usb=()" },
 ];
 
 const nextConfig: NextConfig = {

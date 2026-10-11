@@ -20,6 +20,7 @@ import {
   type SiteImageKey,
 } from "../site-config";
 import { Reveal } from "./reveal";
+import { RoomShowcase } from "./room-showcase";
 import { SitePhoto } from "./site-photo";
 
 export function SectionHeading({
@@ -213,7 +214,7 @@ export async function LevelsSection() {
   );
 }
 
-/** Déroulé des cours en direct sur Google Meet. */
+/** Cours en direct : déroulé et aperçu animé de la salle virtuelle intégrée. */
 export async function LiveSection() {
   const t = await getTranslations("site.live");
   const steps = t.raw("steps") as { title: string; text: string }[];
@@ -252,13 +253,8 @@ export async function LiveSection() {
             })}
           </ol>
         </div>
-        <Reveal className="group relative">
-          <SitePhoto
-            name="liveClass"
-            alt={t("imageAlt")}
-            className="aspect-[4/3] rounded-2xl"
-            sizes="(min-width: 1024px) 50vw, 100vw"
-          />
+        <Reveal className="relative">
+          <RoomShowcase />
           <div className="absolute -bottom-5 left-5 flex items-center gap-3 rounded-xl bg-white px-4 py-3 text-sm text-night shadow-xl">
             <ShieldCheck className="size-5 text-success" aria-hidden />
             {t("badge")}

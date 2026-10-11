@@ -48,6 +48,11 @@ const schema = z.object({
   R2_SECRET_ACCESS_KEY: optional,
   R2_BUCKET: optional,
   LOCAL_STORAGE_DIR: optional,
+  // Salle virtuelle (LiveKit) — sans ces clés, la salle fonctionne en mode démo (chat, réactions,
+  // mains levées et présence actifs ; vidéo limitée à l'aperçu de sa propre caméra)
+  LIVEKIT_URL: optional.pipe(z.string().regex(/^wss?:\/\//, "doit commencer par wss://").optional()),
+  LIVEKIT_API_KEY: optional,
+  LIVEKIT_API_SECRET: optional,
 });
 
 const parsed = schema.safeParse(process.env);

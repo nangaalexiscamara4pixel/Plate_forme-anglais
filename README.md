@@ -151,6 +151,25 @@ node scripts/make-demo-video.mjs
 2. Créez un token d'API R2 avec lecture et écriture sur ce bucket : `R2_ACCESS_KEY_ID` et `R2_SECRET_ACCESS_KEY`. Votre identifiant de compte va dans `R2_ACCOUNT_ID`.
 3. Dans la politique CORS du bucket, autorisez `PUT` et `GET` depuis votre domaine (uploads directs depuis le navigateur).
 
+## Salle virtuelle (cours en direct)
+
+Les cours en direct se déroulent dans la salle virtuelle intégrée, sans lien externe :
+
+| Où | Ce qu'on y fait |
+|---|---|
+| `/admin/live` | programmer une séance (titre, niveau, date, heure, durée), l'annuler, ouvrir la salle en tant qu'enseignant |
+| `/app/live` | l'étudiant voit les séances de **son niveau**, avec compte à rebours |
+| `/room/<id>` | la salle : hall d'accueil (test caméra/micro), mosaïque vidéo, chat avec « j'aime », main levée, « maintenir pour parler » (bouton ou barre d'espace), réactions animées, liste des participants ; l'enseignant partage son écran, modère le chat et donne la parole |
+
+Règles d'accès (`src/features/live/rules.ts`, testées) : la salle ouvre 15 min avant le début et ferme 30 min après la fin prévue ; un étudiant n'entre que dans les séances de son niveau actuel (sinon 404) ; l'enseignant peut préparer la salle à l'avance ; l'impersonation reste en lecture seule. Chaque action (message, j'aime, main levée…) repasse par ces contrôles côté serveur et par une limitation de débit ; le flux temps réel (Server-Sent Events + Postgres LISTEN/NOTIFY, sans service supplémentaire) revérifie l'accès toutes les 20 s.
+
+**Vidéo.** Sans configuration, la salle tourne en **mode démo** : chat, réactions, mains levées et présence fonctionnent en direct, chacun voit sa propre caméra et les autres sous forme d'avatar. Pour la vidéo de groupe :
+
+1. Créez un projet sur [LiveKit Cloud](https://cloud.livekit.io) (offre gratuite pour démarrer) ou auto-hébergez LiveKit.
+2. Dans *Settings → Keys*, créez une clé et renseignez `LIVEKIT_URL` (`wss://<projet>.livekit.cloud`), `LIVEKIT_API_KEY` et `LIVEKIT_API_SECRET` dans `.env`, puis redémarrez le serveur.
+
+Les jetons vidéo sont émis par le serveur après contrôle d'accès, pour une seule salle et 3 h ; seul l'enseignant peut partager son écran.
+
 ## Tests automatisés
 
 Les tests utilisent une **base dédiée**, jamais celle de développement : la suite vide ses tables.
@@ -187,6 +206,7 @@ Ce qui est couvert aujourd'hui :
   - inscription → email → attente → admin avec 2FA → approbation B1 → accès ;
   - fiche étudiant → approbation A2 → « voir en tant que » → sortie → suspension avec motif → étudiant bloqué → audit → export CSV ;
   - étudiant A1 : vidéo sous-titrée, transcription, flux refusé aux anonymes, leçon B1 introuvable ; l'admin crée et publie une leçon, que l'étudiant voit ensuite.
+- **Salle virtuelle** : fenêtre d'ouverture, isolation par niveau, rôle enseignant, ordre des participants ; en E2E, séance d'un autre niveau introuvable (page et flux temps réel), présence, chat dans les deux sens, « j'aime », main levée → notification → prise de parole, suppression d'un message par l'enseignant.
 - **Contenus** : isolation par niveau et par statut de publication ; accès aux médias uniquement via une leçon autorisée ; liste blanche du texte riche (XSS) ; réordonnancement anti-IDOR ; signature binaire des uploads ; jetons de stockage ; protection contre le path traversal.
 
 ## Scripts

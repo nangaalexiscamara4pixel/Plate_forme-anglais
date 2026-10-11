@@ -89,9 +89,16 @@ export async function signInAdmin(browser: Browser): Promise<Page> {
   return page;
 }
 
-/** Inscrit un étudiant par l'interface et confirme son email : il est alors « en attente ». */
+let visitor = 0;
+
+/**
+ * Inscrit un étudiant par l'interface et confirme son email : il est alors « en attente ».
+ * Chaque étudiant simulé a sa propre adresse IP (derrière le proxy) : la limite de 3 inscriptions
+ * par heure et par IP s'applique comme pour de vrais visiteurs.
+ */
 export async function registerStudent(browser: Browser, s: { name: string; email: string; password: string }): Promise<Page> {
-  const page = await (await browser.newContext()).newPage();
+  const context = await browser.newContext({ extraHTTPHeaders: { "x-forwarded-for": `198.51.100.${++visitor}` } });
+  const page = await context.newPage();
   await page.goto("/sign-up");
   await page.getByLabel("Nom complet").fill(s.name);
   await page.getByLabel("Numéro WhatsApp").fill("+33 6 12 34 56 78");

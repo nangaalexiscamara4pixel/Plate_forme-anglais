@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, Home } from "lucide-react";
+import { BookOpen, Home, Radio } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
@@ -12,6 +12,7 @@ export function StudentNav() {
   const items = [
     { href: "/app", label: t("home"), icon: Home, active: pathname === "/app" },
     { href: "/app/learn", label: t("courses"), icon: BookOpen, active: pathname.startsWith("/app/learn") },
+    { href: "/app/live", label: t("live"), icon: Radio, active: pathname.startsWith("/app/live") },
   ];
   return (
     <nav aria-label={t("label")} className="flex items-center gap-1">

@@ -13,8 +13,22 @@ import { routing } from "@/i18n/routing";
  */
 const intl = createIntlMiddleware(routing);
 
-const PRIVATE_PREFIXES = ["/app", "/admin"];
+const PRIVATE_PREFIXES = ["/app", "/admin", "/room"];
 const localePattern = new RegExp(`^/(${routing.locales.join("|")})(?=/|$)`);
+
+/** Serveur LiveKit (salle virtuelle) : LiveKit Cloud, ou l'hôte de LIVEKIT_URL s'il est auto-hébergé. */
+function liveKitSources() {
+  const sources = ["wss://*.livekit.cloud", "https://*.livekit.cloud"];
+  try {
+    if (process.env.LIVEKIT_URL) {
+      const url = new URL(process.env.LIVEKIT_URL);
+      sources.push(`${url.protocol}//${url.host}`, `${url.protocol === "wss:" ? "https:" : "http:"}//${url.host}`);
+    }
+  } catch {
+    // URL invalide : refusée au démarrage par src/env.ts
+  }
+  return sources.join(" ");
+}
 
 function buildCsp(nonce: string) {
   const isDev = process.env.NODE_ENV === "development";
@@ -27,7 +41,7 @@ function buildCsp(nonce: string) {
     "font-src 'self'",
     "media-src 'self' blob: https://stream.mux.com https://*.r2.cloudflarestorage.com",
     // Mux (lecture, statistiques, upload direct via Google Cloud Storage) et R2 (uploads pré-signés)
-    "connect-src 'self' https://*.mux.com https://*.litix.io https://storage.googleapis.com https://*.r2.cloudflarestorage.com",
+    `connect-src 'self' https://*.mux.com https://*.litix.io https://storage.googleapis.com https://*.r2.cloudflarestorage.com ${liveKitSources()}`,
     "worker-src 'self' blob:",
     "frame-src 'none'",
     "object-src 'none'",

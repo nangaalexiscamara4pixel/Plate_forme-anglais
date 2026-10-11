@@ -1,4 +1,4 @@
-import { BookOpen, Ear, GraduationCap, type LucideIcon, Mic, PenLine, Users, Video } from "lucide-react";
+import { BookOpen, Ear, GraduationCap, type LucideIcon, Mic, PenLine, Users } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SITE_IMAGES, type SiteImage, type SiteImageKey } from "../site-config";
@@ -20,7 +20,6 @@ const ICONS: Partial<Record<SiteImageKey, LucideIcon>> = {
   skillListening: Ear,
   skillSpeaking: Mic,
   skillWriting: PenLine,
-  liveClass: Video,
 };
 
 /**

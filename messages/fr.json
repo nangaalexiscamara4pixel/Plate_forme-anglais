@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "GlobeSpeak Academy — L'anglais, avec excellence",
-    "description": "Académie internationale d'anglais en ligne : niveaux A1 à B2, cours en direct sur Google Meet, suivi personnalisé."
+    "description": "Académie internationale d'anglais en ligne : niveaux A1 à B2, cours en direct dans une salle virtuelle intégrée, suivi personnalisé."
   },
   "common": {
     "brand": "GlobeSpeak Academy",
@@ -163,7 +163,8 @@
     "nav": {
       "label": "Navigation de l'espace étudiant",
       "home": "Accueil",
-      "courses": "Mes cours"
+      "courses": "Mes cours",
+      "live": "Cours en direct"
     },
     "goToCourses": "Mes cours"
   },
@@ -192,7 +193,8 @@
       "account": "Mon compte",
       "pendingBadge": "{count, plural, one {# demande en attente} other {# demandes en attente}}",
       "content": "Contenus",
-      "media": "Médiathèque"
+      "media": "Médiathèque",
+      "live": "Cours en direct"
     },
     "notifications": {
       "label": "Notifications ({count} non lues)",
@@ -410,7 +412,10 @@
       "content_block_update": "a modifié un bloc de leçon",
       "media_upload": "a ajouté un fichier",
       "media_delete": "a supprimé un fichier",
-      "video_update": "a modifié une vidéo"
+      "video_update": "a modifié une vidéo",
+      "live_session_create": "Séance en direct créée",
+      "live_session_cancel": "Séance en direct annulée",
+      "live_message_delete": "Message du chat supprimé"
     },
     "account": {
       "title": "Mon compte",
@@ -620,7 +625,13 @@
     "titleTooShort": "Titre trop court.",
     "dateInvalid": "Date invalide.",
     "altRequired": "Le texte alternatif est obligatoire.",
-    "whatsappInvalid": "Numéro WhatsApp invalide : indiquez-le avec l'indicatif du pays (ex. +33 6 12 34 56 78)."
+    "whatsappInvalid": "Numéro WhatsApp invalide : indiquez-le avec l'indicatif du pays (ex. +33 6 12 34 56 78).",
+    "messageTooLong": "Message trop long (500 caractères maximum).",
+    "titleTooLong": "Titre trop long.",
+    "descriptionTooLong": "Description trop longue.",
+    "timeInvalid": "Heure invalide.",
+    "durationInvalid": "Durée invalide.",
+    "dateInPast": "Cette date est déjà passée."
   },
   "errors": {
     "validation": "Merci de corriger les champs indiqués.",
@@ -735,7 +746,7 @@
       "slides": [
         {
           "title": "Parlez anglais avec assurance, partout dans le monde.",
-          "text": "Des cours en direct sur Google Meet et un parcours complet, du niveau A1 au B2."
+          "text": "Des cours en direct dans notre salle virtuelle et un parcours complet, du niveau A1 au B2."
         },
         {
           "title": "Quatre niveaux, quatre compétences, une méthode.",
@@ -762,7 +773,6 @@
       "levelA2": "Affiche du niveau A2 Élémentaire : une étudiante en pull vert devant Big Ben",
       "levelB1": "Affiche du niveau B1 Intermédiaire : une étudiante en pull orange à son bureau, Big Ben en arrière-plan",
       "levelB2": "Affiche du niveau B2 Avancé : une étudiante en veste violette à son bureau, Big Ben en arrière-plan",
-      "liveClass": "Deux personnes échangent en visioconférence",
       "heroLondon": "Un étudiant souriant tient des livres devant Big Ben et le drapeau britannique",
       "heroDenim": "Une étudiante souriante en veste en jean, sacoche en cuir sous le bras, lève le pouce",
       "heroNewYork": "Les gratte-ciel de Manhattan et l'East River, à New York"
@@ -807,8 +817,8 @@
     },
     "live": {
       "eyebrow": "Cours en direct",
-      "title": "Des cours en direct sur Google Meet, en petits groupes",
-      "subtitle": "Retrouvez votre enseignant et les étudiants de votre niveau chaque semaine. Le planning s'affiche automatiquement dans votre fuseau horaire.",
+      "title": "Une salle virtuelle intégrée, en petits groupes",
+      "subtitle": "Retrouvez votre enseignant et les étudiants de votre niveau chaque semaine, en vidéo, directement sur la plateforme. Le planning s'affiche dans votre fuseau horaire.",
       "steps": [
         {
           "title": "Consultez votre planning",
@@ -819,16 +829,39 @@
           "text": "Un email vous prévient 24 h puis 1 h avant chaque cours."
         },
         {
-          "title": "Rejoignez en un clic",
-          "text": "Le bouton « Rejoindre » s'active quelques minutes avant le début. Le lien n'est jamais public."
+          "title": "Entrez dans la salle en un clic",
+          "text": "Vidéo, chat, main levée et réactions, sans lien à partager ni logiciel à installer. La salle est réservée aux étudiants de votre niveau."
         },
         {
           "title": "Revoyez le cours",
           "text": "Supports et enregistrement restent disponibles après la séance."
         }
       ],
-      "imageAlt": "Deux personnes échangent en visioconférence",
-      "badge": "Accès réservé aux étudiants inscrits"
+      "badge": "Accès réservé aux étudiants inscrits",
+      "showcase": {
+        "description": "Aperçu de la salle virtuelle : l'enseignant parle, une étudiante lève la main, les messages du chat s'affichent et des réactions s'envolent.",
+        "title": "Speaking club · A1",
+        "live": "En direct",
+        "chat": "Chat",
+        "messages": [
+          {
+            "name": "Awa",
+            "text": "Hello everyone! 👋"
+          },
+          {
+            "name": "Kofi",
+            "text": "How do you say « je suis ravi » ?"
+          },
+          {
+            "name": "Mr. Carter",
+            "text": "“I'm delighted” — great question!"
+          },
+          {
+            "name": "Fatou",
+            "text": "Can I try the next one? ✋"
+          }
+        ]
+      }
     },
     "testimonials": {
       "eyebrow": "Témoignages",
@@ -848,7 +881,7 @@
         },
         {
           "q": "Comment se déroulent les cours en direct ?",
-          "a": "Sur Google Meet, en petits groupes du même niveau. Le lien de chaque séance n'est visible que par les étudiants inscrits, quelques minutes avant le début."
+          "a": "Dans la salle virtuelle GlobeSpeak, en petits groupes du même niveau : vidéo, chat, main levée et réactions, directement sur la plateforme. Seuls les étudiants inscrits à la séance peuvent y entrer, à partir de 15 minutes avant le début."
         },
         {
           "q": "Faut-il installer un logiciel ?",
@@ -893,6 +926,149 @@
       "invalidText": "Ce lien de confirmation n'est plus valable. Vous pouvez vous réinscrire depuis le pied de page du site.",
       "unsubscribedTitle": "Désinscription prise en compte",
       "unsubscribedText": "Vous ne recevrez plus la newsletter. Vous pouvez vous réinscrire à tout moment."
+    }
+  },
+  "live": {
+    "title": "Cours en direct",
+    "eyebrow": "Salle virtuelle",
+    "subtitle": "Retrouvez votre enseignant et votre groupe en vidéo, directement sur la plateforme : pas de lien à copier, pas de logiciel à installer.",
+    "features": {
+      "video": "Vidéo HD",
+      "chat": "Chat en direct",
+      "hand": "Main levée",
+      "reactions": "Réactions"
+    },
+    "emptyTitle": "Aucun cours en direct programmé",
+    "emptyText": "Les prochaines séances de votre niveau apparaîtront ici. Vous recevrez aussi un rappel.",
+    "startsIn": "Commence dans {time}",
+    "startedSince": "Commencé depuis {time}",
+    "duration": "{minutes} min",
+    "presentCount": "{count, plural, one {# présent} other {# présents}}",
+    "cancel": "Annuler la séance",
+    "cancelConfirm": "Annuler la séance « {title} » ? Les étudiants ne pourront plus y accéder.",
+    "cancelled": "Séance annulée.",
+    "joinLive": "Rejoindre en direct",
+    "openRoom": "Ouvrir la salle",
+    "enter": "Entrer dans la salle",
+    "opensAt": "Salle ouverte dès {time}",
+    "phase": {
+      "upcoming": "À venir",
+      "open": "Salle ouverte",
+      "live": "En direct",
+      "ended": "Terminée",
+      "cancelled": "Annulée"
+    },
+    "admin": {
+      "title": "Cours en direct",
+      "subtitle": "Programmez les séances et animez-les dans la salle virtuelle GlobeSpeak.",
+      "upcoming": "Séances à venir",
+      "emptyTitle": "Aucune séance programmée",
+      "emptyText": "Créez votre première séance avec le formulaire.",
+      "newSession": "Nouvelle séance",
+      "liveKitOn": "Vidéo de groupe active (LiveKit configuré).",
+      "liveKitOff": "Mode démo : chat, réactions, mains levées et présence fonctionnent ; la vidéo de groupe s'active en renseignant LIVEKIT_URL, LIVEKIT_API_KEY et LIVEKIT_API_SECRET.",
+      "created": "Séance programmée.",
+      "titleLabel": "Titre",
+      "titlePlaceholder": "Ex. Conversation : se présenter",
+      "level": "Niveau",
+      "duration": "Durée",
+      "minutes": "{count} min",
+      "date": "Date",
+      "time": "Heure",
+      "timezoneHint": "Fuseau : {timezone}",
+      "descriptionLabel": "Description (optionnelle)",
+      "descriptionPlaceholder": "Objectif de la séance, matériel à prévoir…",
+      "create": "Programmer la séance"
+    },
+    "room": {
+      "virtualRoom": "Salle virtuelle",
+      "back": "Retour",
+      "levelLabel": "Niveau {level}",
+      "reconnecting": "Reconnexion…",
+      "connecting": "Connexion…",
+      "live": "En direct",
+      "startsIn": "Début dans {time}",
+      "startedSince": "Commencé depuis {time}",
+      "people": "{count, plural, one {# participant} other {# participants}}",
+      "participants": "Participants",
+      "micMuted": "Micro coupé",
+      "teacher": "Enseignant",
+      "student": "Étudiant",
+      "screenOf": "Écran de {name}",
+      "you": "{name} (vous)",
+      "me": "Vous",
+      "panelLabel": "Discussion et participants",
+      "chat": "Chat",
+      "closePanel": "Fermer le panneau",
+      "chatEmptyTitle": "Dites bonjour !",
+      "chatEmptyText": "Posez vos questions ici, l'enseignant les voit en direct. Pensez à écrire en anglais 😉",
+      "newMessages": "{count, plural, one {# nouveau message} other {# nouveaux messages}}",
+      "chatPlaceholder": "Écrire un message…",
+      "send": "Envoyer",
+      "chatHint": "Entrée pour envoyer · Maj + Entrée pour aller à la ligne",
+      "like": "J'aime",
+      "unlike": "Je n'aime plus",
+      "likeCount": "{count, plural, one {# j'aime} other {# j'aime}}",
+      "deleteMessage": "Supprimer le message",
+      "handRaisedAgo": "Main levée {when}",
+      "hasFloor": "A la parole",
+      "grantFloor": "Donner la parole",
+      "lowerHandOf": "Baisser la main de {name}",
+      "talking": "Vous parlez…",
+      "micOn": "Activer le micro",
+      "micOff": "Couper le micro",
+      "pushToTalk": "Maintenir pour parler",
+      "pushToTalkHint": "Maintenez ce bouton (ou la barre d'espace) pour parler, relâchez pour couper le micro.",
+      "camOn": "Activer la caméra",
+      "camOff": "Couper la caméra",
+      "screenOn": "Partager l'écran",
+      "screenOff": "Arrêter le partage",
+      "raiseHand": "Lever la main",
+      "lowerHand": "Baisser la main",
+      "react": "Réagir",
+      "reactions": {
+        "like": "Pouce levé",
+        "clap": "Applaudir",
+        "heart": "Cœur",
+        "laugh": "Rire",
+        "party": "Bravo",
+        "think": "Je réfléchis"
+      },
+      "leave": "Quitter",
+      "cameraOffPreview": "Caméra désactivée",
+      "liveNow": "En direct maintenant",
+      "roomOpen": "Salle ouverte",
+      "lobbySubtitle": "Cours en direct · niveau {level}",
+      "schedule": "Horaire",
+      "status": "État",
+      "role": "Rôle",
+      "joinAsHost": "Vous entrez en tant qu'enseignant : partage d'écran et modération du chat.",
+      "joinAsStudent": "Micro coupé par défaut : levez la main ou maintenez le bouton pour parler.",
+      "enterRoom": "Entrer dans la salle",
+      "lobbyPrivacy": "Rien n'est transmis avant votre entrée. La salle est réservée aux participants inscrits à ce cours ; les échanges du chat sont conservés pour la séance.",
+      "demoNotice": "Mode démo : le chat, les réactions, la main levée et la présence fonctionnent en direct. La vidéo de groupe sera active dès la configuration du service vidéo.",
+      "deviceDenied": "Accès à la caméra ou au micro refusé. Autorisez-le dans les réglages du navigateur (icône à gauche de l'adresse).",
+      "deviceMissing": "Aucune caméra ou aucun micro détecté.",
+      "deviceBusy": "La caméra ou le micro est déjà utilisé par une autre application.",
+      "deviceGeneric": "Impossible d'accéder à la caméra ou au micro.",
+      "handRaisedToast": "{name} lève la main",
+      "floorGrantedToast": "L'enseignant vous donne la parole !",
+      "closedTitle": "La séance est terminée",
+      "closedText": "Merci pour votre participation. Retrouvez vos prochains cours dans votre espace.",
+      "unavailable": {
+        "notOpen": {
+          "title": "La salle n'est pas encore ouverte",
+          "text": "Elle ouvre 15 minutes avant le début du cours. Cette page s'ouvrira automatiquement."
+        },
+        "closed": {
+          "title": "Cette séance est terminée",
+          "text": "La salle est fermée. Consultez vos prochains cours en direct."
+        },
+        "readOnly": {
+          "title": "Consultation en lecture seule",
+          "text": "En mode « voir en tant que », vous ne pouvez pas entrer dans une salle au nom de l'étudiant."
+        }
+      }
     }
   }
 }

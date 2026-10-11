@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "GlobeSpeak Academy — English, with excellence",
-    "description": "An international online English academy: levels A1 to B2, live classes on Google Meet, personal guidance."
+    "description": "An international online English academy: levels A1 to B2, live classes in a built-in virtual classroom, personal guidance."
   },
   "common": {
     "brand": "GlobeSpeak Academy",
@@ -163,7 +163,8 @@
     "nav": {
       "label": "Student navigation",
       "home": "Home",
-      "courses": "My courses"
+      "courses": "My courses",
+      "live": "Live classes"
     },
     "goToCourses": "My courses"
   },
@@ -192,7 +193,8 @@
       "account": "My account",
       "pendingBadge": "{count, plural, one {# pending application} other {# pending applications}}",
       "content": "Content",
-      "media": "Media library"
+      "media": "Media library",
+      "live": "Live classes"
     },
     "notifications": {
       "label": "Notifications ({count} unread)",
@@ -410,7 +412,10 @@
       "content_block_update": "edited a lesson block",
       "media_upload": "uploaded a file",
       "media_delete": "deleted a file",
-      "video_update": "edited a video"
+      "video_update": "edited a video",
+      "live_session_create": "Live session created",
+      "live_session_cancel": "Live session cancelled",
+      "live_message_delete": "Chat message deleted"
     },
     "account": {
       "title": "My account",
@@ -620,7 +625,13 @@
     "titleTooShort": "Title too short.",
     "dateInvalid": "Invalid date.",
     "altRequired": "Alternative text is required.",
-    "whatsappInvalid": "Invalid WhatsApp number: include your country code (e.g. +44 7700 900123)."
+    "whatsappInvalid": "Invalid WhatsApp number: include your country code (e.g. +44 7700 900123).",
+    "messageTooLong": "Message too long (500 characters max).",
+    "titleTooLong": "Title too long.",
+    "descriptionTooLong": "Description too long.",
+    "timeInvalid": "Invalid time.",
+    "durationInvalid": "Invalid duration.",
+    "dateInPast": "This date has already passed."
   },
   "errors": {
     "validation": "Please correct the highlighted fields.",
@@ -735,7 +746,7 @@
       "slides": [
         {
           "title": "Speak English with confidence, anywhere in the world.",
-          "text": "Live classes on Google Meet and a complete journey, from A1 to B2."
+          "text": "Live classes in our virtual classroom and a complete journey, from A1 to B2."
         },
         {
           "title": "Four levels, four skills, one method.",
@@ -762,7 +773,6 @@
       "levelA2": "A2 Elementary level poster: a student in a green sweater in front of Big Ben",
       "levelB1": "B1 Intermediate level poster: a student in an orange sweater at her desk, Big Ben in the background",
       "levelB2": "B2 Advanced level poster: a student in a purple blazer at her desk, Big Ben in the background",
-      "liveClass": "Two people talking on a video call",
       "heroLondon": "A smiling student holding books in front of Big Ben and the British flag",
       "heroDenim": "A smiling student in a denim jacket with a leather bag gives a thumbs up",
       "heroNewYork": "The Manhattan skyline and the East River, New York"
@@ -807,8 +817,8 @@
     },
     "live": {
       "eyebrow": "Live classes",
-      "title": "Live classes on Google Meet, in small groups",
-      "subtitle": "Meet your teacher and students of your level every week. The schedule is shown automatically in your time zone.",
+      "title": "A built-in virtual classroom, in small groups",
+      "subtitle": "Meet your teacher and the students of your level every week, on video, right on the platform. The schedule shows in your own time zone.",
       "steps": [
         {
           "title": "Check your schedule",
@@ -819,16 +829,39 @@
           "text": "An email reminds you 24 hours and 1 hour before each class."
         },
         {
-          "title": "Join in one click",
-          "text": "The “Join” button activates a few minutes before the start. The link is never public."
+          "title": "Enter the room in one click",
+          "text": "Video, chat, raised hand and reactions, with no link to share and nothing to install. The room is reserved for students of your level."
         },
         {
           "title": "Watch it again",
           "text": "Materials and the recording remain available after the session."
         }
       ],
-      "imageAlt": "Two people talking on a video call",
-      "badge": "Access reserved for enrolled students"
+      "badge": "Access reserved for enrolled students",
+      "showcase": {
+        "description": "Preview of the virtual classroom: the teacher is speaking, a student raises her hand, chat messages appear and reactions float up.",
+        "title": "Speaking club · A1",
+        "live": "Live",
+        "chat": "Chat",
+        "messages": [
+          {
+            "name": "Awa",
+            "text": "Hello everyone! 👋"
+          },
+          {
+            "name": "Kofi",
+            "text": "How do you say « je suis ravi »?"
+          },
+          {
+            "name": "Mr. Carter",
+            "text": "“I'm delighted” — great question!"
+          },
+          {
+            "name": "Fatou",
+            "text": "Can I try the next one? ✋"
+          }
+        ]
+      }
     },
     "testimonials": {
       "eyebrow": "Testimonials",
@@ -848,7 +881,7 @@
         },
         {
           "q": "How do live classes work?",
-          "a": "On Google Meet, in small groups of the same level. Each session's link is only visible to enrolled students, a few minutes before it starts."
+          "a": "In the GlobeSpeak virtual classroom, in small groups of the same level: video, chat, raised hand and reactions, right on the platform. Only students enrolled in the session can enter, from 15 minutes before it starts."
         },
         {
           "q": "Do I need to install software?",
@@ -893,6 +926,149 @@
       "invalidText": "This confirmation link is no longer valid. You can subscribe again from the site footer.",
       "unsubscribedTitle": "You have been unsubscribed",
       "unsubscribedText": "You will no longer receive the newsletter. You can subscribe again at any time."
+    }
+  },
+  "live": {
+    "title": "Live classes",
+    "eyebrow": "Virtual classroom",
+    "subtitle": "Meet your teacher and your group on video, right on the platform: no link to copy, no software to install.",
+    "features": {
+      "video": "HD video",
+      "chat": "Live chat",
+      "hand": "Raise hand",
+      "reactions": "Reactions"
+    },
+    "emptyTitle": "No live class scheduled",
+    "emptyText": "Upcoming sessions for your level will appear here. You'll also get a reminder.",
+    "startsIn": "Starts in {time}",
+    "startedSince": "Started {time} ago",
+    "duration": "{minutes} min",
+    "presentCount": "{count, plural, one {# present} other {# present}}",
+    "cancel": "Cancel session",
+    "cancelConfirm": "Cancel “{title}”? Students will no longer be able to join.",
+    "cancelled": "Session cancelled.",
+    "joinLive": "Join live",
+    "openRoom": "Open room",
+    "enter": "Enter the room",
+    "opensAt": "Room opens at {time}",
+    "phase": {
+      "upcoming": "Upcoming",
+      "open": "Room open",
+      "live": "Live",
+      "ended": "Ended",
+      "cancelled": "Cancelled"
+    },
+    "admin": {
+      "title": "Live classes",
+      "subtitle": "Schedule sessions and teach them in the GlobeSpeak virtual classroom.",
+      "upcoming": "Upcoming sessions",
+      "emptyTitle": "No session scheduled",
+      "emptyText": "Create your first session with the form.",
+      "newSession": "New session",
+      "liveKitOn": "Group video enabled (LiveKit configured).",
+      "liveKitOff": "Demo mode: chat, reactions, raised hands and presence work; group video turns on once LIVEKIT_URL, LIVEKIT_API_KEY and LIVEKIT_API_SECRET are set.",
+      "created": "Session scheduled.",
+      "titleLabel": "Title",
+      "titlePlaceholder": "e.g. Conversation: introducing yourself",
+      "level": "Level",
+      "duration": "Duration",
+      "minutes": "{count} min",
+      "date": "Date",
+      "time": "Time",
+      "timezoneHint": "Time zone: {timezone}",
+      "descriptionLabel": "Description (optional)",
+      "descriptionPlaceholder": "Session goal, what to prepare…",
+      "create": "Schedule session"
+    },
+    "room": {
+      "virtualRoom": "Virtual classroom",
+      "back": "Back",
+      "levelLabel": "Level {level}",
+      "reconnecting": "Reconnecting…",
+      "connecting": "Connecting…",
+      "live": "Live",
+      "startsIn": "Starts in {time}",
+      "startedSince": "Started {time} ago",
+      "people": "{count, plural, one {# participant} other {# participants}}",
+      "participants": "Participants",
+      "micMuted": "Mic muted",
+      "teacher": "Teacher",
+      "student": "Student",
+      "screenOf": "{name}'s screen",
+      "you": "{name} (you)",
+      "me": "You",
+      "panelLabel": "Chat and participants",
+      "chat": "Chat",
+      "closePanel": "Close panel",
+      "chatEmptyTitle": "Say hello!",
+      "chatEmptyText": "Ask your questions here, the teacher sees them live. Try to write in English 😉",
+      "newMessages": "{count, plural, one {# new message} other {# new messages}}",
+      "chatPlaceholder": "Write a message…",
+      "send": "Send",
+      "chatHint": "Enter to send · Shift + Enter for a new line",
+      "like": "Like",
+      "unlike": "Unlike",
+      "likeCount": "{count, plural, one {# like} other {# likes}}",
+      "deleteMessage": "Delete message",
+      "handRaisedAgo": "Hand raised {when}",
+      "hasFloor": "Has the floor",
+      "grantFloor": "Give the floor",
+      "lowerHandOf": "Lower {name}'s hand",
+      "talking": "You're talking…",
+      "micOn": "Turn on mic",
+      "micOff": "Mute mic",
+      "pushToTalk": "Hold to talk",
+      "pushToTalkHint": "Hold this button (or the space bar) to talk, release to mute.",
+      "camOn": "Turn on camera",
+      "camOff": "Turn off camera",
+      "screenOn": "Share screen",
+      "screenOff": "Stop sharing",
+      "raiseHand": "Raise hand",
+      "lowerHand": "Lower hand",
+      "react": "React",
+      "reactions": {
+        "like": "Thumbs up",
+        "clap": "Clap",
+        "heart": "Heart",
+        "laugh": "Laugh",
+        "party": "Well done",
+        "think": "Thinking"
+      },
+      "leave": "Leave",
+      "cameraOffPreview": "Camera is off",
+      "liveNow": "Live now",
+      "roomOpen": "Room open",
+      "lobbySubtitle": "Live class · level {level}",
+      "schedule": "Schedule",
+      "status": "Status",
+      "role": "Role",
+      "joinAsHost": "You're joining as the teacher: screen sharing and chat moderation.",
+      "joinAsStudent": "Your mic is muted by default: raise your hand or hold the button to talk.",
+      "enterRoom": "Enter the room",
+      "lobbyPrivacy": "Nothing is sent before you enter. The room is reserved for participants enrolled in this class; chat messages are kept for the session.",
+      "demoNotice": "Demo mode: chat, reactions, raised hands and presence work live. Group video turns on once the video service is configured.",
+      "deviceDenied": "Camera or microphone access denied. Allow it in your browser settings (icon left of the address bar).",
+      "deviceMissing": "No camera or microphone found.",
+      "deviceBusy": "The camera or microphone is already used by another app.",
+      "deviceGeneric": "Couldn't access the camera or microphone.",
+      "handRaisedToast": "{name} raised their hand",
+      "floorGrantedToast": "The teacher is giving you the floor!",
+      "closedTitle": "This session has ended",
+      "closedText": "Thanks for joining. Find your next classes in your dashboard.",
+      "unavailable": {
+        "notOpen": {
+          "title": "The room isn't open yet",
+          "text": "It opens 15 minutes before class. This page will open automatically."
+        },
+        "closed": {
+          "title": "This session has ended",
+          "text": "The room is closed. Check your upcoming live classes."
+        },
+        "readOnly": {
+          "title": "Read-only view",
+          "text": "In “view as” mode, you can't enter a room on the student's behalf."
+        }
+      }
     }
   }
 }

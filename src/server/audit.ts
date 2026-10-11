@@ -28,6 +28,9 @@ export const AUDIT_ACTIONS = [
   "media.upload",
   "media.delete",
   "video.update",
+  "live.session.create",
+  "live.session.cancel",
+  "live.message.delete",
 ] as const;
 
 export type AuditAction = (typeof AUDIT_ACTIONS)[number];

@@ -14,6 +14,9 @@ export const RULES = {
   resendVerification: { limit: 3, windowSec: 60 * 10 },
   twoFactor: { limit: 5, windowSec: 60 },
   newsletter: { limit: 5, windowSec: 60 * 60 },
+  liveChat: { limit: 8, windowSec: 10 },
+  liveReaction: { limit: 20, windowSec: 10 },
+  liveHand: { limit: 10, windowSec: 60 },
 } satisfies Record<string, RateLimitRule>;
 
 const redis =
