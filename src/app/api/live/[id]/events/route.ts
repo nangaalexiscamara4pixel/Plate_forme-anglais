@@ -5,6 +5,8 @@ import { logger } from "@/server/logger";
 import { ensureListening, publish, subscribe } from "@/server/realtime";
 
 export const dynamic = "force-dynamic";
+// Flux long : sur Vercel, la fonction vit jusqu'à 5 min, puis le navigateur se reconnecte seul.
+export const maxDuration = 300;
 
 /**
  * Flux temps réel d'une salle (Server-Sent Events) : chat, likes, réactions, mains levées,

@@ -36,6 +36,18 @@ describe("workflow d'approbation (base réelle)", () => {
     expect(log.metadata).toMatchObject({ from: "PENDING", to: "APPROVED", levelCode: "B1" });
   });
 
+  it("l'approbation confirme l'email d'un étudiant qui n'a pas reçu le lien, et le trace", async () => {
+    const student = await createUser();
+    await db.user.update({ where: { id: student.id }, data: { emailVerified: false } });
+    const a1 = levels.find((l) => l.code === "A1")!;
+
+    await changeAccountStatus(actor(), { studentId: student.id, status: "APPROVED", levelId: a1.id });
+
+    expect((await db.user.findUniqueOrThrow({ where: { id: student.id } })).emailVerified).toBe(true);
+    const log = await db.auditLog.findFirstOrThrow({ where: { targetId: student.id } });
+    expect(log.metadata).toMatchObject({ emailConfirmedByAdmin: true });
+  });
+
   it("refuse l'approbation sans niveau", async () => {
     const student = await createUser();
     await expect(changeAccountStatus(actor(), { studentId: student.id, status: "APPROVED" })).rejects.toMatchObject({

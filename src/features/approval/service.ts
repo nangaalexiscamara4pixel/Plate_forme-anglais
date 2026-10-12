@@ -41,11 +41,13 @@ export type StatusChangeInput = {
  * administrateur (assertAdmin) ; ce service applique les règles métier :
  * transition autorisée, niveau obligatoire à l'approbation initiale, révocation
  * des sessions en cas de rejet/suspension, journal d'audit et email.
+ * En approuvant, l'administrateur se porte garant de l'adresse : si l'étudiant n'a pas pu
+ * cliquer sur le lien de confirmation (email non reçu), son adresse est confirmée (tracé dans l'audit).
  */
 export async function changeAccountStatus(actor: AuditContext, input: StatusChangeInput) {
   const student = await db.user.findUnique({
     where: { id: input.studentId },
-    select: { id: true, name: true, email: true, role: true, status: true, currentLevelId: true, deletedAt: true },
+    select: { id: true, name: true, email: true, emailVerified: true, role: true, status: true, currentLevelId: true, deletedAt: true },
   });
   if (!student || student.deletedAt) throw new StatusChangeError("NOT_FOUND");
   if (student.role !== "STUDENT") throw new StatusChangeError("NOT_A_STUDENT");
@@ -66,6 +68,7 @@ export async function changeAccountStatus(actor: AuditContext, input: StatusChan
       : "student.suspend";
 
   const reason = input.reason?.trim() || null;
+  const confirmEmail = approving && !student.emailVerified;
 
   await db.$transaction(async (tx) => {
     await tx.user.update({
@@ -76,6 +79,7 @@ export async function changeAccountStatus(actor: AuditContext, input: StatusChan
         statusChangedAt: new Date(),
         statusChangedById: actor.actorId,
         ...(approving && level ? { currentLevelId: level.id } : {}),
+        ...(confirmEmail ? { emailVerified: true } : {}),
       },
     });
 
@@ -94,7 +98,7 @@ export async function changeAccountStatus(actor: AuditContext, input: StatusChan
       actor,
       action,
       { type: "user", id: student.id },
-      { from: student.status, to: input.status, levelCode: level?.code ?? null, reason },
+      { from: student.status, to: input.status, levelCode: level?.code ?? null, reason, ...(confirmEmail ? { emailConfirmedByAdmin: true } : {}) },
       tx,
     );
   });
