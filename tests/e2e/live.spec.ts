@@ -60,6 +60,15 @@ test("salle virtuelle : accès par niveau, chat, j'aime, main levée, prise de p
   await expect(student.getByRole("button", { name: "Lever la main" })).toBeVisible();
   await expect(admin.getByText(KWAME.name).first()).toBeVisible(); // présence en temps réel
 
+  // Micro ouvert : un clic l'active (sans maintenir de touche), un autre le coupe
+  await student.getByRole("button", { name: "Activer le micro" }).click();
+  await expect(student.getByRole("button", { name: "Couper le micro" })).toBeVisible();
+  await student.waitForTimeout(1500);
+  await expect(student.getByRole("button", { name: "Couper le micro" })).toBeVisible(); // toujours actif
+  await expect(student.getByRole("button", { name: "Maintenir pour parler" })).toHaveCount(0);
+  await student.getByRole("button", { name: "Couper le micro" }).click();
+  await expect(student.getByRole("button", { name: "Activer le micro" })).toBeVisible();
+
   // Chat dans les deux sens, en direct
   await student.getByLabel("Écrire un message…").fill("Good evening, teacher!");
   await student.keyboard.press("Enter");

@@ -174,7 +174,7 @@ Les cours en direct se déroulent dans la salle virtuelle intégrée, sans lien 
 |---|---|
 | `/admin/live` | programmer une séance (titre, niveau, date, heure, durée), l'annuler, ouvrir la salle en tant qu'enseignant |
 | `/app/live` | l'étudiant voit les séances de **son niveau**, avec compte à rebours |
-| `/room/<id>` | la salle : hall d'accueil (test caméra/micro), mosaïque vidéo, chat avec « j'aime », main levée, « maintenir pour parler » (bouton ou barre d'espace), réactions animées, liste des participants ; l'enseignant partage son écran, modère le chat et donne la parole |
+| `/room/<id>` | la salle : hall d'accueil (test caméra/micro), mosaïque vidéo, chat avec « j'aime », micro ouvert (activé ou coupé d’un clic, comme la caméra), main levée, réactions animées, liste des participants ; l'enseignant partage son écran, modère le chat et donne la parole |
 
 Règles d'accès (`src/features/live/rules.ts`, testées) : la salle ouvre 15 min avant le début et ferme 30 min après la fin prévue ; un étudiant n'entre que dans les séances de son niveau actuel (sinon 404) ; l'enseignant peut préparer la salle à l'avance ; l'impersonation reste en lecture seule. Chaque action (message, j'aime, main levée…) repasse par ces contrôles côté serveur et par une limitation de débit ; le flux temps réel (Server-Sent Events + Postgres LISTEN/NOTIFY, sans service supplémentaire) revérifie l'accès toutes les 20 s.
 
