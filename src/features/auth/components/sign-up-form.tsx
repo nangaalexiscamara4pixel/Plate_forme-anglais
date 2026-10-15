@@ -1,6 +1,6 @@
 "use client";
 
-import { MailCheck } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useActionState, useState, useSyncExternalStore } from "react";
 import { echoed, Field, FormAlert, SubmitButton } from "@/components/forms";
@@ -52,7 +52,7 @@ export function SignUpForm({
     return (
       <div className="space-y-4 text-center" role="status">
         <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-accent text-brand-ink">
-          <MailCheck className="size-7" aria-hidden />
+          <CheckCircle2 className="size-7" aria-hidden />
         </span>
         <h2 className="text-2xl font-medium">{t("successTitle")}</h2>
         <p className="text-muted-foreground">{t("successBody")}</p>

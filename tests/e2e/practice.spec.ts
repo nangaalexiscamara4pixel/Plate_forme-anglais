@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { approveStudent, registerStudent, signInAdmin } from "./helpers";
+import { approveStudent, registerStudent, signInAdmin, signInStudent } from "./helpers";
 
 const AMARA = { name: "Amara Diop", email: "amara.practice.e2e@example.test", password: "Golden-River-Compass-31" };
 test.use({ permissions: ["microphone"], launchOptions: { args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"] } });
@@ -10,6 +10,7 @@ test("exercices et devoirs : création, passage, correction automatique, copie c
   const student = await registerStudent(browser, AMARA);
   const admin = await signInAdmin(browser);
   await approveStudent(admin, AMARA.name, "A1 – Discovery");
+  await signInStudent(student, AMARA);
 
   // ── L'enseignant crée un exercice A1 avec trois questions, puis le publie ──
   await admin.goto("/admin/exercises");

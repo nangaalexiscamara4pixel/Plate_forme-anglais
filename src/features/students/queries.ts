@@ -160,7 +160,7 @@ export async function getAdminDashboard(now = new Date()) {
       select: { id: true, action: true, createdAt: true, targetId: true, actor: { select: { name: true } } },
     }),
     db.user.findMany({
-      where: { role: "STUDENT", status: "PENDING", emailVerified: true, deletedAt: null },
+      where: { role: "STUDENT", status: "PENDING", deletedAt: null },
       orderBy: { createdAt: "asc" },
       take: 10,
       select: { id: true, name: true, email: true, createdAt: true, profile: { select: { country: true, timezone: true } } },
@@ -193,5 +193,5 @@ export async function getAdminDashboard(now = new Date()) {
 }
 
 export async function pendingCount() {
-  return db.user.count({ where: { role: "STUDENT", status: "PENDING", emailVerified: true, deletedAt: null } });
+  return db.user.count({ where: { role: "STUDENT", status: "PENDING", deletedAt: null } });
 }

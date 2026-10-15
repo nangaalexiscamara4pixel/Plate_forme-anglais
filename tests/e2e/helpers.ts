@@ -92,7 +92,8 @@ export async function signInAdmin(browser: Browser): Promise<Page> {
 let visitor = 0;
 
 /**
- * Inscrit un étudiant par l'interface et confirme son email : il est alors « en attente ».
+ * Inscrit un étudiant par l'interface : la demande est enregistrée « en attente » (aucun email
+ * à confirmer : l'administrateur valide). La page reste déconnectée jusqu'à l'approbation.
  * Chaque étudiant simulé a sa propre adresse IP (derrière le proxy) : la limite de 3 inscriptions
  * par heure et par IP s'applique comme pour de vrais visiteurs.
  */
@@ -106,10 +107,31 @@ export async function registerStudent(browser: Browser, s: { name: string; email
   await page.getByLabel("Mot de passe").fill(s.password);
   await page.getByRole("checkbox").check();
   await page.getByRole("button", { name: "Envoyer ma demande" }).click();
-  await expect(page.getByText("Vérifiez votre boîte de réception")).toBeVisible();
-  await page.goto(await waitForEmailLink(s.email, "/api/auth/verify-email"));
-  await expect(page).toHaveURL(/\/pending$/);
+  await expect(page.getByText("Demande enregistrée avec succès !")).toBeVisible();
   return page;
+}
+
+/** Connexion d'un étudiant (après approbation) avec son email et son mot de passe. */
+export async function signInStudent(page: Page, s: { email: string; password: string }) {
+  await page.goto("/sign-in");
+  await page.getByLabel("Adresse email").fill(s.email);
+  await page.getByLabel("Mot de passe").fill(s.password);
+  await page.getByRole("button", { name: "Se connecter" }).click();
+  await expect(page).toHaveURL(/\/app$/);
+}
+
+/** Dernier email reçu par un destinataire dont le sujet contient le texte donné. */
+export async function waitForEmail(to: string, subject: string, timeoutMs = 20_000): Promise<{ subject: string; html: string }> {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const files = (await readdir(MAILBOX).catch(() => [] as string[])).sort().reverse();
+    for (const f of files) {
+      const mail = JSON.parse(await readFile(path.join(MAILBOX, f), "utf8")) as Mail;
+      if (mail.to.includes(to) && mail.subject.includes(subject)) return mail;
+    }
+    await new Promise((r) => setTimeout(r, 300));
+  }
+  throw new Error(`Aucun email « ${subject} » pour ${to}`);
 }
 
 /** Approuve un étudiant en attente depuis sa fiche, au niveau donné (ex. « A1 – Discovery »). */

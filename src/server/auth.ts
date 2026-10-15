@@ -77,17 +77,16 @@ export const auth = betterAuth({
     },
   },
 
+  // Pas d'email de confirmation à l'inscription : c'est l'administrateur qui valide la demande
+  // (et confirme l'adresse en approuvant). L'étudiant reçoit un email à chaque décision.
   emailVerification: {
-    sendOnSignUp: true,
-    sendOnSignIn: true,
+    sendOnSignUp: false,
+    sendOnSignIn: false,
     autoSignInAfterVerification: true,
     expiresIn: 60 * 60 * 24,
     sendVerificationEmail: async ({ user, url }) => {
       const locale = await localeOf(user.id);
       await sendEmail(user.email, verifyEmail({ name: user.name, url, locale }));
-    },
-    afterEmailVerification: async (user) => {
-      await notifyAdminsOfRegistration(user.id);
     },
   },
 
@@ -111,8 +110,9 @@ export const auth = betterAuth({
         }),
         after: async (user) => {
           await db.profile.upsert({ where: { userId: user.id }, create: { userId: user.id }, update: {} });
-          // Avec Google, l'email est déjà vérifié : l'admin est prévenu tout de suite.
-          if (user.emailVerified) await notifyAdminsOfRegistration(user.id);
+          // Nouvelle demande d'accès : les administrateurs sont prévenus immédiatement
+          // (notification dans le back-office + email).
+          await notifyAdminsOfRegistration(user.id);
         },
       },
     },

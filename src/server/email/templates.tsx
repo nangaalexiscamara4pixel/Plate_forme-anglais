@@ -80,6 +80,7 @@ export function statusChanged({
   name,
   kind,
   levelName,
+  email,
   reason,
   url,
   locale,
@@ -87,6 +88,8 @@ export function statusChanged({
   name: string;
   kind: StatusEmailKind;
   levelName?: string;
+  /** Identifiant de connexion rappelé dans l'email d'approbation. */
+  email?: string;
   reason?: string | null;
   url: string;
   locale: EmailLocale;
@@ -94,20 +97,20 @@ export function statusChanged({
   const fr = locale === "fr";
   const copy = {
     APPROVED: {
-      subject: fr ? "Votre accès est confirmé 🎉" : "Your access is confirmed 🎉",
+      subject: fr ? "Votre demande d'accès est acceptée 🎉" : "Your access request is approved 🎉",
       heading: fr ? `Bienvenue à l'Académie, ${name}` : `Welcome to the Academy, ${name}`,
       body: fr
-        ? `Votre demande a été acceptée. Vous rejoignez le niveau ${levelName ?? ""}. Votre parcours commence dès maintenant.`
-        : `Your application has been accepted. You are joining level ${levelName ?? ""}. Your journey starts now.`,
-      cta: fr ? "Accéder à mon espace" : "Go to my dashboard",
+        ? `Bonne nouvelle : votre demande d'accès a été acceptée et vous rejoignez le niveau ${levelName ?? ""}. Vous pouvez dès maintenant vous connecter à la plateforme avec votre adresse email${email ? ` (${email})` : ""} et le mot de passe choisi lors de votre demande.`
+        : `Good news: your access request has been approved and you are joining level ${levelName ?? ""}. You can now sign in to the platform with your email address${email ? ` (${email})` : ""} and the password you chose when applying.`,
+      cta: fr ? "Me connecter" : "Sign in",
     },
     REJECTED: {
       subject: fr ? "Votre demande d'accès" : "Your access request",
       heading: fr ? `Bonjour ${name}` : `Hello ${name}`,
       body: fr
-        ? "Après examen, nous ne pouvons pas donner suite à votre demande pour le moment."
-        : "After review, we are unable to accept your request at this time.",
-      cta: fr ? "Nous contacter" : "Contact us",
+        ? "Après examen, nous ne pouvons pas donner suite à votre demande d'accès pour le moment. Pour toute question, contactez-nous depuis le site."
+        : "After review, we are unable to accept your access request at this time. If you have any questions, contact us through the website.",
+      cta: fr ? "Visiter le site" : "Visit the website",
     },
     SUSPENDED: {
       subject: fr ? "Votre compte a été suspendu" : "Your account has been suspended",

@@ -73,8 +73,8 @@
       "consent": "I accept the <privacy>privacy policy</privacy> and the processing of my data to manage my registration.",
       "submit": "Submit my application",
       "haveAccount": "Already registered?",
-      "successTitle": "Check your inbox",
-      "successBody": "If this address is not already in use, a confirmation email has just been sent. Click the link inside to complete your application."
+      "successTitle": "Request received!",
+      "successBody": "Thank you! Your access request has been received. Our team will review it and you will get an answer by email shortly."
     },
     "password": {
       "strength": "Password strength",
@@ -712,7 +712,9 @@
     "EMPTY": "There's nothing to send yet.",
     "TOO_SHORT": "Your text is too short.",
     "TOO_LONG": "Your work exceeds the limit.",
-    "HAS_SUBMISSIONS": "Students have already handed in this assignment: archive it instead of deleting it."
+    "HAS_SUBMISSIONS": "Students have already handed in this assignment: archive it instead of deleting it.",
+    "pendingApproval": "Your access request is being reviewed. You will receive an email as soon as it has been processed.",
+    "accountRejected": "Your access request was not approved. Contact us to find out more."
   },
   "impersonation": {
     "banner": "“View as” mode: {name} — read only",

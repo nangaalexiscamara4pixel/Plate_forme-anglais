@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { registerStudent, signInAdmin } from "./helpers";
+import { registerStudent, signInAdmin, signInStudent } from "./helpers";
 
 const NOAH = { name: "Noah Martin", email: "noah.e2e@example.test", password: "Silver-Compass-Harbour-31" };
 
@@ -18,6 +18,7 @@ test("contenus : parcours étudiant A1, vidéo sécurisée, isolation par niveau
   const student = await registerStudent(browser, NOAH);
   const admin = await signInAdmin(browser);
   await approve(admin, NOAH.email, /A1/);
+  await signInStudent(student, NOAH);
 
   // « Mes cours » ouvre le niveau de l'étudiant, avec ses 4 compétences
   await student.goto("/app/learn");

@@ -110,8 +110,10 @@ export async function changeAccountStatus(actor: AuditContext, input: StatusChan
       name: student.name,
       kind,
       levelName: level ? `${level.code} – ${level.name}` : undefined,
+      email: student.email,
       reason: input.status === "APPROVED" ? null : reason,
-      url: `${env.APP_URL}/${input.status === "APPROVED" ? "app" : "account-status"}`,
+      // Approuvé ou réactivé : lien direct vers la connexion ; refusé : site public ; suspendu : page de statut.
+      url: `${env.APP_URL}/${input.status === "APPROVED" ? "sign-in" : input.status === "REJECTED" ? "" : "account-status"}`,
       locale: await localeOf(student.id),
     }),
   );

@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { registerStudent, signInAdmin } from "./helpers";
+import { registerStudent, signInAdmin, signInStudent } from "./helpers";
 
 const KWAME = { name: "Kwame Mensah", email: "kwame.live.e2e@example.test", password: "Silver-Harbour-Kite-58" };
 
@@ -37,6 +37,7 @@ test("salle virtuelle : accès par niveau, chat, j'aime, main levée, prise de p
   await admin.getByRole("dialog").getByRole("button", { name: "Approuver" }).click();
   await expect(admin.getByText("Compte approuvé.")).toBeVisible();
 
+  await signInStudent(student, KWAME);
   const a1Room = await scheduleSession(admin, "Speaking club A1", "A1 · Discovery");
   const a2Room = await scheduleSession(admin, "Speaking club A2", "A2 · Explorer");
 

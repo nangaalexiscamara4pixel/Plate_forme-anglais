@@ -34,6 +34,11 @@ const schema = z.object({
         .filter(Boolean),
     ),
   RESEND_API_KEY: optional,
+  // Envoi par SMTP (ex. Gmail avec un « mot de passe d'application ») : prioritaire sur Resend
+  SMTP_HOST: optional,
+  SMTP_PORT: z.coerce.number().int().positive().default(465),
+  SMTP_USER: optional,
+  SMTP_PASS: optional,
   EMAIL_FROM: z.string().default("GlobeSpeak Academy <no-reply@globespeak.example>"),
   CRON_SECRET: optional,
   UPSTASH_REDIS_REST_URL: optional,
@@ -67,8 +72,13 @@ if (!parsed.success) {
 // En production, l'envoi d'emails est nécessaire (vérification des comptes, mot de passe oublié).
 // Sans clé, le site démarre quand même (consultation, connexion de l'administrateur) mais aucun
 // email ne part : on le signale clairement dans les journaux plutôt que de bloquer tout le site.
-if (parsed.data.NODE_ENV === "production" && process.env.NEXT_PHASE !== "phase-production-build" && !parsed.data.RESEND_API_KEY) {
-  console.error("[config] RESEND_API_KEY manquante : aucun email ne sera envoyé (inscriptions impossibles).");
+if (
+  parsed.data.NODE_ENV === "production" &&
+  process.env.NEXT_PHASE !== "phase-production-build" &&
+  !parsed.data.RESEND_API_KEY &&
+  !parsed.data.SMTP_USER
+) {
+  console.error("[config] Ni SMTP ni RESEND_API_KEY : aucun email ne sera envoyé.");
 }
 
 export const env = parsed.data;

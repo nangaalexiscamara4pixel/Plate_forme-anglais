@@ -73,8 +73,8 @@
       "consent": "J'accepte la <privacy>politique de confidentialité</privacy> et le traitement de mes données pour la gestion de mon inscription.",
       "submit": "Envoyer ma demande",
       "haveAccount": "Déjà inscrit ?",
-      "successTitle": "Vérifiez votre boîte de réception",
-      "successBody": "Si cette adresse n'est pas déjà utilisée, un email de confirmation vient de vous être envoyé. Cliquez sur le lien qu'il contient pour finaliser votre demande."
+      "successTitle": "Demande enregistrée avec succès !",
+      "successBody": "Merci ! Votre demande d'accès a bien été enregistrée. Notre équipe va l'examiner et vous recevrez une réponse par email dans les plus brefs délais."
     },
     "password": {
       "strength": "Robustesse du mot de passe",
@@ -712,7 +712,9 @@
     "EMPTY": "Il n'y a rien à envoyer pour le moment.",
     "TOO_SHORT": "Votre texte est trop court.",
     "TOO_LONG": "Votre travail dépasse la limite.",
-    "HAS_SUBMISSIONS": "Des étudiants ont déjà rendu ce devoir : archivez-le plutôt que de le supprimer."
+    "HAS_SUBMISSIONS": "Des étudiants ont déjà rendu ce devoir : archivez-le plutôt que de le supprimer.",
+    "pendingApproval": "Votre demande d'accès est en cours d'examen. Vous recevrez un email dès qu'elle aura été traitée.",
+    "accountRejected": "Votre demande d'accès n'a pas été acceptée. Contactez-nous pour en savoir plus."
   },
   "impersonation": {
     "banner": "Mode « voir en tant que » : {name} — lecture seule",

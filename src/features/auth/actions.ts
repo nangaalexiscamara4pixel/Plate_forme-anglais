@@ -91,7 +91,12 @@ export const signInAction = createAction(signInSchema, async ({ email, password,
   } catch (err) {
     if (isAPIError(err)) {
       if (err.statusCode === 401) return fail("invalidCredentials");
-      if (err.statusCode === 403) return fail("emailNotVerified");
+      if (err.statusCode === 403) {
+        // Adresse non confirmée = demande pas encore approuvée (l'approbation confirme l'adresse).
+        // Le mot de passe a été vérifié avant ce refus : on peut indiquer l'état de la demande.
+        const user = await db.user.findUnique({ where: { email }, select: { status: true } });
+        return fail(user?.status === "REJECTED" ? "accountRejected" : user?.status === "PENDING" ? "pendingApproval" : "emailNotVerified");
+      }
       if (err.statusCode === 429) return fail("tooManyAttempts");
     }
     throw err;
