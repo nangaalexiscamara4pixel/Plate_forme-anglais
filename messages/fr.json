@@ -1437,6 +1437,8 @@
     "loading": "Chargement…",
     "loadError": "Impossible d'afficher ce fichier ici. Vous pouvez le télécharger.",
     "previewUnavailable": "L'aperçu des fichiers {kind} n'est pas possible dans le navigateur : téléchargez-le pour l'ouvrir.",
-    "downloadName": "Télécharger {name}"
+    "downloadName": "Télécharger {name}",
+    "officeNote": "Aperçu affiché par Office Online (Microsoft). Si le document ne s'affiche pas, utilisez « Télécharger ».",
+    "officeUnavailable": "L'aperçu en ligne n'est pas disponible pour ce document. Téléchargez-le pour l'ouvrir."
   }
 }

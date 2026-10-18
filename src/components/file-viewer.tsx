@@ -92,6 +92,7 @@ function ViewerBody({ file }: { file: ViewerFile }) {
     );
   }
   if (kind === "pdf") return <PdfFrame file={file} />;
+  if (kind === "slides" || kind === "word" || kind === "sheet") return <OfficeFrame file={file} />;
   return (
     <Unavailable
       message={t("previewUnavailable", { kind: t(`kinds.${kind}`) })}
@@ -139,6 +140,42 @@ function PdfFrame({ file }: { file: ViewerFile }) {
   }
   if (!state.url) return <Loader2 className="size-8 animate-spin text-white" aria-label={t("loading")} />;
   return <iframe src={state.url} title={file.name} className="size-full max-w-5xl rounded-lg bg-white shadow-2xl" />;
+}
+
+/** PowerPoint, Word, Excel : affichés par le lecteur gratuit de Microsoft (Office Online). */
+function OfficeFrame({ file }: { file: ViewerFile }) {
+  const t = useTranslations("files");
+  const [state, setState] = useState<{ url: string | null; error: boolean }>({ url: null, error: false });
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`${src(file.id)}?preview=office`)
+      .then((r) => (r.ok ? (r.json() as Promise<{ url: string }>) : Promise.reject(new Error(String(r.status)))))
+      .then(({ url }) => !cancelled && setState({ url: `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`, error: false }))
+      .catch(() => !cancelled && setState({ url: null, error: true }));
+    return () => {
+      cancelled = true;
+    };
+  }, [file.id]);
+
+  if (state.error) {
+    return (
+      <Unavailable
+        message={t("officeUnavailable")}
+        action={
+          <a href={downloadHref(file.id)} className="inline-flex h-11 items-center gap-2 rounded-lg bg-white px-5 font-semibold text-night hover:bg-white/90">
+            <Download className="size-4" aria-hidden /> {t("download")}
+          </a>
+        }
+      />
+    );
+  }
+  if (!state.url) return <Loader2 className="size-8 animate-spin text-white" aria-label={t("loading")} />;
+  return (
+    <div className="flex size-full max-w-6xl flex-col gap-2">
+      <iframe src={state.url} title={file.name} className="min-h-0 w-full flex-1 rounded-lg bg-white shadow-2xl" allowFullScreen />
+      <p className="text-center text-xs text-white/60">{t("officeNote")}</p>
+    </div>
+  );
 }
 
 function Unavailable({ message, action }: { message: string; action: ReactNode }) {

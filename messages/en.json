@@ -1437,6 +1437,8 @@
     "loading": "Loading…",
     "loadError": "This file can't be shown here. You can download it.",
     "previewUnavailable": "{kind} files can't be previewed in the browser: download it to open it.",
-    "downloadName": "Download {name}"
+    "downloadName": "Download {name}",
+    "officeNote": "Preview shown by Office Online (Microsoft). If the document doesn't appear, use “Download”.",
+    "officeUnavailable": "The online preview isn't available for this document. Download it to open it."
   }
 }

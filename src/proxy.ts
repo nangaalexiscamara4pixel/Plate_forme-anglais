@@ -44,7 +44,7 @@ function buildCsp(nonce: string) {
     `connect-src 'self' https://*.mux.com https://*.litix.io https://storage.googleapis.com https://*.r2.cloudflarestorage.com https://vercel.com https://*.blob.vercel-storage.com ${liveKitSources()}`,
     "worker-src 'self' blob:",
     // PDF affichés dans la visionneuse du site (copie locale blob:), jamais de site tiers
-    "frame-src 'self' blob:",
+    "frame-src 'self' blob: https://view.officeapps.live.com",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
