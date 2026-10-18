@@ -4,6 +4,8 @@ import { approveStudent, registerStudent, signInAdmin, signInStudent } from "./h
 const AMARA = { name: "Amara Diop", email: "amara.practice.e2e@example.test", password: "Golden-River-Compass-31" };
 test.use({ permissions: ["microphone"], launchOptions: { args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"] } });
 
+const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==", "base64");
+
 const shot = (page: Page, name: string) => page.screenshot({ path: `test-results/shots/${name}.png`, fullPage: true });
 
 test("exercices et devoirs : création, passage, correction automatique, copie corrigée", async ({ browser }) => {
@@ -78,8 +80,38 @@ test("exercices et devoirs : création, passage, correction automatique, copie c
   await admin.getByRole("button", { name: "Publier" }).click();
   await expect(admin.getByText("Publié : visible par les étudiants du niveau.")).toBeVisible();
 
+  // Documents de la consigne : un PDF, une image et une vidéo
+  const materials = [
+    { name: "Grammar sheet.pdf", mimeType: "application/pdf", buffer: Buffer.from("%PDF-1.4\n1 0 obj<<>>endobj\ntrailer<<>>\n%%EOF") },
+    { name: "Photo.png", mimeType: "image/png", buffer: PNG },
+    { name: "Intro.mp4", mimeType: "video/mp4", buffer: Buffer.concat([Buffer.from([0, 0, 0, 0x18]), Buffer.from("ftypmp42"), Buffer.alloc(64)]) },
+  ];
+  for (const file of materials) {
+    await admin.locator('input[type="file"]').first().setInputFiles(file);
+    await expect(admin.getByText(file.name)).toBeVisible();
+  }
+
   await student.goto("/app/assignments");
   await student.getByRole("link", { name: /My best friend/ }).click();
+
+  // Visionneuse : chaque fichier s'ouvre sur le site, avec « Télécharger » et « Fermer »
+  const viewer = student.getByRole("dialog");
+  const open = (name: string) => student.getByRole("listitem").filter({ hasText: name }).getByRole("button", { name: "Ouvrir" }).click();
+  await open("Grammar sheet.pdf");
+  await expect(viewer.getByRole("heading", { name: "Grammar sheet.pdf" })).toBeVisible();
+  await expect(viewer.locator("iframe")).toBeVisible();
+  await expect(viewer.getByRole("link", { name: "Télécharger" })).toHaveAttribute("href", /download=1$/);
+  await shot(student, "viewer-pdf");
+  await viewer.getByRole("button", { name: "Fermer" }).click();
+  await expect(viewer).toHaveCount(0);
+  await open("Photo.png");
+  await expect(viewer.locator("img")).toBeVisible();
+  await student.keyboard.press("Escape");
+  await expect(viewer).toHaveCount(0);
+  await open("Intro.mp4");
+  await expect(viewer.locator("video")).toBeVisible();
+  await viewer.getByRole("button", { name: "Fermer" }).click();
+  await expect(student.locator("video")).toHaveCount(0); // la lecture s'arrête à la fermeture
   await student.getByLabel("Votre texte").fill("My friend is Awa.");
   await expect(student.getByText("encore 4 au minimum")).toBeVisible();
   await expect(student.getByRole("button", { name: "Envoyer à mon enseignant" })).toBeDisabled();

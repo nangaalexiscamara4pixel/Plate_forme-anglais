@@ -109,7 +109,7 @@ export const saveQuestionAction = createAction(
     const stored = toStored(question);
     if (stored.attachmentFileId) {
       const file = await db.mediaFile.findFirst({
-        where: { id: stored.attachmentFileId, purpose: { in: ["LESSON_IMAGE", "LESSON_DOCUMENT"] }, uploadedAt: { not: null } },
+        where: { id: stored.attachmentFileId, purpose: { in: ["LESSON_IMAGE", "LESSON_DOCUMENT", "LESSON_VIDEO", "LESSON_AUDIO"] }, uploadedAt: { not: null } },
         select: { id: true },
       });
       if (!file) return fail("ATTACHMENT_INVALID");

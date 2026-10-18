@@ -16,13 +16,15 @@ import { env } from "@/env";
 
 export const UPLOAD_URL_TTL_SEC = 10 * 60;
 export const DOWNLOAD_URL_TTL_SEC = 5 * 60;
+/** Audio et vidéo : le lecteur relit le fichier par morceaux pendant toute l'écoute. */
+export const STREAM_URL_TTL_SEC = 3 * 60 * 60;
 
 export type PresignedUpload = { url: string; method: "PUT"; headers: Record<string, string> };
 
 export interface StorageDriver {
   readonly name: "r2" | "blob" | "local";
   presignUpload(key: string, mime: string, size: number): Promise<PresignedUpload>;
-  presignDownload(key: string, opts?: { filename?: string; inline?: boolean; mime?: string }): Promise<string>;
+  presignDownload(key: string, opts?: { filename?: string; inline?: boolean; mime?: string; ttlSec?: number }): Promise<string>;
   head(key: string): Promise<{ size: number } | null>;
   /** Premiers octets d'un objet (contrôle de la signature binaire après upload). */
   readStart(key: string, bytes: number): Promise<Buffer>;
@@ -49,12 +51,12 @@ class R2Driver implements StorageDriver {
     );
     return { url, method: "PUT", headers: { "Content-Type": mime } };
   }
-  presignDownload(key: string, opts: { filename?: string; inline?: boolean; mime?: string } = {}) {
+  presignDownload(key: string, opts: { filename?: string; inline?: boolean; mime?: string; ttlSec?: number } = {}) {
     const disposition = `${opts.inline === false ? "attachment" : "inline"}${opts.filename ? `; filename="${encodeURIComponent(opts.filename)}"` : ""}`;
     return getSignedUrl(
       this.client,
       new GetObjectCommand({ Bucket: this.bucket, Key: key, ResponseContentDisposition: disposition }),
-      { expiresIn: DOWNLOAD_URL_TTL_SEC },
+      { expiresIn: opts.ttlSec ?? DOWNLOAD_URL_TTL_SEC },
     );
   }
   async head(key: string) {
@@ -98,8 +100,8 @@ class VercelBlobDriver implements StorageDriver {
     });
     return { url: presignedUrl, method: "PUT", headers: { "Content-Type": mime } };
   }
-  async presignDownload(key: string) {
-    const validUntil = Date.now() + DOWNLOAD_URL_TTL_SEC * 1000;
+  async presignDownload(key: string, opts: { ttlSec?: number } = {}) {
+    const validUntil = Date.now() + (opts.ttlSec ?? DOWNLOAD_URL_TTL_SEC) * 1000;
     const signed = await blob.issueSignedToken({ token: this.token, pathname: key, operations: ["get"], validUntil });
     return (await blob.presignUrl(signed, { operation: "get", pathname: key, access: "private", validUntil })).presignedUrl;
   }
@@ -171,11 +173,11 @@ class LocalDriver implements StorageDriver {
     const token = signLocalToken({ k: key, op: "put", exp: Date.now() + UPLOAD_URL_TTL_SEC * 1000, mime, size });
     return { url: `/api/storage?t=${token}`, method: "PUT", headers: { "Content-Type": mime } };
   }
-  async presignDownload(key: string, opts: { filename?: string; inline?: boolean; mime?: string } = {}) {
+  async presignDownload(key: string, opts: { filename?: string; inline?: boolean; mime?: string; ttlSec?: number } = {}) {
     const token = signLocalToken({
       k: key,
       op: "get",
-      exp: Date.now() + DOWNLOAD_URL_TTL_SEC * 1000,
+      exp: Date.now() + (opts.ttlSec ?? DOWNLOAD_URL_TTL_SEC) * 1000,
       fn: opts.filename,
       inline: opts.inline,
       mime: opts.mime,

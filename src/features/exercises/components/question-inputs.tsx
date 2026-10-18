@@ -3,6 +3,7 @@
 import { ArrowDown, ArrowUp, Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { FileIcon } from "@/components/file-drop";
+import { OpenFileButton } from "@/components/file-viewer";
 import { cn } from "@/lib/utils";
 import type { PublicQuestion } from "../questions";
 
@@ -193,21 +194,16 @@ export function QuestionInput(props: Parameters<typeof AnswerInput>[0]) {
     <>
       {file &&
         (file.mime.startsWith("image/") ? (
-          <a href={`/api/media/${file.id}`} target="_blank" rel="noopener noreferrer" className="mb-4 block">
+          <OpenFileButton file={file} className="mb-4 block w-full cursor-zoom-in">
             {/* eslint-disable-next-line @next/next/no-img-element -- fichier privé servi par URL signée */}
             <img src={`/api/media/${file.id}`} alt={file.name} loading="lazy" className="max-h-80 w-full rounded-xl border bg-muted/30 object-contain" />
-          </a>
+          </OpenFileButton>
         ) : (
-          <a
-            href={`/api/media/${file.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mb-4 flex items-center gap-3 rounded-xl border bg-muted/30 p-3 text-sm hover:bg-muted/60"
-          >
+          <OpenFileButton file={file} className="mb-4 flex w-full items-center gap-3 rounded-xl border bg-muted/30 p-3 text-left text-sm hover:bg-muted/60">
             <FileIcon mime={file.mime} className="size-6" />
             <span className="min-w-0 flex-1 truncate font-medium">{file.name || t("file")}</span>
             <span className="text-brand-ink">{t("open")}</span>
-          </a>
+          </OpenFileButton>
         ))}
       <AnswerInput {...props} />
     </>

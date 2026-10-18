@@ -1,11 +1,12 @@
 "use client";
 
-import { FileImage, FileSpreadsheet, FileText, Loader2, Paperclip, Presentation, Trash2, UploadCloud } from "lucide-react";
+import { FileAudio, FileImage, FileSpreadsheet, FileText, FileVideo, Loader2, Paperclip, Presentation, Trash2, UploadCloud } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRef, useState, type ClipboardEvent, type DragEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useUpload, type UploadedFile } from "@/features/content/components/use-upload";
+import { OpenFileButton } from "@/components/file-viewer";
 import { fileKind } from "@/lib/files";
 import { cn } from "@/lib/utils";
 
@@ -13,8 +14,9 @@ export { ACCEPT, fileKind } from "@/lib/files";
 
 export function FileIcon({ mime, className }: { mime: string; className?: string }) {
   const kind = fileKind(mime);
-  const Icon = kind === "image" ? FileImage : kind === "slides" ? Presentation : kind === "sheet" ? FileSpreadsheet : FileText;
-  const tone = { image: "text-sky-600", pdf: "text-red-600", slides: "text-orange-600", sheet: "text-emerald-600", word: "text-blue-600", audio: "text-violet-600", other: "text-muted-foreground" }[kind];
+  const Icon =
+    kind === "image" ? FileImage : kind === "video" ? FileVideo : kind === "audio" ? FileAudio : kind === "slides" ? Presentation : kind === "sheet" ? FileSpreadsheet : FileText;
+  const tone = { image: "text-sky-600", video: "text-fuchsia-600", pdf: "text-red-600", slides: "text-orange-600", sheet: "text-emerald-600", word: "text-blue-600", audio: "text-violet-600", other: "text-muted-foreground" }[kind];
   return <Icon className={cn("shrink-0", tone, className)} aria-hidden />;
 }
 
@@ -85,9 +87,7 @@ export function FileDrop({
           )}
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium">{value.name || t("file")}</p>
-            <a href={`/api/media/${value.id}`} target="_blank" rel="noopener noreferrer" className="text-xs text-brand-ink hover:underline">
-              {t("open")}
-            </a>
+            <OpenFileButton file={value} className="text-xs text-brand-ink hover:underline" />
           </div>
           <Button type="button" variant="ghost" size="sm" onClick={() => input.current?.click()} disabled={busy || disabled}>
             {t("replace")}

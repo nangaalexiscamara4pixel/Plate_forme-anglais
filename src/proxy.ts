@@ -43,7 +43,8 @@ function buildCsp(nonce: string) {
     // Mux (lecture, statistiques, upload direct via Google Cloud Storage) et R2 (uploads pré-signés)
     `connect-src 'self' https://*.mux.com https://*.litix.io https://storage.googleapis.com https://*.r2.cloudflarestorage.com https://vercel.com https://*.blob.vercel-storage.com ${liveKitSources()}`,
     "worker-src 'self' blob:",
-    "frame-src 'none'",
+    // PDF affichés dans la visionneuse du site (copie locale blob:), jamais de site tiers
+    "frame-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",

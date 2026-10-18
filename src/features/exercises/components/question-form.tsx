@@ -165,7 +165,7 @@ export function QuestionForm({
 
       <FileDrop
         uploader={adminAutoUploader}
-        accept={ACCEPT.documentOrImage}
+        accept={ACCEPT.any}
         label={t("attachment")}
         hint={t("attachmentHint")}
         value={d.attachment}

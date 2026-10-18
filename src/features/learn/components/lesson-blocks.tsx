@@ -1,6 +1,7 @@
 import { BookMarked, Globe2, Info, Lightbulb, TriangleAlert } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { FileIcon } from "@/components/file-drop";
+import { OpenFileButton } from "@/components/file-viewer";
 import { fileKind } from "@/lib/files";
 import { RichText } from "@/components/rich-text";
 import type { RenderableBlock } from "@/features/content/blocks";
@@ -83,14 +84,16 @@ export async function LessonBlocks({
       case "IMAGE":
         return (
           <figure className="grid gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element -- fichier privé servi par URL signée */}
-            <img
-              src={`/api/media/${block.content.mediaId}`}
-              alt={block.content.alt}
-              loading="lazy"
-              decoding="async"
-              className="max-h-[480px] w-full rounded-xl border object-contain"
-            />
+            <OpenFileButton file={{ id: block.content.mediaId, name: block.content.caption || block.content.alt, mime: "image/*" }} className="block w-full cursor-zoom-in">
+              {/* eslint-disable-next-line @next/next/no-img-element -- fichier privé servi par URL signée */}
+              <img
+                src={`/api/media/${block.content.mediaId}`}
+                alt={block.content.alt}
+                loading="lazy"
+                decoding="async"
+                className="max-h-[480px] w-full rounded-xl border object-contain"
+              />
+            </OpenFileButton>
             {block.content.caption && <figcaption className="text-center text-sm text-muted-foreground">{block.content.caption}</figcaption>}
           </figure>
         );
@@ -115,7 +118,7 @@ export async function LessonBlocks({
 /** Document à télécharger (PowerPoint, Word, PDF, Excel) : icône du type, nom, taille, ouverture. */
 async function DocumentCard({ mediaId, title, description }: { mediaId: string; title: string; description?: string }) {
   const t = await getTranslations("files");
-  const media = await db.mediaFile.findUnique({ where: { id: mediaId }, select: { mime: true, sizeBytes: true } });
+  const media = await db.mediaFile.findUnique({ where: { id: mediaId }, select: { mime: true, sizeBytes: true, originalName: true } });
   if (!media) return null;
   const size = media.sizeBytes >= 1024 * 1024 ? `${(media.sizeBytes / 1024 / 1024).toFixed(1)} Mo` : `${Math.max(1, Math.round(media.sizeBytes / 1024))} Ko`;
   return (
@@ -131,9 +134,7 @@ async function DocumentCard({ mediaId, title, description }: { mediaId: string; 
         </p>
       </div>
       <div className="flex gap-2">
-        <a href={`/api/media/${mediaId}`} target="_blank" rel="noopener noreferrer" className="rounded-lg border px-3 py-2 text-sm font-medium hover:bg-muted">
-          {t("open")}
-        </a>
+        <OpenFileButton file={{ id: mediaId, name: media.originalName ?? title, mime: media.mime }} className="rounded-lg border px-3 py-2 text-sm font-medium hover:bg-muted" />
         <a href={`/api/media/${mediaId}?download=1`} className="rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
           {t("download")}
         </a>

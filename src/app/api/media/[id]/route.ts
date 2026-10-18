@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { canViewMedia } from "@/features/media/access";
 import { db } from "@/server/db";
 import { getViewer } from "@/server/dal/viewer";
-import { storage } from "@/server/storage";
+import { storage, STREAM_URL_TTL_SEC } from "@/server/storage";
 
 const notFound = () => new NextResponse(null, { status: 404, headers: { "Cache-Control": "no-store" } });
 
@@ -19,6 +19,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     mime: media.mime,
     inline: !download,
     filename: media.originalName ?? undefined,
+    ttlSec: !download && /^(audio|video)\//.test(media.mime) ? STREAM_URL_TTL_SEC : undefined,
   });
   return NextResponse.redirect(new URL(url, request.url), { status: 302, headers: { "Cache-Control": "no-store" } });
 }

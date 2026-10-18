@@ -1,10 +1,11 @@
 "use client";
 
-import { Trash2 } from "lucide-react";
+import { Download, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { FileDrop, FileIcon } from "@/components/file-drop";
+import { OpenFileButton } from "@/components/file-viewer";
 import { Button } from "@/components/ui/button";
 import { adminAutoUploader } from "@/features/content/components/use-upload";
 import { useRouter } from "@/i18n/navigation";
@@ -23,8 +24,9 @@ export function MaterialList({ items, onRemove }: { items: Material[]; onRemove?
         <li key={m.mediaId} className="flex items-center gap-3 rounded-xl border bg-muted/30 p-3">
           <FileIcon mime={m.mime} className="size-6" />
           <span className="min-w-0 flex-1 truncate text-sm font-medium">{m.name || t("file")}</span>
-          <a href={`/api/media/${m.mediaId}`} target="_blank" rel="noopener noreferrer" className="text-sm text-brand-ink hover:underline">
-            {t("open")}
+          <OpenFileButton file={{ id: m.mediaId, name: m.name, mime: m.mime }} />
+          <a href={`/api/media/${m.mediaId}?download=1`} aria-label={t("downloadName", { name: m.name })} className="rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground">
+            <Download className="size-4" aria-hidden />
           </a>
           {onRemove && (
             <Button type="button" variant="ghost" size="icon" onClick={() => onRemove(m)} aria-label={t("remove")} className="text-destructive hover:text-destructive">
@@ -61,7 +63,7 @@ export function MaterialsEditor({ assignmentId, items }: { assignmentId: string;
   return (
     <div className="grid gap-3">
       <MaterialList items={items} onRemove={remove} />
-      <FileDrop key={key} uploader={adminAutoUploader} accept={`${ACCEPT.documentOrImage},${ACCEPT.audio}`} hint={t("materialHint")} value={null} onChange={(f) => f && add(f.id)} />
+      <FileDrop key={key} uploader={adminAutoUploader} accept={ACCEPT.any} hint={t("materialHint")} value={null} onChange={(f) => f && add(f.id)} />
     </div>
   );
 }

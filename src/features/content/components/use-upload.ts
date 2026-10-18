@@ -29,7 +29,13 @@ export function adminUploader(purpose: AdminPurpose): Uploader {
 export const adminAutoUploader: Uploader = {
   request: (file) =>
     requestUploadAction(null, {
-      purpose: file.mime.startsWith("image/") ? "LESSON_IMAGE" : file.mime.startsWith("audio/") ? "LESSON_AUDIO" : "LESSON_DOCUMENT",
+      purpose: file.mime.startsWith("image/")
+        ? "LESSON_IMAGE"
+        : file.mime.startsWith("audio/")
+          ? "LESSON_AUDIO"
+          : file.mime.startsWith("video/")
+            ? "LESSON_VIDEO"
+            : "LESSON_DOCUMENT",
       ...file,
     }),
   confirm: (mediaId) => confirmUploadAction(null, { mediaId }),

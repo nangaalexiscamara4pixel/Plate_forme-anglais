@@ -204,7 +204,7 @@ export const addAssignmentMaterialAction = createAction(z.object({ assignmentId:
   const [assignment, media] = await Promise.all([
     db.assignment.findUnique({ where: { id: assignmentId }, select: { id: true } }),
     db.mediaFile.findFirst({
-      where: { id: mediaId, purpose: { in: ["LESSON_DOCUMENT", "LESSON_IMAGE", "LESSON_AUDIO"] }, uploadedAt: { not: null } },
+      where: { id: mediaId, purpose: { in: ["LESSON_DOCUMENT", "LESSON_IMAGE", "LESSON_AUDIO", "LESSON_VIDEO"] }, uploadedAt: { not: null } },
       select: { id: true },
     }),
   ]);

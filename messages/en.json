@@ -1246,8 +1246,8 @@
       "cancel": "Cancel",
       "save": "Save question",
       "saved": "Question saved.",
-      "attachment": "Attached image or document (optional)",
-      "attachmentHint": "Screenshot (Ctrl + V), image, PDF, Word or PowerPoint shown under the question"
+      "attachment": "Attached file (optional)",
+      "attachmentHint": "Screenshot (Ctrl + V), image, video, audio, PDF, Word or PowerPoint shown under the question"
     },
     "player": {
       "levelLabel": "Exercise · level {level}",
@@ -1338,7 +1338,7 @@
       "materials": "Instruction documents",
       "materialAdded": "Document added to the assignment.",
       "materialConfirmRemove": "Remove “{name}” from this assignment?",
-      "materialHint": "PowerPoint, Word, PDF, image or screenshot (Ctrl + V): visible to students"
+      "materialHint": "PowerPoint, Word, PDF, image, video or screenshot (Ctrl + V): visible to students"
     },
     "review": {
       "back": "Submissions to grade",
@@ -1428,7 +1428,15 @@
       "sheet": "Excel",
       "word": "Word",
       "audio": "Audio",
-      "other": "File"
-    }
+      "other": "File",
+      "video": "Video"
+    },
+    "close": "Close",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "loading": "Loading…",
+    "loadError": "This file can't be shown here. You can download it.",
+    "previewUnavailable": "{kind} files can't be previewed in the browser: download it to open it.",
+    "downloadName": "Download {name}"
   }
 }

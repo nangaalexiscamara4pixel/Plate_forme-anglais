@@ -1246,8 +1246,8 @@
       "cancel": "Annuler",
       "save": "Enregistrer la question",
       "saved": "Question enregistrée.",
-      "attachment": "Image ou document joint (optionnel)",
-      "attachmentHint": "Capture d'écran (Ctrl + V), image, PDF, Word ou PowerPoint affiché sous l'énoncé"
+      "attachment": "Fichier joint (optionnel)",
+      "attachmentHint": "Capture d'écran (Ctrl + V), image, vidéo, audio, PDF, Word ou PowerPoint affiché sous l'énoncé"
     },
     "player": {
       "levelLabel": "Exercice · niveau {level}",
@@ -1338,7 +1338,7 @@
       "materials": "Documents de la consigne",
       "materialAdded": "Document ajouté au devoir.",
       "materialConfirmRemove": "Retirer « {name} » de ce devoir ?",
-      "materialHint": "PowerPoint, Word, PDF, image ou capture (Ctrl + V) : visibles par les étudiants"
+      "materialHint": "PowerPoint, Word, PDF, image, vidéo ou capture (Ctrl + V) : visibles par les étudiants"
     },
     "review": {
       "back": "Copies à corriger",
@@ -1428,7 +1428,15 @@
       "sheet": "Excel",
       "word": "Word",
       "audio": "Audio",
-      "other": "Fichier"
-    }
+      "other": "Fichier",
+      "video": "Vidéo"
+    },
+    "close": "Fermer",
+    "zoomIn": "Agrandir",
+    "zoomOut": "Réduire",
+    "loading": "Chargement…",
+    "loadError": "Impossible d'afficher ce fichier ici. Vous pouvez le télécharger.",
+    "previewUnavailable": "L'aperçu des fichiers {kind} n'est pas possible dans le navigateur : téléchargez-le pour l'ouvrir.",
+    "downloadName": "Télécharger {name}"
   }
 }
