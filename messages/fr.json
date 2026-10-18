@@ -74,7 +74,10 @@
       "submit": "Envoyer ma demande",
       "haveAccount": "Déjà inscrit ?",
       "successTitle": "Demande enregistrée avec succès !",
-      "successBody": "Merci ! Votre demande d'accès a bien été enregistrée. Notre équipe va l'examiner et vous recevrez une réponse par email dans les plus brefs délais."
+      "successBody": "Merci ! Votre demande d'accès a bien été enregistrée. Notre équipe va l'examiner et vous recevrez une réponse par email dans les plus brefs délais.",
+      "whatsappTitle": "En attendant, rejoignez notre groupe WhatsApp",
+      "whatsappText": "Recevez les informations de l'Académie, les horaires des cours et échangez avec les autres étudiants.",
+      "whatsappCta": "Rejoindre le groupe WhatsApp"
     },
     "password": {
       "strength": "Robustesse du mot de passe",

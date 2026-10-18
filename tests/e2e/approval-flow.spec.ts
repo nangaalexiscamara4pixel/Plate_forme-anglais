@@ -16,6 +16,11 @@ test("inscription → attente → approbation par l'admin (2FA) → accès au ni
   // 1-2. L'étudiant fait sa demande : « enregistrée avec succès », aucun email à confirmer
   const student = await registerStudent(browser, STUDENT);
   await expect(student.getByText("vous recevrez une réponse par email dans les plus brefs délais")).toBeVisible();
+  // … et peut rejoindre le groupe WhatsApp de l'Académie en attendant
+  const whatsapp = student.getByRole("link", { name: "Rejoindre le groupe WhatsApp" });
+  await expect(whatsapp).toHaveAttribute("href", /^https:\/\/chat\.whatsapp\.com\//);
+  await expect(whatsapp).toHaveAttribute("target", "_blank");
+  await student.screenshot({ path: "test-results/shots/signup-success.png" });
 
   // 3. Tant qu'il n'est pas approuvé, il ne peut pas se connecter : on lui explique pourquoi
   await student.goto("/sign-in");

@@ -77,6 +77,9 @@ export const SOCIAL_LINKS: { network: "facebook" | "instagram" | "linkedin" | "y
   { network: "portfolio", url: "https://portfolio-nanga.vercel.app/" },
 ];
 
+/** Groupe WhatsApp de l'Académie, proposé juste après une demande d'accès (laisser vide pour masquer). */
+export const WHATSAPP_GROUP_URL = "https://chat.whatsapp.com/EXN9spgq0PLAH8ZBmP3K3z?s=cl&p=a&mlu=4&ilr=4";
+
 /**
  * Coordonnées affichées dans le pied de page. Chaque numéro ouvre une conversation WhatsApp
  * (https://wa.me/<numéro sans « + »>) ; `e164` est le numéro international sans espaces.

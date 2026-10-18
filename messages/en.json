@@ -74,7 +74,10 @@
       "submit": "Submit my application",
       "haveAccount": "Already registered?",
       "successTitle": "Request received!",
-      "successBody": "Thank you! Your access request has been received. Our team will review it and you will get an answer by email shortly."
+      "successBody": "Thank you! Your access request has been received. Our team will review it and you will get an answer by email shortly.",
+      "whatsappTitle": "Meanwhile, join our WhatsApp group",
+      "whatsappText": "Get Academy news and class times, and chat with other students.",
+      "whatsappCta": "Join the WhatsApp group"
     },
     "password": {
       "strength": "Password strength",

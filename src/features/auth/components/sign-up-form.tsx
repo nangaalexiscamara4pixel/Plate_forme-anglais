@@ -1,11 +1,12 @@
 "use client";
 
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, MessageCircle } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useActionState, useState, useSyncExternalStore } from "react";
 import { echoed, Field, FormAlert, SubmitButton } from "@/components/forms";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { WHATSAPP_GROUP_URL } from "@/features/marketing/site-config";
 import { Link } from "@/i18n/navigation";
 import { signUpAction } from "../actions";
 import { PasswordStrength } from "./password-strength";
@@ -56,6 +57,21 @@ export function SignUpForm({
         </span>
         <h2 className="text-2xl font-medium">{t("successTitle")}</h2>
         <p className="text-muted-foreground">{t("successBody")}</p>
+        {WHATSAPP_GROUP_URL && (
+          <div className="mt-6 rounded-2xl border border-[#25D366]/40 bg-[#25D366]/10 p-5">
+            <p className="font-medium">{t("whatsappTitle")}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{t("whatsappText")}</p>
+            <a
+              href={WHATSAPP_GROUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex h-12 items-center gap-2 rounded-xl bg-[#25D366] px-6 font-semibold text-white shadow-sm transition hover:bg-[#1ebe5b]"
+            >
+              <MessageCircle className="size-5" aria-hidden />
+              {t("whatsappCta")}
+            </a>
+          </div>
+        )}
       </div>
     );
   }
