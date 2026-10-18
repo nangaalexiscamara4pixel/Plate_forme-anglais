@@ -536,7 +536,8 @@
         "VIDEO": "Vidéo",
         "AUDIO": "Audio",
         "IMAGE": "Image",
-        "VOCAB_LIST": "Vocabulaire"
+        "VOCAB_LIST": "Vocabulaire",
+        "DOCUMENT": "Document (PowerPoint, Word, PDF)"
       },
       "unsaved": "Modifications non enregistrées",
       "saved": "Enregistré",
@@ -574,7 +575,10 @@
       "partOfSpeech": "Nature",
       "removeRow": "Retirer ce mot",
       "example": "Exemple d'emploi (facultatif)",
-      "addRow": "Ajouter un mot"
+      "addRow": "Ajouter un mot",
+      "documentTitle": "Titre du document",
+      "documentDescription": "Description (optionnelle)",
+      "documentHint": "PowerPoint, Word, PDF ou Excel — 100 Mo maximum"
     },
     "media": {
       "title": "Médiathèque",
@@ -613,7 +617,7 @@
       "purpose": {
         "LESSON_AUDIO": "Audio (MP3, M4A, OGG, WAV)",
         "LESSON_IMAGE": "Image (JPEG, PNG, WebP)",
-        "LESSON_DOCUMENT": "Document PDF"
+        "LESSON_DOCUMENT": "Document (PowerPoint, Word, PDF, Excel)"
       },
       "uploadFile": "Envoyer un fichier",
       "fileAdded": "Fichier ajouté.",
@@ -661,7 +665,8 @@
     "tooLong": "Texte trop long.",
     "numberInvalid": "Nombre invalide.",
     "promptTooShort": "Consigne trop courte.",
-    "rangeInvalid": "Le maximum doit être supérieur au minimum."
+    "rangeInvalid": "Le maximum doit être supérieur au minimum.",
+    "titleRequired": "Ajoutez un titre."
   },
   "errors": {
     "validation": "Merci de corriger les champs indiqués.",
@@ -717,7 +722,8 @@
     "TOO_LONG": "Votre travail dépasse la limite.",
     "HAS_SUBMISSIONS": "Des étudiants ont déjà rendu ce devoir : archivez-le plutôt que de le supprimer.",
     "pendingApproval": "Votre demande d'accès est en cours d'examen. Vous recevrez un email dès qu'elle aura été traitée.",
-    "accountRejected": "Votre demande d'accès n'a pas été acceptée. Contactez-nous pour en savoir plus."
+    "accountRejected": "Votre demande d'accès n'a pas été acceptée. Contactez-nous pour en savoir plus.",
+    "ATTACHMENT_INVALID": "Fichier introuvable ou invalide. Envoyez-le à nouveau."
   },
   "impersonation": {
     "banner": "Mode « voir en tant que » : {name} — lecture seule",
@@ -1239,7 +1245,9 @@
       "explanationPlaceholder": "Ex. Avec he/she/it, on ajoute -s au verbe au present simple.",
       "cancel": "Annuler",
       "save": "Enregistrer la question",
-      "saved": "Question enregistrée."
+      "saved": "Question enregistrée.",
+      "attachment": "Image ou document joint (optionnel)",
+      "attachmentHint": "Capture d'écran (Ctrl + V), image, PDF, Word ou PowerPoint affiché sous l'énoncé"
     },
     "player": {
       "levelLabel": "Exercice · niveau {level}",
@@ -1326,7 +1334,11 @@
       "submissions": "{count, plural, =0 {Copies reçues} one {# copie reçue} other {# copies reçues}}",
       "noSubmissions": "Aucune copie pour le moment. Pensez à publier le devoir.",
       "wordsCount": "{count, plural, one {# mot} other {# mots}}",
-      "settings": "Paramètres"
+      "settings": "Paramètres",
+      "materials": "Documents de la consigne",
+      "materialAdded": "Document ajouté au devoir.",
+      "materialConfirmRemove": "Retirer « {name} » de ce devoir ?",
+      "materialHint": "PowerPoint, Word, PDF, image ou capture (Ctrl + V) : visibles par les étudiants"
     },
     "review": {
       "back": "Copies à corriger",
@@ -1392,7 +1404,31 @@
       "recordedDuration": "Durée : {duration}",
       "rerecord": "Recommencer l'enregistrement",
       "micDenied": "Accès au micro refusé. Autorisez-le dans les réglages du navigateur.",
-      "speakingTip": "Réécoutez-vous avant d'envoyer."
+      "speakingTip": "Réécoutez-vous avant d'envoyer.",
+      "materials": "Documents fournis",
+      "attachFile": "Joindre un fichier (facultatif)",
+      "attachHint": "Word, PDF, PowerPoint, ou photo / capture de votre travail (Ctrl + V)"
+    }
+  },
+  "files": {
+    "drop": "Glissez un fichier ici ou cliquez pour choisir",
+    "pasteHint": "Capture d'écran : cliquez dans cette zone puis Ctrl + V",
+    "clickHint": "PowerPoint, Word, PDF ou Excel",
+    "uploading": "Envoi… {progress} %",
+    "progress": "Progression de l'envoi",
+    "file": "Fichier",
+    "open": "Ouvrir",
+    "download": "Télécharger",
+    "replace": "Remplacer",
+    "remove": "Retirer",
+    "kinds": {
+      "image": "Image",
+      "pdf": "PDF",
+      "slides": "PowerPoint",
+      "sheet": "Excel",
+      "word": "Word",
+      "audio": "Audio",
+      "other": "Fichier"
     }
   }
 }

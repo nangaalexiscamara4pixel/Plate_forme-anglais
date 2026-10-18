@@ -107,6 +107,13 @@ export const saveQuestionAction = createAction(
     const actor = await admin();
     if (!(await db.exercise.count({ where: { id: exerciseId } }))) return fail("NOT_FOUND");
     const stored = toStored(question);
+    if (stored.attachmentFileId) {
+      const file = await db.mediaFile.findFirst({
+        where: { id: stored.attachmentFileId, purpose: { in: ["LESSON_IMAGE", "LESSON_DOCUMENT"] }, uploadedAt: { not: null } },
+        select: { id: true },
+      });
+      if (!file) return fail("ATTACHMENT_INVALID");
+    }
     if (stored.audioFileId) {
       const audio = await db.mediaFile.findFirst({ where: { id: stored.audioFileId, purpose: "LESSON_AUDIO", uploadedAt: { not: null } }, select: { id: true } });
       if (!audio) return fail("AUDIO_INVALID");
@@ -119,6 +126,7 @@ export const saveQuestionAction = createAction(
       explanation: stored.explanation,
       points: stored.points,
       audioFileId: stored.audioFileId,
+      attachmentFileId: stored.attachmentFileId,
     };
     if (questionId) {
       const updated = await db.question.updateMany({ where: { id: questionId, exerciseId }, data });

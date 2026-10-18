@@ -20,9 +20,17 @@ export async function canViewMedia(viewer: Viewer | null, target: { mediaId?: st
     if (await studentCanAccessMedia(scope, target.mediaId)) return true;
     const media = await db.mediaFile.findUnique({ where: { id: target.mediaId }, select: { ownerUserId: true } });
     if (media?.ownerUserId === viewer.userId) return true;
+    // Document joint à la consigne d'un devoir publié de ses niveaux
+    const material = await db.assignmentMaterial.count({
+      where: { mediaFileId: target.mediaId, assignment: { status: "PUBLISHED", levelId: { in: scope.levelIds } } },
+    });
+    if (material > 0) return true;
     return (
       (await db.question.count({
-        where: { audioFileId: target.mediaId, exercise: { status: "PUBLISHED", levelId: { in: scope.levelIds } } },
+        where: {
+          OR: [{ audioFileId: target.mediaId }, { attachmentFileId: target.mediaId }],
+          exercise: { status: "PUBLISHED", levelId: { in: scope.levelIds } },
+        },
       })) > 0
     );
   }

@@ -76,6 +76,27 @@ test("contenus : parcours étudiant A1, vidéo sécurisée, isolation par niveau
   await block.getByRole("button", { name: "Enregistrer" }).click();
   await expect(admin.getByText("Bloc enregistré.")).toBeVisible();
 
+  // Bloc « Document » : un PowerPoint à télécharger (type deviné depuis l'extension, comme sous Windows)
+  await admin.getByRole("button", { name: "Document (PowerPoint, Word, PDF)" }).click();
+  const docBlock = admin.getByRole("article", { name: "Document (PowerPoint, Word, PDF)" });
+  await docBlock.locator('input[type="file"]').setInputFiles({
+    name: "Numbers 1-10.pptx",
+    mimeType: "",
+    buffer: Buffer.concat([Buffer.from([0x50, 0x4b, 0x03, 0x04]), Buffer.alloc(2048, 1)]),
+  });
+  await expect(docBlock.getByLabel("Titre du document")).toHaveValue("Numbers 1-10");
+  await docBlock.getByRole("button", { name: "Enregistrer" }).click();
+  await expect(admin.getByText("Bloc enregistré.").first()).toBeVisible();
+
+  // Un faux PowerPoint (contenu HTML) est refusé à l'envoi
+  await admin.getByRole("button", { name: "Document (PowerPoint, Word, PDF)" }).click();
+  await admin.getByRole("article", { name: "Document (PowerPoint, Word, PDF)" }).last().locator('input[type="file"]').setInputFiles({
+    name: "piege.pptx",
+    mimeType: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    buffer: Buffer.from("<html><script>alert(1)</script></html>"),
+  });
+  await expect(admin.getByRole("alert").filter({ hasText: /fichier/i }).first()).toBeVisible();
+
   // Tant que la leçon est un brouillon, l'étudiant ne la voit pas
   await student.goto("/app/learn/a1/reading");
   await expect(student.getByText("Counting to ten")).toHaveCount(0);
@@ -94,4 +115,7 @@ test("contenus : parcours étudiant A1, vidéo sécurisée, isolation par niveau
   await student.goto("/app/learn/a1/reading");
   await student.getByRole("link", { name: /Counting to ten/ }).click();
   await expect(student.getByText("One, two, three, four, five.")).toBeVisible();
+  await expect(student.getByText("Numbers 1-10", { exact: true })).toBeVisible();
+  const download = student.getByRole("link", { name: "Télécharger" }).first();
+  expect((await student.request.get(`http://localhost:3100${await download.getAttribute("href")}`, { maxRedirects: 0 })).status()).toBe(302);
 });

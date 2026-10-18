@@ -55,6 +55,10 @@ const schema = z.object({
   R2_SECRET_ACCESS_KEY: optional,
   R2_BUCKET: optional,
   LOCAL_STORAGE_DIR: optional,
+  // Vercel Blob (magasin privé relié au projet : jeton ajouté automatiquement par Vercel)
+  BLOB_READ_WRITE_TOKEN: optional,
+  /** Forcer un pilote de stockage en développement (ex. « blob » pour tester Vercel Blob). */
+  STORAGE_DRIVER: optional.pipe(z.enum(["blob", "local"]).optional()),
   // Salle virtuelle (LiveKit) — sans ces clés, la salle fonctionne en mode démo (chat, réactions,
   // mains levées et présence actifs ; vidéo limitée à l'aperçu de sa propre caméra)
   LIVEKIT_URL: optional.pipe(z.string().regex(/^wss?:\/\//, "doit commencer par wss://").optional()),

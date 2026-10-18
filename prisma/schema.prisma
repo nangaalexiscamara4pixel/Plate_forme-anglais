@@ -56,6 +56,7 @@ enum LessonType {
 
 enum BlockKind {
   RICH_TEXT
+  DOCUMENT
   VIDEO
   AUDIO
   IMAGE
@@ -140,6 +141,7 @@ enum MediaPurpose {
   LESSON_IMAGE
   LESSON_DOCUMENT
   SUBMISSION_AUDIO
+  SUBMISSION_FILE
   FEEDBACK_AUDIO
   LIVE_MATERIAL
   AVATAR
@@ -170,70 +172,70 @@ enum ReminderKind {
 // ─────────────────────────────────────────────────────────────
 
 model User {
-  id               String        @id
-  name             String
-  email            String        @unique
-  emailVerified    Boolean       @default(false)
-  image            String?
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  id                String        @id
+  name              String
+  email             String        @unique
+  emailVerified     Boolean       @default(false)
+  image             String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
   // Plugin admin
-  role             Role          @default(STUDENT)
-  banned           Boolean?      @default(false)
-  banReason        String?
-  banExpires       DateTime?
+  role              Role          @default(STUDENT)
+  banned            Boolean?      @default(false)
+  banReason         String?
+  banExpires        DateTime?
   // Plugin twoFactor
-  twoFactorEnabled Boolean?      @default(false)
+  twoFactorEnabled  Boolean?      @default(false)
   // GlobeSpeak
-  status           AccountStatus @default(PENDING)
-  statusReason     String?
-  statusChangedAt  DateTime?
+  status            AccountStatus @default(PENDING)
+  statusReason      String?
+  statusChangedAt   DateTime?
   statusChangedById String?
-  currentLevelId   String?
-  failedLoginCount Int           @default(0)
-  lockedUntil      DateTime?
-  lastLoginAt      DateTime?
-  deletedAt        DateTime?
+  currentLevelId    String?
+  failedLoginCount  Int           @default(0)
+  lockedUntil       DateTime?
+  lastLoginAt       DateTime?
+  deletedAt         DateTime?
 
-  currentLevel     Level?        @relation("UserCurrentLevel", fields: [currentLevelId], references: [id], onDelete: SetNull)
-  statusChangedBy  User?         @relation("UserStatusChangedBy", fields: [statusChangedById], references: [id], onDelete: SetNull)
-  statusChanges    User[]        @relation("UserStatusChangedBy")
+  currentLevel    Level? @relation("UserCurrentLevel", fields: [currentLevelId], references: [id], onDelete: SetNull)
+  statusChangedBy User?  @relation("UserStatusChangedBy", fields: [statusChangedById], references: [id], onDelete: SetNull)
+  statusChanges   User[] @relation("UserStatusChangedBy")
 
-  sessions         Session[]
-  accounts         Account[]
-  twoFactors       TwoFactor[]
-  profile          Profile?
-  enrollments      LevelEnrollment[]     @relation("EnrollmentStudent")
-  promotions       LevelEnrollment[]     @relation("EnrollmentPromotedBy")
-  auditLogs        AuditLog[]            @relation("AuditActor")
-  privacyRequests  PrivacyRequest[]
-  attempts         Attempt[]
-  submissions      Submission[]
-  feedbacksGiven   Feedback[]
-  lessonProgress   LessonProgress[]
-  lessonNotes      LessonNote[]
-  vocab            UserVocab[]
-  attendances      Attendance[]          @relation("AttendanceStudent")
-  attendanceMarked Attendance[]          @relation("AttendanceMarkedBy")
-  liveMessages     LiveChatMessage[]     @relation("LiveChatAuthor")
-  liveMessagesDeleted LiveChatMessage[]  @relation("LiveChatDeletedBy")
-  liveLikes        LiveChatLike[]
-  livePresences    LiveRoomPresence[]
-  liveSeries       LiveSeries[]
-  xpEvents         XpEvent[]
-  dailyActivity    DailyActivity[]
-  badges           UserBadge[]
-  certificates     Certificate[]         @relation("CertificateHolder")
-  certificatesIssued Certificate[]       @relation("CertificateIssuer")
-  thread           MessageThread?
-  messagesSent     Message[]
-  announcements    Announcement[]        @relation("AnnouncementAuthor")
-  targetedAnnouncements Announcement[]   @relation("AnnouncementTarget")
-  notifications    Notification[]
-  mediaUploaded    MediaFile[]           @relation("MediaUploader")
-  mediaOwned       MediaFile[]           @relation("MediaOwner")
-  reminders        ReminderLog[]
-  settingsUpdated  PlatformSetting[]
+  sessions              Session[]
+  accounts              Account[]
+  twoFactors            TwoFactor[]
+  profile               Profile?
+  enrollments           LevelEnrollment[]  @relation("EnrollmentStudent")
+  promotions            LevelEnrollment[]  @relation("EnrollmentPromotedBy")
+  auditLogs             AuditLog[]         @relation("AuditActor")
+  privacyRequests       PrivacyRequest[]
+  attempts              Attempt[]
+  submissions           Submission[]
+  feedbacksGiven        Feedback[]
+  lessonProgress        LessonProgress[]
+  lessonNotes           LessonNote[]
+  vocab                 UserVocab[]
+  attendances           Attendance[]       @relation("AttendanceStudent")
+  attendanceMarked      Attendance[]       @relation("AttendanceMarkedBy")
+  liveMessages          LiveChatMessage[]  @relation("LiveChatAuthor")
+  liveMessagesDeleted   LiveChatMessage[]  @relation("LiveChatDeletedBy")
+  liveLikes             LiveChatLike[]
+  livePresences         LiveRoomPresence[]
+  liveSeries            LiveSeries[]
+  xpEvents              XpEvent[]
+  dailyActivity         DailyActivity[]
+  badges                UserBadge[]
+  certificates          Certificate[]      @relation("CertificateHolder")
+  certificatesIssued    Certificate[]      @relation("CertificateIssuer")
+  thread                MessageThread?
+  messagesSent          Message[]
+  announcements         Announcement[]     @relation("AnnouncementAuthor")
+  targetedAnnouncements Announcement[]     @relation("AnnouncementTarget")
+  notifications         Notification[]
+  mediaUploaded         MediaFile[]        @relation("MediaUploader")
+  mediaOwned            MediaFile[]        @relation("MediaOwner")
+  reminders             ReminderLog[]
+  settingsUpdated       PlatformSetting[]
 
   @@index([status])
   @@index([role])
@@ -318,9 +320,9 @@ model Profile {
   id                   String    @id @default(cuid())
   userId               String    @unique
   avatarKey            String?
-  country              String?   // ISO 3166-1 alpha-2
-  whatsapp             String?   // E.164 (ex. +33612345678), demandé à l'inscription
-  nativeLanguage       String?   // BCP 47
+  country              String? // ISO 3166-1 alpha-2
+  whatsapp             String? // E.164 (ex. +33612345678), demandé à l'inscription
+  nativeLanguage       String? // BCP 47
   timezone             String    @default("Europe/Paris") // IANA
   uiLocale             String    @default("fr")
   goals                String?
@@ -355,7 +357,7 @@ model AuditLog {
   id             String   @id @default(cuid())
   actorId        String?
   impersonatorId String?
-  action         String   // ex. "student.approve"
+  action         String // ex. "student.approve"
   targetType     String?
   targetId       String?
   metadata       Json?
@@ -399,23 +401,23 @@ model Level {
   id          String    @id @default(cuid())
   code        LevelCode @unique
   slug        String    @unique
-  name        String    // "Discovery", "Explorer"…
+  name        String // "Discovery", "Explorer"…
   tagline     String
   description String?
-  accentColor String    // token CSS, ex. "level-a1"
-  icon        String    // nom d'icône Lucide
+  accentColor String // token CSS, ex. "level-a1"
+  icon        String // nom d'icône Lucide
   order       Int       @unique
 
-  modules         Module[]
-  students        User[]            @relation("UserCurrentLevel")
-  enrollments     LevelEnrollment[]
-  exercises       Exercise[]
-  assignments     Assignment[]
-  vocabulary      VocabularyItem[]
-  liveSeries      LiveSeries[]
-  liveSessions    LiveSession[]
-  certificates    Certificate[]
-  announcements   Announcement[]
+  modules       Module[]
+  students      User[]            @relation("UserCurrentLevel")
+  enrollments   LevelEnrollment[]
+  exercises     Exercise[]
+  assignments   Assignment[]
+  vocabulary    VocabularyItem[]
+  liveSeries    LiveSeries[]
+  liveSessions  LiveSession[]
+  certificates  Certificate[]
+  announcements Announcement[]
 }
 
 model Module {
@@ -451,20 +453,20 @@ model Unit {
 }
 
 model Lesson {
-  id               String        @id @default(cuid())
+  id               String           @id @default(cuid())
   unitId           String
   title            String
   slug             String
   summary          String?
-  type             LessonType    @default(TEXT)
+  type             LessonType       @default(TEXT)
   order            Int
-  status           PublishStatus @default(DRAFT)
+  status           PublishStatus    @default(DRAFT)
   publishAt        DateTime?
-  estimatedMinutes Int           @default(15)
-  xpReward         Int           @default(20)
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
-  unit             Unit          @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  estimatedMinutes Int              @default(15)
+  xpReward         Int              @default(20)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  unit             Unit             @relation(fields: [unitId], references: [id], onDelete: Cascade)
   blocks           LessonBlock[]
   assignments      Assignment[]
   progress         LessonProgress[]
@@ -494,24 +496,24 @@ model LessonBlock {
 }
 
 model Video {
-  id           String        @id @default(cuid())
-  title        String
-  provider     VideoProvider
-  assetId      String?
-  playbackId   String?
-  uploadId     String?
-  status       VideoStatus   @default(UPLOADING)
-  durationSec  Int?
-  chapters     Json          @default("[]")
-  posterKey    String?
+  id          String        @id @default(cuid())
+  title       String
+  provider    VideoProvider
+  assetId     String?
+  playbackId  String?
+  uploadId    String?
+  status      VideoStatus   @default(UPLOADING)
+  durationSec Int?
+  chapters    Json          @default("[]")
+  posterKey   String?
   /// Fournisseur LOCAL : fichier vidéo stocké (démo / développement)
-  mediaFileId  String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  mediaFile    MediaFile?    @relation(fields: [mediaFileId], references: [id], onDelete: SetNull)
-  tracks       VideoTrack[]
-  blocks       LessonBlock[]
-  liveReplays  LiveSession[]
+  mediaFileId String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  mediaFile   MediaFile?    @relation(fields: [mediaFileId], references: [id], onDelete: SetNull)
+  tracks      VideoTrack[]
+  blocks      LessonBlock[]
+  liveReplays LiveSession[]
 
   @@index([assetId])
 }
@@ -536,19 +538,22 @@ model MediaFile {
   originalName String?
   purpose      MediaPurpose
   uploadedById String?
-  ownerUserId  String?      // propriétaire (fichiers d'étudiant)
+  ownerUserId  String? // propriétaire (fichiers d'étudiant)
   /// Renseigné quand l'upload a été vérifié (taille, type) — un fichier non confirmé n'est jamais servi
   uploadedAt   DateTime?
   createdAt    DateTime     @default(now())
   uploadedBy   User?        @relation("MediaUploader", fields: [uploadedById], references: [id], onDelete: SetNull)
   owner        User?        @relation("MediaOwner", fields: [ownerUserId], references: [id], onDelete: Cascade)
 
-  submissionsAudio Submission[]
-  feedbacksAudio   Feedback[]
-  questionsAudio   Question[]
-  vocabAudio       VocabularyItem[]
-  liveMaterials    LiveSessionMaterial[]
-  videos           Video[]
+  submissionsAudio    Submission[]
+  submissionsFile     Submission[]          @relation("SubmissionFile")
+  questionsAttachment Question[]            @relation("QuestionAttachment")
+  assignmentMaterials AssignmentMaterial[]
+  feedbacksAudio      Feedback[]
+  questionsAudio      Question[]
+  vocabAudio          VocabularyItem[]
+  liveMaterials       LiveSessionMaterial[]
+  videos              Video[]
 
   @@index([ownerUserId])
 }
@@ -558,60 +563,63 @@ model MediaFile {
 // ─────────────────────────────────────────────────────────────
 
 model Exercise {
-  id            String       @id @default(cuid())
-  kind          ExerciseKind @default(PRACTICE)
-  title         String
-  instructions  String?
-  unitId        String?
-  levelId       String?
-  passingScore  Int          @default(70) // pourcentage
-  timeLimitSec  Int?
-  maxAttempts   Int?
-  shuffle       Boolean      @default(false)
-  status        PublishStatus @default(DRAFT)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  unit          Unit?        @relation(fields: [unitId], references: [id], onDelete: Cascade)
-  level         Level?       @relation(fields: [levelId], references: [id], onDelete: Cascade)
-  questions     Question[]
-  attempts      Attempt[]
-  blocks        LessonBlock[]
+  id           String        @id @default(cuid())
+  kind         ExerciseKind  @default(PRACTICE)
+  title        String
+  instructions String?
+  unitId       String?
+  levelId      String?
+  passingScore Int           @default(70) // pourcentage
+  timeLimitSec Int?
+  maxAttempts  Int?
+  shuffle      Boolean       @default(false)
+  status       PublishStatus @default(DRAFT)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  unit         Unit?         @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  level        Level?        @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  questions    Question[]
+  attempts     Attempt[]
+  blocks       LessonBlock[]
 
   @@index([unitId])
   @@index([levelId, kind])
 }
 
 model Question {
-  id          String       @id @default(cuid())
-  exerciseId  String
-  order       Int
-  type        QuestionType
-  prompt      String
+  id               String          @id @default(cuid())
+  exerciseId       String
+  order            Int
+  type             QuestionType
+  prompt           String
   /// Données publiques (options, segments…) envoyées au client
-  payload     Json
+  payload          Json
   /// Clé de correction — JAMAIS envoyée au client
-  answerKey   Json
-  explanation String?
-  points      Int          @default(1)
-  audioFileId String?
-  exercise    Exercise     @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
-  audioFile   MediaFile?   @relation(fields: [audioFileId], references: [id], onDelete: SetNull)
-  answers     AttemptAnswer[]
+  answerKey        Json
+  explanation      String?
+  points           Int             @default(1)
+  audioFileId      String?
+  exercise         Exercise        @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  audioFile        MediaFile?      @relation(fields: [audioFileId], references: [id], onDelete: SetNull)
+  /// Image ou document joint à l'énoncé (schéma, capture, texte à lire…)
+  attachmentFileId String?
+  attachmentFile   MediaFile?      @relation("QuestionAttachment", fields: [attachmentFileId], references: [id], onDelete: SetNull)
+  answers          AttemptAnswer[]
 
   @@index([exerciseId, order])
 }
 
 model Attempt {
-  id          String    @id @default(cuid())
+  id          String          @id @default(cuid())
   userId      String
   exerciseId  String
-  startedAt   DateTime  @default(now())
+  startedAt   DateTime        @default(now())
   submittedAt DateTime?
   score       Int?
   maxScore    Int?
   passed      Boolean?
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  exercise    Exercise  @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercise    Exercise        @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
   answers     AttemptAnswer[]
 
   @@index([userId, exerciseId])
@@ -631,26 +639,39 @@ model AttemptAnswer {
 }
 
 model Assignment {
-  id             String       @id @default(cuid())
+  id             String               @id @default(cuid())
   lessonId       String?
   /// Niveau des étudiants concernés (devoir autonome, hors leçon)
   levelId        String?
-  skill          SkillCode    // WRITING | SPEAKING
+  skill          SkillCode // WRITING | SPEAKING
   title          String
   prompt         String
   minWords       Int?
   maxWords       Int?
   maxDurationSec Int?
-  rubric         Json         @default("[]")
-  status         PublishStatus @default(DRAFT)
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  lesson         Lesson?      @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-  level          Level?       @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  rubric         Json                 @default("[]")
+  status         PublishStatus        @default(DRAFT)
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  lesson         Lesson?              @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  level          Level?               @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  materials      AssignmentMaterial[]
   submissions    Submission[]
   blocks         LessonBlock[]
 
   @@index([levelId, status])
+}
+
+/// Documents joints à la consigne d'un devoir (PowerPoint, Word, PDF, images…)
+model AssignmentMaterial {
+  id           String     @id @default(cuid())
+  assignmentId String
+  mediaFileId  String
+  order        Int        @default(0)
+  assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  mediaFile    MediaFile  @relation(fields: [mediaFileId], references: [id], onDelete: Cascade)
+
+  @@unique([assignmentId, mediaFileId])
 }
 
 model Submission {
@@ -669,6 +690,9 @@ model Submission {
   user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   assignment   Assignment       @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
   audioFile    MediaFile?       @relation(fields: [audioFileId], references: [id], onDelete: SetNull)
+  /// Fichier rendu par l'étudiant (Word, PDF, photo de sa copie…)
+  fileId       String?
+  file         MediaFile?       @relation("SubmissionFile", fields: [fileId], references: [id], onDelete: SetNull)
   feedback     Feedback?
 
   @@unique([userId, assignmentId, version])
@@ -721,7 +745,7 @@ model LessonNote {
 }
 
 model VocabularyItem {
-  id           String     @id @default(cuid())
+  id           String      @id @default(cuid())
   levelId      String
   lessonId     String?
   term         String
@@ -730,9 +754,9 @@ model VocabularyItem {
   example      String?
   partOfSpeech String?
   audioFileId  String?
-  level        Level      @relation(fields: [levelId], references: [id], onDelete: Cascade)
-  lesson       Lesson?    @relation(fields: [lessonId], references: [id], onDelete: SetNull)
-  audioFile    MediaFile? @relation(fields: [audioFileId], references: [id], onDelete: SetNull)
+  level        Level       @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  lesson       Lesson?     @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  audioFile    MediaFile?  @relation(fields: [audioFileId], references: [id], onDelete: SetNull)
   learners     UserVocab[]
 
   @@index([levelId])
@@ -778,31 +802,31 @@ model LiveSeries {
 }
 
 model LiveSession {
-  id             String            @id @default(cuid())
-  seriesId       String?
-  levelId        String
-  skill          SkillCode?
-  title          String
-  description    String?
-  startsAt       DateTime          // UTC
-  durationMin    Int
-  timezone       String            // IANA de l'organisateur
+  id            String                @id @default(cuid())
+  seriesId      String?
+  levelId       String
+  skill         SkillCode?
+  title         String
+  description   String?
+  startsAt      DateTime // UTC
+  durationMin   Int
+  timezone      String // IANA de l'organisateur
   /// Lien Meet chiffré (AES-256-GCM) — jamais exposé avant la fenêtre d'ouverture
-  meetUrlEnc     String?
-  googleEventId  String?
-  joinWindowMin  Int               @default(15)
-  status         LiveSessionStatus @default(SCHEDULED)
-  replayVideoId  String?
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @updatedAt
-  series         LiveSeries?       @relation(fields: [seriesId], references: [id], onDelete: SetNull)
-  level          Level             @relation(fields: [levelId], references: [id], onDelete: Cascade)
-  replayVideo    Video?            @relation(fields: [replayVideoId], references: [id], onDelete: SetNull)
-  materials      LiveSessionMaterial[]
-  attendances    Attendance[]
-  reminders      ReminderLog[]
-  chatMessages   LiveChatMessage[]
-  presences      LiveRoomPresence[]
+  meetUrlEnc    String?
+  googleEventId String?
+  joinWindowMin Int                   @default(15)
+  status        LiveSessionStatus     @default(SCHEDULED)
+  replayVideoId String?
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  series        LiveSeries?           @relation(fields: [seriesId], references: [id], onDelete: SetNull)
+  level         Level                 @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  replayVideo   Video?                @relation(fields: [replayVideoId], references: [id], onDelete: SetNull)
+  materials     LiveSessionMaterial[]
+  attendances   Attendance[]
+  reminders     ReminderLog[]
+  chatMessages  LiveChatMessage[]
+  presences     LiveRoomPresence[]
 
   @@index([levelId, startsAt])
   @@index([startsAt, status])
@@ -826,7 +850,7 @@ model LiveChatMessage {
   id          String         @id @default(cuid())
   sessionId   String
   userId      String
-  body        String         // texte brut (500 caractères max), jamais interprété comme HTML
+  body        String // texte brut (500 caractères max), jamais interprété comme HTML
   createdAt   DateTime       @default(now())
   deletedAt   DateTime?
   deletedById String?
@@ -946,7 +970,7 @@ model Certificate {
   userId        String
   levelId       String
   serial        String    @unique // ex. GSA-B1-2026-7K3QX9
-  holderName    String    // figé à l'émission
+  holderName    String // figé à l'émission
   issuedAt      DateTime  @default(now())
   issuedById    String?
   pdfKey        String?

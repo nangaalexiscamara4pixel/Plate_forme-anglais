@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useUpload } from "@/features/content/components/use-upload";
+import { FileDrop } from "@/components/file-drop";
+import { adminAutoUploader, useUpload, type UploadedFile } from "@/features/content/components/use-upload";
+import { ACCEPT } from "@/lib/files";
 import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { saveQuestionAction } from "../actions";
@@ -30,9 +32,10 @@ type Draft = {
   pairs: { left: string; right: string }[];
   audioFileId: string;
   audioName: string;
+  attachment: UploadedFile | null;
 };
 
-function toDraft(q?: QuestionInput, audioName?: string | null): Draft {
+function toDraft(q?: QuestionInput, audioName?: string | null, attachment?: UploadedFile | null): Draft {
   const d: Draft = {
     type: q?.type ?? "MCQ",
     prompt: q?.prompt ?? "",
@@ -51,6 +54,7 @@ function toDraft(q?: QuestionInput, audioName?: string | null): Draft {
     ],
     audioFileId: "",
     audioName: audioName ?? "",
+    attachment: attachment ?? null,
   };
   if (!q) return d;
   if (q.type === "MCQ" || q.type === "LISTENING_MCQ") Object.assign(d, { options: q.options, correct: q.correct });
@@ -65,7 +69,7 @@ function toDraft(q?: QuestionInput, audioName?: string | null): Draft {
 }
 
 function fromDraft(d: Draft): unknown {
-  const common = { prompt: d.prompt, explanation: d.explanation, points: d.points };
+  const common = { prompt: d.prompt, explanation: d.explanation, points: d.points, attachmentFileId: d.attachment?.id ?? "" };
   const options = d.options.map((o) => o.trim());
   switch (d.type) {
     case "MCQ":
@@ -93,19 +97,21 @@ export function QuestionForm({
   questionId,
   initial,
   audioName,
+  attachment,
   onDone,
 }: {
   exerciseId: string;
   questionId?: string;
   initial?: QuestionInput;
   audioName?: string | null;
+  attachment?: UploadedFile | null;
   onDone: () => void;
 }) {
   const t = useTranslations("exercises.question");
   const tv = useTranslations("validation");
   const te = useTranslations("errors");
   const router = useRouter();
-  const [d, setD] = useState<Draft>(() => toDraft(initial, audioName));
+  const [d, setD] = useState<Draft>(() => toDraft(initial, audioName, attachment));
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
   const set = (patch: Partial<Draft>) => setD((prev) => ({ ...prev, ...patch }));
@@ -156,6 +162,15 @@ export function QuestionForm({
         <Textarea id="q-prompt" rows={2} maxLength={1000} value={d.prompt} onChange={(e) => set({ prompt: e.target.value })} placeholder={t(`promptPlaceholder.${d.type}`)} aria-invalid={!!errors.prompt} />
         {err("prompt")}
       </div>
+
+      <FileDrop
+        uploader={adminAutoUploader}
+        accept={ACCEPT.documentOrImage}
+        label={t("attachment")}
+        hint={t("attachmentHint")}
+        value={d.attachment}
+        onChange={(attachment) => set({ attachment })}
+      />
 
       {d.type === "LISTENING_MCQ" && <AudioPicker d={d} set={set} error={err("audioFileId")} />}
 

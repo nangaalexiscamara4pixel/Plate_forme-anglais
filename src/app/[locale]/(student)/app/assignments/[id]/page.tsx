@@ -38,6 +38,7 @@ export default async function StudentAssignmentPage({ params }: { params: Promis
           minWords: assignment.minWords,
           maxWords: assignment.maxWords,
           maxDurationSec: assignment.maxDurationSec,
+          materials: assignment.materials.map((m) => ({ mediaId: m.mediaFile.id, name: m.mediaFile.originalName ?? "", mime: m.mediaFile.mime })),
         }}
         submissions={assignment.submissions.map((s) => ({
           ...s,

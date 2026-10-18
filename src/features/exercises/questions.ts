@@ -17,6 +17,13 @@ const common = {
   prompt: text(1000),
   explanation: z.string().trim().max(1000, "tooLong").optional().or(z.literal("").transform(() => undefined)),
   points: z.coerce.number().int().min(1).max(20).default(1),
+  /** Image ou document joint à l'énoncé (médiathèque). */
+  // Chaîne vide (aucun fichier) ⇒ absent : jamais de référence vide en base.
+  attachmentFileId: z
+    .string()
+    .max(64)
+    .transform((v) => v || undefined)
+    .optional(),
 };
 
 /** Blancs d'un texte à trous : `{réponse}` ou `{réponse|variante}`. */
@@ -62,11 +69,20 @@ export function parseGapText(source: string): { segments: string[]; answers: str
   return { segments, answers };
 }
 
-export type StoredQuestion = { type: QuestionType; prompt: string; payload: unknown; answerKey: unknown; explanation: string | null; points: number; audioFileId: string | null };
+export type StoredQuestion = {
+  type: QuestionType;
+  prompt: string;
+  payload: unknown;
+  answerKey: unknown;
+  explanation: string | null;
+  points: number;
+  audioFileId: string | null;
+  attachmentFileId: string | null;
+};
 
 /** Saisie de l'enseignant → données publiques + clé de correction. */
 export function toStored(q: QuestionInput): StoredQuestion {
-  const base = { type: q.type, prompt: q.prompt, explanation: q.explanation ?? null, points: q.points, audioFileId: null as string | null };
+  const base = { type: q.type, prompt: q.prompt, explanation: q.explanation ?? null, points: q.points, audioFileId: null as string | null, attachmentFileId: q.attachmentFileId ?? null };
   switch (q.type) {
     case "MCQ":
       return { ...base, payload: { options: q.options }, answerKey: { correct: q.correct } };
@@ -94,10 +110,19 @@ const arr = (v: unknown) => (Array.isArray(v) ? v : []) as unknown[];
 const strs = (v: unknown) => arr(v).map(String);
 
 /** Question enregistrée → formulaire de l'enseignant (modification). */
-export function toInput(q: { type: QuestionType; prompt: string; payload: unknown; answerKey: unknown; explanation: string | null; points: number; audioFileId: string | null }): QuestionInput {
+export function toInput(q: {
+  type: QuestionType;
+  prompt: string;
+  payload: unknown;
+  answerKey: unknown;
+  explanation: string | null;
+  points: number;
+  audioFileId: string | null;
+  attachmentFileId?: string | null;
+}): QuestionInput {
   const p = (q.payload ?? {}) as Any;
   const k = (q.answerKey ?? {}) as Any;
-  const common = { prompt: q.prompt, explanation: q.explanation ?? undefined, points: q.points };
+  const common = { prompt: q.prompt, explanation: q.explanation ?? undefined, points: q.points, attachmentFileId: q.attachmentFileId ?? undefined };
   switch (q.type) {
     case "MCQ":
       return { type: "MCQ", ...common, options: strs(p.options), correct: Number(k.correct ?? 0) };
@@ -129,6 +154,8 @@ export type PublicQuestion = {
   prompt: string;
   points: number;
   audioFileId: string | null;
+  /** Image ou document joint (servi par /api/media après contrôle d'accès). */
+  attachment: { id: string; mime: string; name: string } | null;
   options?: string[];
   segments?: string[];
   items?: string[];
@@ -148,9 +175,19 @@ function shuffled<T>(list: T[], random: () => number): T[] {
 }
 
 /** Ce que voit l'étudiant : jamais la clé de correction ; « à remettre dans l'ordre » et « associer » mélangés. */
-export function toPublic(q: { id: string; type: QuestionType; prompt: string; payload: unknown; points: number; audioFileId: string | null }, random = Math.random): PublicQuestion {
+export function toPublic(
+  q: { id: string; type: QuestionType; prompt: string; payload: unknown; points: number; audioFileId: string | null; attachment?: PublicQuestion["attachment"] },
+  random = Math.random,
+): PublicQuestion {
   const p = (q.payload ?? {}) as Any;
-  const base: PublicQuestion = { id: q.id, type: q.type, prompt: q.prompt, points: q.points, audioFileId: q.type === "LISTENING_MCQ" ? q.audioFileId : null };
+  const base: PublicQuestion = {
+    id: q.id,
+    type: q.type,
+    prompt: q.prompt,
+    points: q.points,
+    audioFileId: q.type === "LISTENING_MCQ" ? q.audioFileId : null,
+    attachment: q.attachment ?? null,
+  };
   switch (q.type) {
     case "MCQ":
     case "LISTENING_MCQ":

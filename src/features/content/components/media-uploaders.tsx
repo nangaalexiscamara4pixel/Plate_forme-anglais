@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { createLocalVideoAction, createMuxVideoAction } from "../actions";
+import { ACCEPT } from "@/lib/files";
 import { useUpload } from "./use-upload";
 
 /** Ajout d'une vidéo : upload direct vers Mux (production) ou stockage local (développement). */
@@ -90,7 +91,7 @@ export function FileUploader() {
   const input = useRef<HTMLInputElement>(null);
   const [purpose, setPurpose] = useState<"LESSON_AUDIO" | "LESSON_IMAGE" | "LESSON_DOCUMENT">("LESSON_AUDIO");
   const { state, upload } = useUpload(purpose);
-  const accept = { LESSON_AUDIO: "audio/*", LESSON_IMAGE: "image/jpeg,image/png,image/webp,image/avif", LESSON_DOCUMENT: "application/pdf" }[purpose];
+  const accept = { LESSON_AUDIO: "audio/*", LESSON_IMAGE: ACCEPT.image, LESSON_DOCUMENT: ACCEPT.document }[purpose];
 
   return (
     <div className="grid gap-3">

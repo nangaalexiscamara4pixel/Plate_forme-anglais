@@ -37,11 +37,11 @@ function buildCsp(nonce: string) {
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDev ? " 'unsafe-eval'" : ""}`,
     // Les attributs style (Tailwind/Motion) nécessitent 'unsafe-inline' pour les styles uniquement.
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' blob: data: https://image.mux.com https://*.r2.cloudflarestorage.com",
+    "img-src 'self' blob: data: https://image.mux.com https://*.r2.cloudflarestorage.com https://*.blob.vercel-storage.com",
     "font-src 'self'",
-    "media-src 'self' blob: https://stream.mux.com https://*.r2.cloudflarestorage.com",
+    "media-src 'self' blob: https://stream.mux.com https://*.r2.cloudflarestorage.com https://*.blob.vercel-storage.com",
     // Mux (lecture, statistiques, upload direct via Google Cloud Storage) et R2 (uploads pré-signés)
-    `connect-src 'self' https://*.mux.com https://*.litix.io https://storage.googleapis.com https://*.r2.cloudflarestorage.com ${liveKitSources()}`,
+    `connect-src 'self' https://*.mux.com https://*.litix.io https://storage.googleapis.com https://*.r2.cloudflarestorage.com https://vercel.com https://*.blob.vercel-storage.com ${liveKitSources()}`,
     "worker-src 'self' blob:",
     "frame-src 'none'",
     "object-src 'none'",

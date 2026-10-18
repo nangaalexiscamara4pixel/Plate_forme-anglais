@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LevelBadge } from "@/features/admin-shell/ui";
 import { deleteAssignmentAction, setAssignmentStatusAction } from "@/features/assignments/actions";
 import { AssignmentForm } from "@/features/assignments/components/assignment-form";
+import { MaterialsEditor } from "@/features/assignments/components/materials";
 import { getAdminAssignment } from "@/features/assignments/server";
 import { PublishBar } from "@/features/exercises/components/publish-bar";
 import { Link } from "@/i18n/navigation";
@@ -84,14 +85,27 @@ export default async function AdminAssignmentPage({ params }: { params: Promise<
             )}
           </CardContent>
         </Card>
-        <Card className="h-fit">
-          <CardHeader>
-            <CardTitle className="font-sans text-base">{t("settings")}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <AssignmentForm levels={levels} assignment={{ ...assignment, skill: assignment.skill as "WRITING" | "SPEAKING" }} />
-          </CardContent>
-        </Card>
+        <div className="grid h-fit gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="font-sans text-base">{t("materials")}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <MaterialsEditor
+                assignmentId={assignment.id}
+                items={assignment.materials.map((m) => ({ id: m.id, mediaId: m.mediaFile.id, name: m.mediaFile.originalName ?? "", mime: m.mediaFile.mime }))}
+              />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="font-sans text-base">{t("settings")}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <AssignmentForm levels={levels} assignment={{ ...assignment, skill: assignment.skill as "WRITING" | "SPEAKING" }} />
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

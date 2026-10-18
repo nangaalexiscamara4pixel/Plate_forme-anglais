@@ -2,13 +2,14 @@
 
 import { ArrowDown, ArrowUp, Check } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { FileIcon } from "@/components/file-drop";
 import { cn } from "@/lib/utils";
 import type { PublicQuestion } from "../questions";
 
 export type Response = Record<string, unknown> | undefined;
 
 /** Champ de réponse d'une question, selon son type (contrôlé par le lecteur d'exercice). */
-export function QuestionInput({
+function AnswerInput({
   q,
   value,
   onChange,
@@ -182,6 +183,35 @@ export function QuestionInput({
       );
     }
   }
+}
+
+/** Image ou document joint à l'énoncé, puis le champ de réponse. */
+export function QuestionInput(props: Parameters<typeof AnswerInput>[0]) {
+  const t = useTranslations("files");
+  const file = props.q.attachment;
+  return (
+    <>
+      {file &&
+        (file.mime.startsWith("image/") ? (
+          <a href={`/api/media/${file.id}`} target="_blank" rel="noopener noreferrer" className="mb-4 block">
+            {/* eslint-disable-next-line @next/next/no-img-element -- fichier privé servi par URL signée */}
+            <img src={`/api/media/${file.id}`} alt={file.name} loading="lazy" className="max-h-80 w-full rounded-xl border bg-muted/30 object-contain" />
+          </a>
+        ) : (
+          <a
+            href={`/api/media/${file.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mb-4 flex items-center gap-3 rounded-xl border bg-muted/30 p-3 text-sm hover:bg-muted/60"
+          >
+            <FileIcon mime={file.mime} className="size-6" />
+            <span className="min-w-0 flex-1 truncate font-medium">{file.name || t("file")}</span>
+            <span className="text-brand-ink">{t("open")}</span>
+          </a>
+        ))}
+      <AnswerInput {...props} />
+    </>
+  );
 }
 
 /** Une réponse a-t-elle été donnée (pour le compteur de progression) ? */

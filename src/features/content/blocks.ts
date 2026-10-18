@@ -27,6 +27,8 @@ export const blockContentSchemas = {
   VIDEO: z.object({ caption: shortText(300).optional() }),
   AUDIO: z.object({ mediaId: id, caption: shortText(300).optional(), transcript: shortText(10_000).optional() }),
   IMAGE: z.object({ mediaId: id, alt: z.string().trim().min(1, "altRequired").max(300), caption: shortText(300).optional() }),
+  // Document à télécharger : PowerPoint, Word, PDF, Excel
+  DOCUMENT: z.object({ mediaId: id, title: z.string().trim().min(1, "titleRequired").max(200), description: shortText(500).optional() }),
   VOCAB_LIST: z.object({
     title: shortText(120).optional(),
     items: z
@@ -54,6 +56,7 @@ export type RenderableBlock =
   | { id: string; kind: "VIDEO"; content: BlockContent<"VIDEO">; videoId: string | null }
   | { id: string; kind: "AUDIO"; content: BlockContent<"AUDIO"> }
   | { id: string; kind: "IMAGE"; content: BlockContent<"IMAGE"> }
+  | { id: string; kind: "DOCUMENT"; content: BlockContent<"DOCUMENT"> }
   | { id: string; kind: "VOCAB_LIST"; content: BlockContent<"VOCAB_LIST"> };
 
 /**

@@ -145,6 +145,14 @@ node scripts/make-demo-video.mjs
 2. Créez une clé de signature (*Signing keys*) : `MUX_SIGNING_KEY_ID` et `MUX_SIGNING_PRIVATE_KEY` (clé privée encodée en base64, telle que fournie).
 3. Créez un webhook vers `https://<votre-domaine>/api/webhooks/mux` et récupérez son secret : `MUX_WEBHOOK_SECRET`.
 
+### Stockage des fichiers en ligne : Vercel Blob (configuration actuelle)
+
+Les fichiers (PowerPoint, Word, PDF, Excel, images, audio, enregistrements et copies des étudiants) sont stockés dans un magasin **Vercel Blob privé** relié au projet : Vercel ajoute `BLOB_READ_WRITE_TOKEN` automatiquement. Sans signature, tout accès est refusé (403) ; le site émet des liens signés de quelques minutes, après contrôle des droits.
+
+- Envoi direct navigateur → stockage (lien signé limité à un fichier, un type et une taille), puis vérification du contenu réel (signature binaire) côté serveur.
+- En développement, le disque local reste utilisé ; `STORAGE_DRIVER=blob` permet de tester Vercel Blob en local.
+- Limites : 500 Mo par vidéo, 100 Mo par document, 15 Mo par image, 25 Mo par copie d'étudiant.
+
 ### Configurer Cloudflare R2 (production)
 
 1. Créez un bucket **privé** (sans accès public) : `R2_BUCKET`.

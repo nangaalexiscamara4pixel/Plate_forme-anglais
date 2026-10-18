@@ -1,12 +1,13 @@
 "use client";
 
-import { ArrowDown, ArrowUp, CheckCircle2, ListPlus, Music, Pencil, Trash2 } from "lucide-react";
+import { ArrowDown, ArrowUp, CheckCircle2, ListPlus, Music, Paperclip, Pencil, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
 import { deleteQuestionAction, moveQuestionAction } from "../actions";
+import type { UploadedFile } from "@/features/content/components/use-upload";
 import type { QuestionInput, QuestionType } from "../questions";
 import { QuestionForm } from "./question-form";
 
@@ -18,6 +19,7 @@ export type EditorQuestion = {
   input: QuestionInput;
   answer: string[];
   audioName: string | null;
+  attachment: UploadedFile | null;
 };
 
 /** Liste des questions d'un exercice : ajout, modification, ordre, suppression. */
@@ -62,7 +64,7 @@ export function QuestionsEditor({ exerciseId, questions }: { exerciseId: string;
         {questions.map((q, i) =>
           editing === q.id ? (
             <li key={q.id}>
-              <QuestionForm exerciseId={exerciseId} questionId={q.id} initial={q.input} audioName={q.audioName} onDone={() => setEditing(null)} />
+              <QuestionForm exerciseId={exerciseId} questionId={q.id} initial={q.input} audioName={q.audioName} attachment={q.attachment} onDone={() => setEditing(null)} />
             </li>
           ) : (
             <li key={q.id} className="group flex gap-4 rounded-2xl border bg-card p-4 shadow-sm">
@@ -71,6 +73,11 @@ export function QuestionsEditor({ exerciseId, questions }: { exerciseId: string;
                 <p className="mb-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                   <span className="rounded-full bg-accent px-2 py-0.5 font-medium text-accent-foreground">{t(`types.${q.type}`)}</span>
                   <span>{t("pointsCount", { count: q.points })}</span>
+                  {q.attachment && (
+                    <span className="inline-flex items-center gap-1">
+                      <Paperclip className="size-3" aria-hidden /> {q.attachment.name}
+                    </span>
+                  )}
                   {q.audioName && (
                     <span className="inline-flex items-center gap-1">
                       <Music className="size-3" aria-hidden /> {q.audioName}

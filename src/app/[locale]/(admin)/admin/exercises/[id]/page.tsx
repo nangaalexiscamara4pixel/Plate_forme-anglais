@@ -34,7 +34,9 @@ export default async function AdminExercisePage({ params }: { params: Promise<{ 
 
   const questions = exercise.questions.map((q) => {
     const type = q.type as QuestionType;
-    return { id: q.id, type, prompt: q.prompt, points: q.points, input: toInput({ ...q, type }), answer: revealAnswer(type, q.payload, q.answerKey), audioName: q.audioFile?.originalName ?? null };
+    return { id: q.id, type, prompt: q.prompt, points: q.points, input: toInput({ ...q, type }), answer: revealAnswer(type, q.payload, q.answerKey), audioName: q.audioFile?.originalName ?? null,
+      attachment: q.attachmentFile ? { id: q.attachmentFile.id, name: q.attachmentFile.originalName ?? "", mime: q.attachmentFile.mime } : null,
+    };
   });
 
   return (

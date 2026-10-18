@@ -1,8 +1,11 @@
 import { BookMarked, Globe2, Info, Lightbulb, TriangleAlert } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { FileIcon } from "@/components/file-drop";
+import { fileKind } from "@/lib/files";
 import { RichText } from "@/components/rich-text";
 import type { RenderableBlock } from "@/features/content/blocks";
 import { cn } from "@/lib/utils";
+import { db } from "@/server/db";
 import type { LessonContent } from "../queries";
 import { LessonVideoPlayer } from "./video-player";
 import { VocabList } from "./vocab-list";
@@ -91,6 +94,8 @@ export async function LessonBlocks({
             {block.content.caption && <figcaption className="text-center text-sm text-muted-foreground">{block.content.caption}</figcaption>}
           </figure>
         );
+      case "DOCUMENT":
+        return <DocumentCard mediaId={block.content.mediaId} title={block.content.title} description={block.content.description} />;
       case "VOCAB_LIST":
         return <VocabList content={block.content} />;
     }
@@ -103,6 +108,36 @@ export async function LessonBlocks({
           {render(b)}
         </section>
       ))}
+    </div>
+  );
+}
+
+/** Document à télécharger (PowerPoint, Word, PDF, Excel) : icône du type, nom, taille, ouverture. */
+async function DocumentCard({ mediaId, title, description }: { mediaId: string; title: string; description?: string }) {
+  const t = await getTranslations("files");
+  const media = await db.mediaFile.findUnique({ where: { id: mediaId }, select: { mime: true, sizeBytes: true } });
+  if (!media) return null;
+  const size = media.sizeBytes >= 1024 * 1024 ? `${(media.sizeBytes / 1024 / 1024).toFixed(1)} Mo` : `${Math.max(1, Math.round(media.sizeBytes / 1024))} Ko`;
+  return (
+    <div className="flex flex-wrap items-center gap-4 rounded-xl border bg-card p-4 shadow-sm">
+      <span className="flex size-12 items-center justify-center rounded-lg bg-muted">
+        <FileIcon mime={media.mime} className="size-6" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="font-medium">{title}</p>
+        {description && <p className="text-sm text-muted-foreground">{description}</p>}
+        <p className="text-xs text-muted-foreground uppercase">
+          {t(`kinds.${fileKind(media.mime)}`)} · {size}
+        </p>
+      </div>
+      <div className="flex gap-2">
+        <a href={`/api/media/${mediaId}`} target="_blank" rel="noopener noreferrer" className="rounded-lg border px-3 py-2 text-sm font-medium hover:bg-muted">
+          {t("open")}
+        </a>
+        <a href={`/api/media/${mediaId}?download=1`} className="rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+          {t("download")}
+        </a>
+      </div>
     </div>
   );
 }

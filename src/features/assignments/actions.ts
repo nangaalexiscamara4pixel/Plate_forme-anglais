@@ -135,6 +135,7 @@ export const saveDraftAction = createAction(
     text: z.string().max(40_000, "descriptionTooLong").optional(),
     audioFileId: id.nullable().optional(),
     durationSec: z.number().int().min(0).max(3600).optional(),
+    fileId: id.nullable().optional(),
   }),
   async ({ assignmentId, ...input }) => {
     const viewer = await assertApprovedStudent({ mutation: true });
@@ -168,6 +169,65 @@ export const requestRecordingUploadAction = createAction(
     });
   },
 );
+
+/** Copie rendue sous forme de fichier (Word, PDF, PowerPoint, photo ou capture de son travail). */
+export const requestSubmissionFileUploadAction = createAction(
+  z.object({ assignmentId: id, mime: z.string().max(100), size: z.number().int().positive(), name: z.string().max(255) }),
+  async ({ assignmentId, mime, size, name }) => {
+    const viewer = await assertApprovedStudent({ mutation: true });
+    return run(async () => {
+      const where = await studentAssignmentWhere(viewer.userId);
+      if (!(await db.assignment.count({ where: { ...where, id: assignmentId } }))) throw new AssignmentError("NOT_FOUND");
+      return requestUpload(
+        { actorId: viewer.userId, ip: viewer.ip, userAgent: viewer.userAgent },
+        { purpose: "SUBMISSION_FILE", mime, size, name, ownerUserId: viewer.userId },
+      );
+    });
+  },
+);
+
+export const confirmSubmissionFileUploadAction = createAction(z.object({ mediaId: id }), async ({ mediaId }) => {
+  const viewer = await assertApprovedStudent({ mutation: true });
+  return run(async () => {
+    // Un étudiant ne confirme que ses propres fichiers.
+    const media = await db.mediaFile.findFirst({ where: { id: mediaId, ownerUserId: viewer.userId, purpose: "SUBMISSION_FILE" }, select: { id: true } });
+    if (!media) throw new AssignmentError("ATTACHMENT_INVALID");
+    const m = await confirmUpload({ actorId: viewer.userId, ip: viewer.ip, userAgent: viewer.userAgent }, mediaId);
+    return { id: m.id, name: m.originalName ?? "", mime: m.mime };
+  });
+});
+
+// ── Back-office : documents joints à la consigne ──
+
+export const addAssignmentMaterialAction = createAction(z.object({ assignmentId: id, mediaId: id }), async ({ assignmentId, mediaId }) => {
+  const actor = await admin();
+  const [assignment, media] = await Promise.all([
+    db.assignment.findUnique({ where: { id: assignmentId }, select: { id: true } }),
+    db.mediaFile.findFirst({
+      where: { id: mediaId, purpose: { in: ["LESSON_DOCUMENT", "LESSON_IMAGE", "LESSON_AUDIO"] }, uploadedAt: { not: null } },
+      select: { id: true },
+    }),
+  ]);
+  if (!assignment || !media) return fail("NOT_FOUND");
+  const last = await db.assignmentMaterial.aggregate({ where: { assignmentId }, _max: { order: true } });
+  await db.assignmentMaterial.upsert({
+    where: { assignmentId_mediaFileId: { assignmentId, mediaFileId: mediaId } },
+    create: { assignmentId, mediaFileId: mediaId, order: (last._max.order ?? -1) + 1 },
+    update: {},
+  });
+  await audit(actor, "assignment.update", { type: "Assignment", id: assignmentId }, { materialAdded: mediaId });
+  refreshAdmin(assignmentId);
+  return { ok: true };
+});
+
+export const removeAssignmentMaterialAction = createAction(z.object({ assignmentId: id, materialId: id }), async ({ assignmentId, materialId }) => {
+  const actor = await admin();
+  const deleted = await db.assignmentMaterial.deleteMany({ where: { id: materialId, assignmentId } });
+  if (!deleted.count) return fail("NOT_FOUND");
+  await audit(actor, "assignment.update", { type: "Assignment", id: assignmentId }, { materialRemoved: materialId });
+  refreshAdmin(assignmentId);
+  return { ok: true };
+});
 
 export const confirmRecordingUploadAction = createAction(z.object({ mediaId: id }), async ({ mediaId }) => {
   const viewer = await assertApprovedStudent({ mutation: true });

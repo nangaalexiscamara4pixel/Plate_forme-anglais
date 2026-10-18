@@ -4,6 +4,7 @@ import {
   AudioLines,
   BookA,
   Check,
+  FileDown,
   FileText,
   ImageIcon,
   Loader2,
@@ -29,7 +30,10 @@ import { CALLOUT_TONES, type EditableBlockKind } from "../blocks";
 import { addBlockAction, deleteBlockAction, reorderAction, saveBlockAction } from "../actions";
 import { RichTextEditor } from "./rich-text-editor";
 import { SortableList } from "./sortable-list";
-import { useUpload } from "./use-upload";
+import { FileDrop } from "@/components/file-drop";
+import { ACCEPT } from "@/lib/files";
+import { mimeFromName } from "@/features/media/policy";
+import type { UploadedFile } from "./use-upload";
 
 export type EditorBlock = { id: string; kind: string; content: Record<string, unknown>; videoId: string | null };
 type VideoOption = { id: string; title: string; status: string };
@@ -40,9 +44,10 @@ const KIND_ICON: Record<EditableBlockKind, typeof FileText> = {
   VIDEO: MonitorPlay,
   AUDIO: AudioLines,
   IMAGE: ImageIcon,
+  DOCUMENT: FileDown,
   VOCAB_LIST: BookA,
 };
-const ADDABLE: EditableBlockKind[] = ["RICH_TEXT", "CALLOUT", "VIDEO", "AUDIO", "IMAGE", "VOCAB_LIST"];
+const ADDABLE: EditableBlockKind[] = ["RICH_TEXT", "CALLOUT", "VIDEO", "AUDIO", "IMAGE", "DOCUMENT", "VOCAB_LIST"];
 const selectClass = "h-10 w-full rounded-md border border-input bg-background px-3 text-sm";
 
 export function BlocksEditor({
@@ -242,13 +247,12 @@ function BlockCard({
 
         {(kind === "AUDIO" || kind === "IMAGE") && (
           <>
-            <MediaPicker
-              purpose={kind === "AUDIO" ? "LESSON_AUDIO" : "LESSON_IMAGE"}
-              accept={kind === "AUDIO" ? "audio/*" : "image/jpeg,image/png,image/webp,image/avif"}
-              mediaId={typeof block.content.mediaId === "string" ? block.content.mediaId : undefined}
-              name={typeof block.content.mediaId === "string" ? mediaNames[block.content.mediaId] : undefined}
-              isImage={kind === "IMAGE"}
-              onUploaded={(m) => setContent({ mediaId: m.id })}
+            <FileDrop
+              uploader={kind === "AUDIO" ? "LESSON_AUDIO" : "LESSON_IMAGE"}
+              accept={kind === "AUDIO" ? ACCEPT.audio : ACCEPT.image}
+              pasteImages={kind === "IMAGE"}
+              value={mediaValue(block.content.mediaId, mediaNames)}
+              onChange={(m) => setContent({ mediaId: m?.id ?? "" })}
             />
             {kind === "IMAGE" && (
               <div className="grid gap-2">
@@ -264,6 +268,27 @@ function BlockCard({
                 <Textarea id={`tr-${block.id}`} rows={4} maxLength={10_000} value={String(block.content.transcript ?? "")} onChange={(e) => setContent({ transcript: e.target.value })} />
               </div>
             )}
+          </>
+        )}
+
+        {kind === "DOCUMENT" && (
+          <>
+            <FileDrop
+              uploader="LESSON_DOCUMENT"
+              accept={ACCEPT.document}
+              pasteImages={false}
+              hint={t("documentHint")}
+              value={mediaValue(block.content.mediaId, mediaNames)}
+              onChange={(m) => setContent({ mediaId: m?.id ?? "", title: block.content.title || (m?.name ?? "").replace(/.[^.]+$/, "") })}
+            />
+            <div className="grid gap-2">
+              <Label htmlFor={`doc-title-${block.id}`}>{t("documentTitle")}</Label>
+              <Input id={`doc-title-${block.id}`} value={String(block.content.title ?? "")} maxLength={200} required onChange={(e) => setContent({ title: e.target.value })} />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor={`doc-desc-${block.id}`}>{t("documentDescription")}</Label>
+              <Textarea id={`doc-desc-${block.id}`} rows={2} maxLength={500} value={String(block.content.description ?? "")} onChange={(e) => setContent({ description: e.target.value })} />
+            </div>
           </>
         )}
 
@@ -283,60 +308,11 @@ function CaptionField({ id, value, onChange }: { id: string; value: string; onCh
   );
 }
 
-function MediaPicker({
-  purpose,
-  accept,
-  mediaId,
-  name,
-  isImage,
-  onUploaded,
-}: {
-  purpose: "LESSON_AUDIO" | "LESSON_IMAGE";
-  accept: string;
-  mediaId?: string;
-  name?: string;
-  isImage: boolean;
-  onUploaded: (m: { id: string; name: string }) => void;
-}) {
-  const t = useTranslations("admin.editor");
-  const te = useTranslations("errors");
-  const input = useRef<HTMLInputElement>(null);
-  const { state, upload } = useUpload(purpose);
-  const [uploadedName, setUploadedName] = useState<string | undefined>();
-
-  return (
-    <div className="grid gap-3">
-      {mediaId && isImage && (
-        // eslint-disable-next-line @next/next/no-img-element -- aperçu d'un fichier privé
-        <img src={`/api/media/${mediaId}`} alt="" className="max-h-48 w-fit rounded-lg border object-contain" />
-      )}
-      {mediaId && !isImage && <audio controls preload="none" src={`/api/media/${mediaId}`} className="w-full" />}
-      <div className="flex flex-wrap items-center gap-3">
-        <input
-          ref={input}
-          type="file"
-          accept={accept}
-          className="sr-only"
-          onChange={async (e) => {
-            const file = e.target.files?.[0];
-            e.target.value = "";
-            if (!file) return;
-            const m = await upload(file);
-            if (m) {
-              setUploadedName(m.name);
-              onUploaded(m);
-            }
-          }}
-        />
-        <Button type="button" variant="outline" size="sm" onClick={() => input.current?.click()} disabled={state.status === "uploading"}>
-          <Upload className="size-4" aria-hidden /> {mediaId ? t("replaceFile") : t("uploadFile")}
-        </Button>
-        <span className="text-sm text-muted-foreground">{uploadedName ?? name ?? (mediaId ? "" : t("noFile"))}</span>
-      </div>
-      {state.status === "uploading" && <Progress value={state.progress} aria-label={t("uploading")} />}
-      {state.status === "error" && <p className="text-sm text-destructive">{te.has(state.error) ? te(state.error) : te("generic")}</p>}
-    </div>
-  );
+/** Fichier déjà choisi pour un bloc (nom connu de la médiathèque, type déduit de l'extension). */
+function mediaValue(mediaId: unknown, names: Record<string, string>): UploadedFile | null {
+  if (typeof mediaId !== "string" || !mediaId) return null;
+  const name = names[mediaId] ?? "";
+  return { id: mediaId, name, mime: mimeFromName(name) ?? "application/octet-stream" };
 }
 
 type VocabItem = { term: string; translation: string; partOfSpeech?: string; example?: string };

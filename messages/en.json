@@ -536,7 +536,8 @@
         "VIDEO": "Video",
         "AUDIO": "Audio",
         "IMAGE": "Image",
-        "VOCAB_LIST": "Vocabulary"
+        "VOCAB_LIST": "Vocabulary",
+        "DOCUMENT": "Document (PowerPoint, Word, PDF)"
       },
       "unsaved": "Unsaved changes",
       "saved": "Saved",
@@ -574,7 +575,10 @@
       "partOfSpeech": "Part of speech",
       "removeRow": "Remove this word",
       "example": "Example sentence (optional)",
-      "addRow": "Add a word"
+      "addRow": "Add a word",
+      "documentTitle": "Document title",
+      "documentDescription": "Description (optional)",
+      "documentHint": "PowerPoint, Word, PDF or Excel — 100 MB max"
     },
     "media": {
       "title": "Media library",
@@ -613,7 +617,7 @@
       "purpose": {
         "LESSON_AUDIO": "Audio (MP3, M4A, OGG, WAV)",
         "LESSON_IMAGE": "Image (JPEG, PNG, WebP)",
-        "LESSON_DOCUMENT": "PDF document"
+        "LESSON_DOCUMENT": "Document (PowerPoint, Word, PDF, Excel)"
       },
       "uploadFile": "Upload a file",
       "fileAdded": "File added.",
@@ -661,7 +665,8 @@
     "tooLong": "Text too long.",
     "numberInvalid": "Invalid number.",
     "promptTooShort": "Instructions too short.",
-    "rangeInvalid": "The maximum must be greater than the minimum."
+    "rangeInvalid": "The maximum must be greater than the minimum.",
+    "titleRequired": "Add a title."
   },
   "errors": {
     "validation": "Please correct the highlighted fields.",
@@ -717,7 +722,8 @@
     "TOO_LONG": "Your work exceeds the limit.",
     "HAS_SUBMISSIONS": "Students have already handed in this assignment: archive it instead of deleting it.",
     "pendingApproval": "Your access request is being reviewed. You will receive an email as soon as it has been processed.",
-    "accountRejected": "Your access request was not approved. Contact us to find out more."
+    "accountRejected": "Your access request was not approved. Contact us to find out more.",
+    "ATTACHMENT_INVALID": "File missing or invalid. Please upload it again."
   },
   "impersonation": {
     "banner": "“View as” mode: {name} — read only",
@@ -1239,7 +1245,9 @@
       "explanationPlaceholder": "e.g. With he/she/it, add -s to the verb in the present simple.",
       "cancel": "Cancel",
       "save": "Save question",
-      "saved": "Question saved."
+      "saved": "Question saved.",
+      "attachment": "Attached image or document (optional)",
+      "attachmentHint": "Screenshot (Ctrl + V), image, PDF, Word or PowerPoint shown under the question"
     },
     "player": {
       "levelLabel": "Exercise · level {level}",
@@ -1326,7 +1334,11 @@
       "submissions": "{count, plural, =0 {Submissions} one {# submission} other {# submissions}}",
       "noSubmissions": "No submissions yet. Remember to publish the assignment.",
       "wordsCount": "{count, plural, one {# word} other {# words}}",
-      "settings": "Settings"
+      "settings": "Settings",
+      "materials": "Instruction documents",
+      "materialAdded": "Document added to the assignment.",
+      "materialConfirmRemove": "Remove “{name}” from this assignment?",
+      "materialHint": "PowerPoint, Word, PDF, image or screenshot (Ctrl + V): visible to students"
     },
     "review": {
       "back": "Submissions to grade",
@@ -1392,7 +1404,31 @@
       "recordedDuration": "Duration: {duration}",
       "rerecord": "Record again",
       "micDenied": "Microphone access denied. Allow it in your browser settings.",
-      "speakingTip": "Listen back before sending."
+      "speakingTip": "Listen back before sending.",
+      "materials": "Provided documents",
+      "attachFile": "Attach a file (optional)",
+      "attachHint": "Word, PDF, PowerPoint, or a photo / screenshot of your work (Ctrl + V)"
+    }
+  },
+  "files": {
+    "drop": "Drop a file here or click to choose",
+    "pasteHint": "Screenshot: click in this area then press Ctrl + V",
+    "clickHint": "PowerPoint, Word, PDF or Excel",
+    "uploading": "Uploading… {progress} %",
+    "progress": "Upload progress",
+    "file": "File",
+    "open": "Open",
+    "download": "Download",
+    "replace": "Replace",
+    "remove": "Remove",
+    "kinds": {
+      "image": "Image",
+      "pdf": "PDF",
+      "slides": "PowerPoint",
+      "sheet": "Excel",
+      "word": "Word",
+      "audio": "Audio",
+      "other": "File"
     }
   }
 }

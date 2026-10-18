@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LevelBadge } from "@/features/admin-shell/ui";
+import { MaterialList } from "@/features/assignments/components/materials";
 import { ReviewForm } from "@/features/assignments/components/review-form";
 import { getSubmissionForReview } from "@/features/assignments/server";
 import { Link } from "@/i18n/navigation";
@@ -68,6 +69,15 @@ export default async function ReviewSubmissionPage({ params }: { params: Promise
                 </p>
               )}
               {s.audioFileId && <audio controls src={`/api/media/${s.audioFileId}`} className="w-full" />}
+              {s.file && (
+                <div className="mt-4 grid gap-3">
+                  {s.file.mime.startsWith("image/") && (
+                    // eslint-disable-next-line @next/next/no-img-element -- copie de l'étudiant, URL signée
+                    <img src={`/api/media/${s.file.id}`} alt={s.file.originalName ?? ""} className="max-h-[600px] w-full rounded-lg border object-contain" />
+                  )}
+                  <MaterialList items={[{ mediaId: s.file.id, name: s.file.originalName ?? "", mime: s.file.mime }]} />
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

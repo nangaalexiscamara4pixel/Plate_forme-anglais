@@ -7,6 +7,9 @@ describe("questions : saisie et stockage", () => {
   it("texte à trous : segments et variantes acceptées", () => {
     expect(parseGapText("I {am|'m} a student and she {is}.")).toEqual({ segments: ["I ", " a student and she ", "."], answers: [["am", "'m"], ["is"]] });
   });
+  it("aucun fichier joint : jamais d'identifiant vide", () => {
+    expect(toStored(questionInputSchema.parse({ type: "TRUE_FALSE", prompt: "?", correct: true, attachmentFileId: "" })).attachmentFileId).toBeNull();
+  });
   it("refuse une bonne réponse hors des options et un texte sans blanc", () => {
     expect(questionInputSchema.safeParse({ type: "MCQ", prompt: "?", options: ["a", "b"], correct: 2 }).success).toBe(false);
     expect(questionInputSchema.safeParse({ type: "GAP_FILL", prompt: "?", text: "no gaps here" }).success).toBe(false);
@@ -21,7 +24,7 @@ describe("questions : saisie et stockage", () => {
       { type: "ORDERING", prompt: "Order", items: ["I", "am", "happy"], points: 1 },
       { type: "MATCHING", prompt: "Match", pairs: [{ left: "cat", right: "chat" }, { left: "dog", right: "chien" }], points: 1 },
     ];
-    for (const input of inputs) expect(toInput(toStored(input))).toEqual({ ...input, explanation: undefined });
+    for (const input of inputs) expect(toInput(toStored(input))).toEqual({ ...input, explanation: undefined, attachmentFileId: undefined });
   });
 });
 

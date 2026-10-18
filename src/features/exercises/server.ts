@@ -67,7 +67,10 @@ export async function getStudentExercise(userId: string, exerciseId: string) {
       timeLimitSec: true,
       shuffle: true,
       level: { select: { code: true } },
-      questions: { orderBy: { order: "asc" }, select: { id: true, type: true, prompt: true, payload: true, points: true, audioFileId: true } },
+      questions: {
+        orderBy: { order: "asc" },
+        select: { id: true, type: true, prompt: true, payload: true, points: true, audioFileId: true, attachmentFile: { select: { id: true, mime: true, originalName: true } } },
+      },
       attempts: {
         where: { userId, submittedAt: { not: null } },
         orderBy: { submittedAt: "desc" },
@@ -76,7 +79,12 @@ export async function getStudentExercise(userId: string, exerciseId: string) {
     },
   });
   if (!exercise) return null;
-  return { ...exercise, questions: exercise.questions.map((q) => toPublic({ ...q, type: q.type as QuestionType })) };
+  return {
+    ...exercise,
+    questions: exercise.questions.map(({ attachmentFile, ...q }) =>
+      toPublic({ ...q, type: q.type as QuestionType, attachment: attachmentFile ? { id: attachmentFile.id, mime: attachmentFile.mime, name: attachmentFile.originalName ?? "" } : null }),
+    ),
+  };
 }
 
 export async function startAttempt(userId: string, exerciseId: string) {
@@ -199,7 +207,19 @@ export async function getAdminExercise(id: string) {
       level: { select: { code: true } },
       questions: {
         orderBy: { order: "asc" },
-        select: { id: true, type: true, prompt: true, payload: true, answerKey: true, explanation: true, points: true, audioFileId: true, audioFile: { select: { originalName: true } } },
+        select: {
+          id: true,
+          type: true,
+          prompt: true,
+          payload: true,
+          answerKey: true,
+          explanation: true,
+          points: true,
+          audioFileId: true,
+          audioFile: { select: { originalName: true } },
+          attachmentFileId: true,
+          attachmentFile: { select: { id: true, mime: true, originalName: true } },
+        },
       },
     },
   });

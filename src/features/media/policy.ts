@@ -5,13 +5,28 @@
  */
 const MB = 1024 * 1024;
 
+/** Documents de cours et rendus d'étudiants : PDF, Word, PowerPoint, Excel (formats récents et anciens). */
+export const OFFICE_MIMES = [
+  "application/pdf",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/msword",
+  "application/vnd.ms-powerpoint",
+  "application/vnd.ms-excel",
+] as const;
+export const IMAGE_MIMES = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"] as const;
+
 export const MEDIA_POLICY = {
-  LESSON_VIDEO: { maxBytes: 1024 * MB, mimes: ["video/mp4", "video/webm"] },
+  // 500 Mo : limite d'un envoi direct en une fois vers le stockage
+  LESSON_VIDEO: { maxBytes: 500 * MB, mimes: ["video/mp4", "video/webm"] },
   LESSON_AUDIO: { maxBytes: 50 * MB, mimes: ["audio/mpeg", "audio/mp4", "audio/x-m4a", "audio/webm", "audio/ogg", "audio/wav", "audio/x-wav"] },
-  LESSON_IMAGE: { maxBytes: 10 * MB, mimes: ["image/jpeg", "image/png", "image/webp", "image/avif"] },
-  LESSON_DOCUMENT: { maxBytes: 25 * MB, mimes: ["application/pdf"] },
+  LESSON_IMAGE: { maxBytes: 15 * MB, mimes: IMAGE_MIMES },
+  LESSON_DOCUMENT: { maxBytes: 100 * MB, mimes: OFFICE_MIMES },
   // Enregistrements des étudiants (devoirs d'expression orale), produits par le navigateur
   SUBMISSION_AUDIO: { maxBytes: 20 * MB, mimes: ["audio/webm", "audio/ogg", "audio/mp4"] },
+  // Copie rendue par un étudiant : document ou photo/capture de son travail
+  SUBMISSION_FILE: { maxBytes: 25 * MB, mimes: [...OFFICE_MIMES, ...IMAGE_MIMES] },
 } as const;
 
 export type UploadPurpose = keyof typeof MEDIA_POLICY;
@@ -31,10 +46,35 @@ const EXT: Record<string, string> = {
   "image/webp": "webp",
   "image/avif": "avif",
   "application/pdf": "pdf",
+  "image/gif": "gif",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation": "pptx",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
+  "application/msword": "doc",
+  "application/vnd.ms-powerpoint": "ppt",
+  "application/vnd.ms-excel": "xls",
 };
 
 export function extensionFor(mime: string): string {
   return EXT[mime] ?? "bin";
+}
+
+/** Type déduit de l'extension, quand le navigateur n'en fournit pas (fréquent pour Office sous Windows). */
+export function mimeFromName(name: string): string | undefined {
+  const ext = name.toLowerCase().split(".").pop();
+  if (ext === "jpeg") return "image/jpeg";
+  if (ext === "mp3") return "audio/mpeg";
+  return Object.entries(EXT).find(([, e]) => e === ext)?.[0];
+}
+
+/** Nom de fichier sûr pour les chemins de stockage (lettres, chiffres, tirets), sans extension. */
+export function safeBaseName(name: string): string {
+  // Extension retirée seulement si elle termine le nom (pas de « / » ou « \ » après le point)
+  const base = name
+    .replace(/\.[^./\\]*$/, "")
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "");
+  return base.replace(/[^\w-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80) || "fichier";
 }
 
 /** Vérifie que les premiers octets correspondent bien au type déclaré. */
@@ -65,6 +105,18 @@ export function matchesSignature(mime: string, head: Buffer): boolean {
       return ascii(0, "RIFF") && ascii(8, "WEBP");
     case "application/pdf":
       return ascii(0, "%PDF-");
+    case "image/gif":
+      return ascii(0, "GIF8");
+    // Office récent (docx, pptx, xlsx) : archive ZIP
+    case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+    case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+    case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+      return bytes(0, 0x50, 0x4b, 0x03, 0x04);
+    // Office ancien (doc, ppt, xls) : conteneur OLE
+    case "application/msword":
+    case "application/vnd.ms-powerpoint":
+    case "application/vnd.ms-excel":
+      return bytes(0, 0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1);
     default:
       return false;
   }

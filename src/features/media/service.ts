@@ -4,7 +4,7 @@ import { db } from "@/server/db";
 import { storage, type PresignedUpload } from "@/server/storage";
 import { createMuxDirectUpload, muxEnabled } from "@/server/video";
 import { parseChapters, parseSubtitles } from "@/features/video/captions";
-import { extensionFor, matchesSignature, MEDIA_POLICY, type UploadPurpose } from "./policy";
+import { extensionFor, matchesSignature, MEDIA_POLICY, safeBaseName, type UploadPurpose } from "./policy";
 
 /**
  * Médiathèque du CMS et enregistrements d'étudiants (l'appelant vérifie le rôle et la propriété).
@@ -27,8 +27,8 @@ export async function requestUpload(
   if (input.size <= 0 || input.size > policy.maxBytes) throw new MediaError("TOO_LARGE");
 
   const now = new Date();
-  // Clé aléatoire, sans le nom d'origine (pas de donnée utilisateur dans les chemins).
-  const key = `${input.purpose.toLowerCase()}/${now.getUTCFullYear()}/${randomUUID()}.${extensionFor(input.mime)}`;
+  // Dossier aléatoire (impossible à deviner) + nom d'origine assaini : le fichier téléchargé garde un nom lisible.
+  const key = `${input.purpose.toLowerCase()}/${now.getUTCFullYear()}/${randomUUID()}/${safeBaseName(input.name)}.${extensionFor(input.mime)}`;
   const media = await db.mediaFile.create({
     data: {
       key,

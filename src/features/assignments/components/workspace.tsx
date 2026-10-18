@@ -7,7 +7,18 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { confirmRecordingUploadAction, requestRecordingUploadAction, saveDraftAction, submitAssignmentAction } from "../actions";
+import { FileDrop } from "@/components/file-drop";
+import type { UploadedFile, Uploader } from "@/features/content/components/use-upload";
+import { ACCEPT } from "@/lib/files";
+import {
+  confirmRecordingUploadAction,
+  confirmSubmissionFileUploadAction,
+  requestRecordingUploadAction,
+  requestSubmissionFileUploadAction,
+  saveDraftAction,
+  submitAssignmentAction,
+} from "../actions";
+import { MaterialList, type Material } from "./materials";
 
 export type WorkspaceSubmission = {
   id: string;
@@ -17,6 +28,7 @@ export type WorkspaceSubmission = {
   audioFileId: string | null;
   durationSec: number | null;
   wordCount: number | null;
+  file: { id: string; mime: string; originalName: string | null } | null;
   submittedAt: string | null;
   feedback: { score: number | null; comment: string | null; returnedAt: string | null } | null;
 };
@@ -30,6 +42,7 @@ export type WorkspaceAssignment = {
   minWords: number | null;
   maxWords: number | null;
   maxDurationSec: number | null;
+  materials: Material[];
 };
 
 const countWords = (text: string) => (text.trim().match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu) ?? []).length;
@@ -69,6 +82,12 @@ export function AssignmentWorkspace({ assignment, submissions }: { assignment: W
         <section className="rounded-2xl border bg-card p-6 shadow-sm">
           <h2 className="mb-2 text-xs font-semibold tracking-[0.2em] text-brand-ink uppercase">{t("instructions")}</h2>
           <p className="whitespace-pre-wrap leading-relaxed">{assignment.prompt}</p>
+          {assignment.materials.length > 0 && (
+            <div className="mt-4 grid gap-2">
+              <p className="text-sm font-medium">{t("materials")}</p>
+              <MaterialList items={assignment.materials} />
+            </div>
+          )}
           <p className="mt-4 text-sm text-muted-foreground">
             {assignment.skill === "WRITING"
               ? assignment.minWords && assignment.maxWords
@@ -99,7 +118,13 @@ export function AssignmentWorkspace({ assignment, submissions }: { assignment: W
 
         {editing ? (
           assignment.skill === "WRITING" ? (
-            <WritingEditor assignment={assignment} initial={latest?.text ?? ""} onSubmit={submit} sending={sending} />
+            <WritingEditor
+              assignment={assignment}
+              initial={latest?.text ?? ""}
+              initialFile={latest?.file ? { id: latest.file.id, name: latest.file.originalName ?? "", mime: latest.file.mime } : null}
+              onSubmit={submit}
+              sending={sending}
+            />
           ) : (
             <SpeakingRecorder assignment={assignment} initial={latest?.status === "DRAFT" ? latest : null} onSubmit={submit} sending={sending} />
           )
@@ -109,6 +134,11 @@ export function AssignmentWorkspace({ assignment, submissions }: { assignment: W
               <h2 className="mb-3 font-medium">{t("yourWork", { version: latest.version })}</h2>
               {latest.text && <p className="whitespace-pre-wrap leading-relaxed">{latest.text}</p>}
               {latest.audioFileId && <audio controls src={`/api/media/${latest.audioFileId}`} className="w-full" />}
+              {latest.file && (
+                <div className="mt-4">
+                  <MaterialList items={[{ mediaId: latest.file.id, name: latest.file.originalName ?? "", mime: latest.file.mime }]} />
+                </div>
+              )}
               {locked && <p className="mt-4 rounded-lg bg-muted px-3 py-2 text-sm text-muted-foreground">{t("waiting")}</p>}
             </section>
           )
@@ -156,13 +186,37 @@ function SubmitBar({ disabled, sending, onSubmit, info }: { disabled: boolean; s
   );
 }
 
-function WritingEditor({ assignment, initial, onSubmit, sending }: { assignment: WorkspaceAssignment; initial: string; onSubmit: () => void; sending: boolean }) {
+/** Envoi d'un fichier de copie par l'étudiant (rattaché à son compte). */
+function studentFileUploader(assignmentId: string): Uploader {
+  return {
+    request: (file) => requestSubmissionFileUploadAction(null, { assignmentId, ...file }),
+    confirm: (mediaId) => confirmSubmissionFileUploadAction(null, { mediaId }),
+  };
+}
+
+function WritingEditor({
+  assignment,
+  initial,
+  initialFile,
+  onSubmit,
+  sending,
+}: {
+  assignment: WorkspaceAssignment;
+  initial: string;
+  initialFile: UploadedFile | null;
+  onSubmit: () => void;
+  sending: boolean;
+}) {
   const t = useTranslations("assignments.student");
+  const te = useTranslations("errors");
   const [text, setText] = useState(initial);
+  const [file, setFile] = useState<UploadedFile | null>(initialFile);
+  const [uploader] = useState(() => studentFileUploader(assignment.id));
   const [saved, setSaved] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const words = countWords(text);
-  const tooShort = !!assignment.minWords && words < assignment.minWords;
+  // Avec un fichier joint (copie scannée, document Word…), le texte saisi devient facultatif.
+  const tooShort = !file && !!assignment.minWords && words < assignment.minWords;
   const tooLong = !!assignment.maxWords && words > assignment.maxWords;
 
   // Enregistrement automatique du brouillon (1,2 s après la dernière frappe).
@@ -183,6 +237,11 @@ function WritingEditor({ assignment, initial, onSubmit, sending }: { assignment:
     if (timer.current) clearTimeout(timer.current);
     if (await persist(text)) onSubmit();
   };
+  const attach = async (f: UploadedFile | null) => {
+    const res = await saveDraftAction(null, { assignmentId: assignment.id, fileId: f?.id ?? null });
+    if (!res.ok) return toast.error(te(res.error));
+    setFile(f);
+  };
 
   return (
     <section className="grid gap-3 rounded-2xl border bg-card p-6 shadow-sm">
@@ -199,8 +258,16 @@ function WritingEditor({ assignment, initial, onSubmit, sending }: { assignment:
         placeholder={t("textPlaceholder")}
         className="w-full resize-y rounded-xl border border-input bg-transparent p-4 text-base leading-relaxed outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
       />
+      <FileDrop
+        uploader={uploader}
+        accept={ACCEPT.documentOrImage}
+        label={t("attachFile")}
+        hint={t("attachHint")}
+        value={file}
+        onChange={(f) => void attach(f)}
+      />
       <SubmitBar
-        disabled={words === 0 || tooShort || tooLong}
+        disabled={(words === 0 && !file) || tooShort || tooLong}
         sending={sending}
         onSubmit={send}
         info={
