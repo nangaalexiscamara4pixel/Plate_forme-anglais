@@ -107,6 +107,38 @@ export type LessonContent = {
 };
 
 /** Transforme les blocs stockés en blocs affichables + sources vidéo signées. */
+/** Dernières leçons mises en ligne pour l'étudiant (tableau de bord), avec leur état de progression. */
+export async function getRecentLessons(userId: string, take = 6) {
+  const scope = await learnerScope(userId);
+  if (scope.levelIds.length === 0) return [];
+  const lessons = await db.lesson.findMany({
+    where: accessibleLessonWhere(scope),
+    orderBy: [{ publishAt: { sort: "desc", nulls: "last" } }, { updatedAt: "desc" }],
+    take,
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      estimatedMinutes: true,
+      publishAt: true,
+      unit: { select: { slug: true, title: true, module: { select: { skill: true, level: { select: { code: true } } } } } },
+      progress: { where: { userId }, select: { status: true } },
+    },
+  });
+  return lessons.map((l) => ({
+    id: l.id,
+    title: l.title,
+    unitTitle: l.unit.title,
+    minutes: l.estimatedMinutes,
+    publishAt: l.publishAt,
+    skill: l.unit.module.skill,
+    levelCode: l.unit.module.level.code,
+    unitSlug: l.unit.slug,
+    lessonSlug: l.slug,
+    completed: l.progress[0]?.status === "COMPLETED",
+  }));
+}
+
 export async function loadLessonContent(blocks: { id: string; kind: string; content: unknown; videoId: string | null }[]): Promise<LessonContent> {
   const rendered = blocks.map(parseStoredBlock).filter((b): b is RenderableBlock => b !== null);
   const videoIds = rendered.flatMap((b) => (b.kind === "VIDEO" && b.videoId ? [b.videoId] : []));

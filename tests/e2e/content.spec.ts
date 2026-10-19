@@ -112,17 +112,20 @@ test("contenus : parcours étudiant A1, vidéo sécurisée, isolation par niveau
   await settings.getByLabel("Publication").selectOption("PUBLISHED");
   await settings.getByRole("button", { name: "Enregistrer" }).click();
   await expect(settings.getByText("Enregistré.")).toBeVisible();
-  await admin.goto("/admin/content/a1/reading");
-  await unitCard.getByRole("button", { name: "Modifier l'unité" }).click();
-  await admin.getByRole("dialog").getByLabel("Publication").selectOption("PUBLISHED");
-  await admin.getByRole("dialog").getByRole("button", { name: "Enregistrer" }).click();
-  await expect(admin.getByText("Enregistré.").first()).toBeVisible();
+  // Publier la leçon suffit : son unité devient visible avec elle (aucune autre étape à faire)
 
   // Publiée : l'étudiant la voit et la lit
   await student.goto("/app/learn/a1/reading");
   await student.getByRole("link", { name: /Counting to ten/ }).click();
   await expect(student.getByText("One, two, three, four, five.")).toBeVisible();
   await expect(student.getByText("Numbers 1-10", { exact: true })).toBeVisible();
+
   const download = student.getByRole("link", { name: "Télécharger" }).first();
   expect((await student.request.get(`http://localhost:3100${await download.getAttribute("href")}`, { maxRedirects: 0 })).status()).toBe(302);
+
+  // Le tableau de bord de l'étudiant annonce le nouveau cours, avec un lien direct
+  await student.goto("/app");
+  const recent = student.getByRole("region", { name: "Nouveaux cours" });
+  await expect(recent.getByRole("link", { name: /Counting to ten/ })).toBeVisible();
+  await student.screenshot({ path: "test-results/shots/student-dashboard.png", fullPage: true });
 });

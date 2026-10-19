@@ -45,6 +45,9 @@ export async function createUnit(actor: AuditContext, input: { moduleId: string;
       summary: input.summary || null,
       slug: uniqueSlug(slugify(input.title), mod.units.map((u) => u.slug)),
       order: Math.max(0, ...mod.units.map((u) => u.order)) + 1,
+      // Une unité n'est qu'un regroupement : visible d'office. Ce sont les leçons qui se publient.
+      status: "PUBLISHED",
+      publishAt: new Date(),
     },
   });
   await audit(actor, "content.unit.create", { type: "unit", id: unit.id }, { title: unit.title });
@@ -128,6 +131,11 @@ export async function updateLesson(
       ...publication,
     },
   });
+  // Publier une leçon rend aussi visible son unité si elle était restée en brouillon :
+  // sinon la leçon resterait invisible pour les étudiants.
+  if (updated.status === "PUBLISHED" || updated.status === "SCHEDULED") {
+    await db.unit.updateMany({ where: { id: lesson.unitId, status: "DRAFT" }, data: { status: "PUBLISHED", publishAt: new Date() } });
+  }
   await audit(actor, "content.lesson.update", { type: "lesson", id }, { status: updated.status });
   return updated;
 }

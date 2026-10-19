@@ -160,7 +160,7 @@
   },
   "app": {
     "welcome": "Bonjour, {name}",
-    "welcomeSubtitle": "Votre espace d'apprentissage est prêt. Les cours arrivent très bientôt.",
+    "welcomeSubtitle": "Votre espace d'apprentissage : reprenez vos cours ou découvrez les nouveautés ci-dessous.",
     "yourLevel": "Votre niveau",
     "comingSoon": "Bientôt disponible",
     "nav": {
@@ -171,7 +171,11 @@
       "exercises": "Exercices",
       "assignments": "Devoirs"
     },
-    "goToCourses": "Mes cours"
+    "goToCourses": "Mes cours",
+    "recentTitle": "Nouveaux cours",
+    "allCourses": "Tous mes cours",
+    "lessonNew": "À découvrir",
+    "lessonDone": "Terminé"
   },
   "admin": {
     "title": "Administration",

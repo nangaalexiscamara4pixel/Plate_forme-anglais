@@ -160,7 +160,7 @@
   },
   "app": {
     "welcome": "Hello, {name}",
-    "welcomeSubtitle": "Your learning space is ready. Courses are coming very soon.",
+    "welcomeSubtitle": "Your learning space: pick up your lessons or discover what's new below.",
     "yourLevel": "Your level",
     "comingSoon": "Coming soon",
     "nav": {
@@ -171,7 +171,11 @@
       "exercises": "Exercises",
       "assignments": "Assignments"
     },
-    "goToCourses": "My courses"
+    "goToCourses": "My courses",
+    "recentTitle": "New lessons",
+    "allCourses": "All my courses",
+    "lessonNew": "New",
+    "lessonDone": "Completed"
   },
   "admin": {
     "title": "Administration",
