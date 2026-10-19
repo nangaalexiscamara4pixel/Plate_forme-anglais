@@ -50,7 +50,7 @@ export default async function LessonEditorPage({ params }: { params: Promise<{ i
             lessonId={lesson.id}
             blocks={lesson.blocks.map((b) => ({ id: b.id, kind: b.kind, content: (b.content ?? {}) as Record<string, unknown>, videoId: b.videoId }))}
             videos={videos}
-            mediaNames={Object.fromEntries(media.map((m) => [m.id, m.originalName ?? m.id]))}
+            mediaInfo={Object.fromEntries(media.map((m) => [m.id, { name: m.originalName ?? "", mime: m.mime }]))}
           />
         </section>
         <aside>

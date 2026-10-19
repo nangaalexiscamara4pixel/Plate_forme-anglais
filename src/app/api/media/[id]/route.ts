@@ -24,6 +24,14 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   // Réponse identique « inexistant » / « interdit » : on ne révèle pas l'existence d'un fichier.
   if (!media?.uploadedAt || !(await canViewMedia(await getViewer(), { mediaId: id }))) return notFound();
 
+  // Fiche du fichier : la visionneuse connaît toujours le vrai type, même s'il n'était pas fourni par la page.
+  if (request.nextUrl.searchParams.get("info") === "1") {
+    return NextResponse.json(
+      { id: media.id, name: media.originalName ?? "", mime: media.mime, size: media.sizeBytes },
+      { headers: { "Cache-Control": "no-store" } },
+    );
+  }
+
   // Aperçu Office Online : le lecteur de Microsoft doit pouvoir lire le fichier lui-même.
   // On lui confie un lien signé de 30 min, pour ce seul fichier et seulement s'il s'agit d'un document Office.
   if (request.nextUrl.searchParams.get("preview") === "office") {

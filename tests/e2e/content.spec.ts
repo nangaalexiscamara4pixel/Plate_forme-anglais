@@ -85,6 +85,13 @@ test("contenus : parcours étudiant A1, vidéo sécurisée, isolation par niveau
     buffer: Buffer.concat([Buffer.from([0x50, 0x4b, 0x03, 0x04]), Buffer.alloc(2048, 1)]),
   });
   await expect(docBlock.getByLabel("Titre du document")).toHaveValue("Numbers 1-10");
+  // Ouvert juste après l'envoi (avant d'enregistrer) : le type est bien reconnu (PowerPoint)
+  await docBlock.getByRole("button", { name: "Ouvrir" }).click();
+  const viewer = admin.getByRole("dialog");
+  await expect(viewer.getByRole("heading", { name: "Numbers 1-10.pptx" })).toBeVisible();
+  await expect(viewer.getByText(/aperçu des fichiers Fichier/)).toHaveCount(0);
+  await expect(viewer.getByText(/Office Online|aperçu en ligne/)).toBeVisible();
+  await viewer.getByRole("button", { name: "Fermer" }).click();
   await docBlock.getByRole("button", { name: "Enregistrer" }).click();
   await expect(admin.getByText("Bloc enregistré.").first()).toBeVisible();
 

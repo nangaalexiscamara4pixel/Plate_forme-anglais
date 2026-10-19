@@ -54,16 +54,20 @@ export function BlocksEditor({
   lessonId,
   blocks: initial,
   videos,
-  mediaNames,
+  mediaInfo,
 }: {
   lessonId: string;
   blocks: EditorBlock[];
   videos: VideoOption[];
-  mediaNames: Record<string, string>;
+  /** Nom et type réels des fichiers déjà utilisés par la leçon. */
+  mediaInfo: Record<string, MediaInfo>;
 }) {
   const t = useTranslations("admin.editor");
   const te = useTranslations("errors");
   const [blocks, setBlocks] = useState(initial);
+  // Fichiers connus : ceux de la leçon + ceux envoyés pendant la session d'édition.
+  const [files, setFiles] = useState(mediaInfo);
+  const remember = (f: UploadedFile) => setFiles((all) => ({ ...all, [f.id]: { name: f.name, mime: f.mime } }));
   const [prevInitial, setPrevInitial] = useState(initial);
   if (initial !== prevInitial) {
     // Nouvelle version serveur (ajout / suppression) : on conserve les modifications locales des blocs existants.
@@ -92,7 +96,8 @@ export function BlocksEditor({
             block={block}
             handle={handle}
             videos={videos}
-            mediaNames={mediaNames}
+            files={files}
+            onUploaded={remember}
             onLocalChange={(next) => setBlocks((all) => all.map((b) => (b.id === block.id ? next : b)))}
           />
         )}
@@ -131,13 +136,15 @@ function BlockCard({
   block,
   handle,
   videos,
-  mediaNames,
+  files,
+  onUploaded,
   onLocalChange,
 }: {
   block: EditorBlock;
   handle: ReactNode;
   videos: VideoOption[];
-  mediaNames: Record<string, string>;
+  files: Record<string, MediaInfo>;
+  onUploaded: (f: UploadedFile) => void;
   onLocalChange: (b: EditorBlock) => void;
 }) {
   const t = useTranslations("admin.editor");
@@ -251,8 +258,11 @@ function BlockCard({
               uploader={kind === "AUDIO" ? "LESSON_AUDIO" : "LESSON_IMAGE"}
               accept={kind === "AUDIO" ? ACCEPT.audio : ACCEPT.image}
               pasteImages={kind === "IMAGE"}
-              value={mediaValue(block.content.mediaId, mediaNames)}
-              onChange={(m) => setContent({ mediaId: m?.id ?? "" })}
+              value={mediaValue(block.content.mediaId, files)}
+              onChange={(m) => {
+                if (m) onUploaded(m);
+                setContent({ mediaId: m?.id ?? "" });
+              }}
             />
             {kind === "IMAGE" && (
               <div className="grid gap-2">
@@ -278,8 +288,11 @@ function BlockCard({
               accept={ACCEPT.document}
               pasteImages={false}
               hint={t("documentHint")}
-              value={mediaValue(block.content.mediaId, mediaNames)}
-              onChange={(m) => setContent({ mediaId: m?.id ?? "", title: block.content.title || (m?.name ?? "").replace(/.[^.]+$/, "") })}
+              value={mediaValue(block.content.mediaId, files)}
+              onChange={(m) => {
+                if (m) onUploaded(m);
+                setContent({ mediaId: m?.id ?? "", title: block.content.title || (m?.name ?? "").replace(/\.[^.]+$/, "") });
+              }}
             />
             <div className="grid gap-2">
               <Label htmlFor={`doc-title-${block.id}`}>{t("documentTitle")}</Label>
@@ -308,11 +321,14 @@ function CaptionField({ id, value, onChange }: { id: string; value: string; onCh
   );
 }
 
-/** Fichier déjà choisi pour un bloc (nom connu de la médiathèque, type déduit de l'extension). */
-function mediaValue(mediaId: unknown, names: Record<string, string>): UploadedFile | null {
+export type MediaInfo = { name: string; mime: string };
+
+/** Fichier choisi pour un bloc : nom et type réels (connus du serveur ou de l'envoi qui vient d'avoir lieu). */
+function mediaValue(mediaId: unknown, files: Record<string, MediaInfo>): UploadedFile | null {
   if (typeof mediaId !== "string" || !mediaId) return null;
-  const name = names[mediaId] ?? "";
-  return { id: mediaId, name, mime: mimeFromName(name) ?? "application/octet-stream" };
+  const info = files[mediaId];
+  // Type inconnu ici ⇒ la visionneuse le demandera au serveur.
+  return { id: mediaId, name: info?.name ?? "", mime: info?.mime ?? (info ? (mimeFromName(info.name) ?? "") : "") };
 }
 
 type VocabItem = { term: string; translation: string; partOfSpeech?: string; example?: string };

@@ -54,7 +54,45 @@ export function FileViewer({ file, open, onOpenChange }: { file: ViewerFile | nu
   );
 }
 
+/** Type absent, générique (« image/* ») ou inconnu : la page ne le connaissait pas avec certitude. */
+function needsInfo(file: ViewerFile) {
+  return !file.mime || file.mime.includes("*") || file.mime === "application/octet-stream" || fileKind(file.mime) === "other";
+}
+
 function ViewerBody({ file }: { file: ViewerFile }) {
+  const t = useTranslations("files");
+  const [resolved, setResolved] = useState<{ for: string; file: ViewerFile | null; error: boolean } | null>(null);
+  const unsure = needsInfo(file);
+  useEffect(() => {
+    if (!unsure) return;
+    let cancelled = false;
+    fetch(`${src(file.id)}?info=1`)
+      .then((r) => (r.ok ? (r.json() as Promise<{ name: string; mime: string }>) : Promise.reject(new Error(String(r.status)))))
+      .then((info) => !cancelled && setResolved({ for: file.id, file: { id: file.id, name: file.name || info.name, mime: info.mime }, error: false }))
+      .catch(() => !cancelled && setResolved({ for: file.id, file: null, error: true }));
+    return () => {
+      cancelled = true;
+    };
+  }, [file.id, file.name, unsure]);
+
+  if (!unsure) return <ViewerContent file={file} />;
+  if (!resolved || resolved.for !== file.id) return <Loader2 className="size-8 animate-spin text-white" aria-label={t("loading")} />;
+  if (!resolved.file) {
+    return (
+      <Unavailable
+        message={t("loadError")}
+        action={
+          <a href={downloadHref(file.id)} className="inline-flex h-11 items-center gap-2 rounded-lg bg-white px-5 font-semibold text-night hover:bg-white/90">
+            <Download className="size-4" aria-hidden /> {t("download")}
+          </a>
+        }
+      />
+    );
+  }
+  return <ViewerContent file={resolved.file} />;
+}
+
+function ViewerContent({ file }: { file: ViewerFile }) {
   const t = useTranslations("files");
   const kind = fileKind(file.mime);
   const [zoom, setZoom] = useState(false);
